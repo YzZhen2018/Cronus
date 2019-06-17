@@ -1,0 +1,82 @@
+package ink.ptms.cronus.internal.task.player.damage;
+
+import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.internal.QuestTask;
+import ink.ptms.cronus.internal.bukkit.DamageCause;
+import ink.ptms.cronus.internal.bukkit.Entity;
+import ink.ptms.cronus.internal.bukkit.ItemStack;
+import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
+import ink.ptms.cronus.internal.task.Task;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.util.NumberConversions;
+
+import java.util.Map;
+
+/**
+ * @Author 坏黑
+ * @Since 2019-05-28 17:21
+ */
+@Task(name = "player_attack")
+public class TaskPlayerAttack extends QuestTask {
+
+    private int damage;
+    private Entity victim;
+    private ItemStack weapon;
+    private DamageCause cause;
+
+    public TaskPlayerAttack(ConfigurationSection config) {
+        super(config);
+    }
+
+    @Override
+    public void init(Map<String, Object> data) {
+        damage = NumberConversions.toInt(data.getOrDefault("damage", 1));
+        victim = data.containsKey("victim") ? BukkitParser.toEntity(data.get("victim")) : null;
+        weapon = data.containsKey("weapon") ? BukkitParser.toItemStack(data.get("weapon")) : null;
+        cause = data.containsKey("cause") ? BukkitParser.toDamageCause(data.get("cause")) : null;
+    }
+
+    @Override
+    public boolean isCompleted(DataQuest dataQuest) {
+        return dataQuest.getDataStage().getInt(getId() + ".damage") >= damage;
+    }
+
+    @Override
+    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+        EntityDamageByEntityEvent e = ((EntityDamageByEntityEvent) event);
+        return (weapon == null || weapon.isItem(player.getItemInHand())) && (victim == null || victim.isSelect(e.getEntity())) && (cause == null || cause.isSelect(e.getCause()));
+    }
+
+    @Override
+    public void next(Player player, DataQuest dataQuest, Event event) {
+        EntityDamageByEntityEvent e = ((EntityDamageByEntityEvent) event);
+        dataQuest.getDataStage().set(getId() + ".damage", dataQuest.getDataStage().getInt(getId() + ".damage") + e.getDamage());
+    }
+
+    @Override
+    public void complete(DataQuest dataQuest) {
+        dataQuest.getDataStage().set(getId() + ".damage", damage);
+    }
+
+    @Override
+    public void reset(DataQuest dataQuest) {
+        dataQuest.getDataStage().set(getId() + ".damage", 0);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskPlayerAttack{" +
+                "damage=" + damage +
+                ", victim=" + victim +
+                ", weapon=" + weapon +
+                ", cause=" + cause +
+                ", action=" + action +
+                ", config=" + config +
+                ", condition=" + condition +
+                ", guide=" + guide +
+                '}';
+    }
+}

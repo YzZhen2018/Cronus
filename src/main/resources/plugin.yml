@@ -1,0 +1,8 @@
+name: Cronus
+main: ink.ptms.cronus.Cronus
+version: 1.0
+api-version: 1.13
+
+author: 坏黑
+depend:
+- TabooLib

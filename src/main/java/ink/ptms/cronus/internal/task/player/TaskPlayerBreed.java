@@ -1,0 +1,83 @@
+package ink.ptms.cronus.internal.task.player;
+
+import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.internal.QuestTask;
+import ink.ptms.cronus.internal.bukkit.Entity;
+import ink.ptms.cronus.internal.bukkit.ItemStack;
+import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
+import ink.ptms.cronus.internal.task.Task;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityBreedEvent;
+import org.bukkit.util.NumberConversions;
+
+import java.util.Map;
+
+/**
+ * @Author 坏黑
+ * @Since 2019-05-28 17:21
+ */
+@Task(name = "player_breed")
+public class TaskPlayerBreed extends QuestTask {
+
+    private int count;
+    private Entity mother;
+    private Entity father;
+    private Entity entity;
+    private ItemStack item;
+
+    public TaskPlayerBreed(ConfigurationSection config) {
+        super(config);
+    }
+
+    @Override
+    public void init(Map<String, Object> data) {
+        count = NumberConversions.toInt(data.getOrDefault("count", 1));
+        mother = data.containsKey("mother") ? BukkitParser.toEntity(data.get("mother")) : null;
+        father = data.containsKey("father") ? BukkitParser.toEntity(data.get("father")) : null;
+        entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
+        item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
+    }
+
+    @Override
+    public boolean isCompleted(DataQuest dataQuest) {
+        return dataQuest.getDataStage().getInt(getId() + ".count") >= count;
+    }
+
+    @Override
+    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+        EntityBreedEvent e = ((EntityBreedEvent) event);
+        return (item == null || item.isItem(e.getBredWith())) && (mother == null || mother.isSelect(e.getMother())) && (father == null || father.isSelect(e.getFather())) && (entity == null || entity.isSelect(e.getEntity()));
+    }
+
+    @Override
+    public void next(Player player, DataQuest dataQuest, Event event) {
+        dataQuest.getDataStage().set(getId() + ".count", dataQuest.getDataStage().getInt(getId() + ".count") + 1);
+    }
+
+    @Override
+    public void complete(DataQuest dataQuest) {
+        dataQuest.getDataStage().set(getId() + ".count", count);
+    }
+
+    @Override
+    public void reset(DataQuest dataQuest) {
+        dataQuest.getDataStage().set(getId() + ".count", 0);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskPlayerBreed{" +
+                "count=" + count +
+                ", mother=" + mother +
+                ", father=" + father +
+                ", entity=" + entity +
+                ", item=" + item +
+                ", action=" + action +
+                ", config=" + config +
+                ", condition=" + condition +
+                ", guide=" + guide +
+                '}';
+    }
+}

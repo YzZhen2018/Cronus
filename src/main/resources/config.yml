@@ -1,0 +1,74 @@
+# 插件设置
+Settings:
+  # 任务引导模式
+  # 视觉优先 = Visual（更流畅的全息移动）
+  # 性能优先 = Performance（更高的性能）
+  guide-mode: Performance
+  # 对话设置（界面模式）
+  dialog-chest:
+    # 界面行数
+    rows-script: 'Math.ceil($size / 5.0) + 2'
+    # 对话位置
+    slot-message: 10
+    # 回复位置
+    slot-reply:
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+
+# 数据储存
+Database:
+  # UUID 模式
+  # 如果你是正版服务器，则开启 SQL 储存并启用该模式
+  uniqueId: false
+  # 储存类型
+  # 可用类型 YAML、SQL
+  type: YAML
+  # 数据库相关地址
+  host: localhost
+  port: 3306
+  user: root
+  password: ''
+  database: test
+  table: cronus_database
+
+# 任务纵览
+QuestBook:
+  # 任务纵览序号
+  # 用于规定多种不同的纵览格式与内容
+  def_0:
+    # 录入任务
+    # 通过任务配置中的标签判断是否写入任务纵览
+    # 右侧参数为列表优先级，数值越高排名越靠前
+    list:
+      主线任务: 1
+      支线任务: 0
+
+    # 纵览开头
+    head:
+    - '任务纵览'
+    - ''
+    - '当前正在进行的任务'
+    - ''
+    # 纵览格式
+    format:
+    - '<hover:{display}|查看详细信息|CronusQuestOpen {id}>'
+    - '{content}'
+    - ''
