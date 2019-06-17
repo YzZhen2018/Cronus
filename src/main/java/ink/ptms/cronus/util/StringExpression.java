@@ -15,9 +15,9 @@ public class StringExpression {
 
     @TInject
     private static TLogger logger;
-    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|=|==)[ ]?(?<number>.+)");
+    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|=|==|≈|≈≈)[ ]?(?<number>.+)");
     private String symbol;
-    private double number;
+    private StringNumber number;
 
     public StringExpression(Object in) {
         Matcher matcher = pattern.matcher(String.valueOf(in));
@@ -26,24 +26,41 @@ public class StringExpression {
             return;
         }
         symbol = matcher.group("symbol");
-        number = NumberConversions.toDouble(matcher.group("number"));
+        number = new StringNumber(matcher.group("number"));
     }
-    
-    public boolean isSelect(double number) {
+
+    public boolean isSelect(String string) {
         switch (symbol) {
-            case ">":
-                return number > this.number;
-            case ">=":
-                return number >= this.number;
-            case "<":
-                return number < this.number;
-            case "<=":
-                return number <= this.number;
             case "=":
             case "==":
-                return number == this.number;
+                return number.getSource().equals(string);
+            case "≈":
+            case "≈≈":
+                return number.getSource().equalsIgnoreCase(string);
             default:
-                return true;
+                return false;
+        }
+    }
+
+    public boolean isSelect(double number) {
+        if (!this.number.isNumber()) {
+            return false;
+        }
+        double v = this.number.getNumber().doubleValue();
+        switch (symbol) {
+            case ">":
+                return number > v;
+            case ">=":
+                return number >= v;
+            case "<":
+                return number < v;
+            case "<=":
+                return number <= v;
+            case "=":
+            case "==":
+                return number == v;
+            default:
+                return false;
         }
     }
 
@@ -53,5 +70,13 @@ public class StringExpression {
                 "symbol='" + symbol + '\'' +
                 ", number=" + number +
                 '}';
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public StringNumber getNumber() {
+        return number;
     }
 }

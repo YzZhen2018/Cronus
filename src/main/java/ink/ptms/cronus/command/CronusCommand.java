@@ -2,7 +2,10 @@ package ink.ptms.cronus.command;
 
 import com.ilummc.tlib.resources.TLocale;
 import me.skymc.taboolib.commands.internal.BaseMainCommand;
+import me.skymc.taboolib.other.NumberUtils;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @Author 坏黑
@@ -15,10 +18,18 @@ public abstract class CronusCommand extends BaseMainCommand {
 
     protected void normal(CommandSender sender, String args) {
         sender.sendMessage(normal + TLocale.Translate.setColored(args));
+        // 音效
+        if (sender instanceof Player) {
+            ((Player) sender).playSound(((Player) sender).getLocation(), Sound.ENTITY_VILLAGER_TRADING, 1f, (float) NumberUtils.getRandomDouble(0, 2));
+        }
     }
 
     protected void error(CommandSender sender, String args) {
         sender.sendMessage(error + TLocale.Translate.setColored(args));
+        // 音效
+        if (sender instanceof Player) {
+            ((Player) sender).playSound(((Player) sender).getLocation(), Sound.ENTITY_VILLAGER_NO, 1f, (float) NumberUtils.getRandomDouble(0, 2));
+        }
     }
 
     @Override

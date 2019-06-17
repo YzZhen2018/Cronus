@@ -24,7 +24,7 @@ public abstract class Collect extends Condition implements ConfigurationSerializ
     }
 
     @Override
-    public void init(Matcher matcher) {
+    public void init(Matcher matcher, String text) {
     }
 
     @Override

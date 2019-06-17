@@ -68,7 +68,7 @@ public class EffectVal extends Effect {
                 try {
                     list.set(NumberConversions.toInt(symbol.substring("=:".length())), parsed);
                 } catch (Throwable t) {
-                    logger.warn("无效操作: " + t.getMessage());
+                    logger.warn("Invalid: " + t.getMessage());
                 }
                 data.set(name, list);
             }
@@ -97,7 +97,7 @@ public class EffectVal extends Effect {
                 try {
                     list.add(NumberConversions.toInt(symbol.substring("+:".length())), parsed);
                 } catch (Throwable t) {
-                    logger.warn("无效操作: " + t.getMessage());
+                    logger.warn("Invalid: " + t.getMessage());
                 }
                 data.set(name, list);
             }
@@ -147,7 +147,7 @@ public class EffectVal extends Effect {
                 data.set(name, data.getString(name).replace(key, parsed));
             }
         } else {
-            logger.warn("无效操作: " + symbol);
+            logger.warn("Invalid Symbol: " + symbol);
         }
     }
 

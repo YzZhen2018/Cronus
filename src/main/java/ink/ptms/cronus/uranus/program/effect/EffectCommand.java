@@ -58,7 +58,7 @@ public class EffectCommand extends Effect {
                 program.getSender().setOp(isOp);
                 break;
             default:
-                logger.warn("无效的指令执行目标: " + type);
+                logger.warn("Invalid type: " + type);
                 break;
         }
     }

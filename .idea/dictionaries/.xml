@@ -3,9 +3,14 @@
     <words>
       <w>bukkit</w>
       <w>cooldown</w>
+      <w>firetick</w>
+      <w>gamemode</w>
       <w>motd</w>
       <w>mythicmobs</w>
+      <w>papi</w>
       <w>purtmars</w>
+      <w>skript</w>
+      <w>teleport</w>
     </words>
   </dictionary>
 </component>

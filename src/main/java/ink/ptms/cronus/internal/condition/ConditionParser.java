@@ -23,7 +23,7 @@ public class ConditionParser {
             if (matcher.find()) {
                 try {
                     Condition instance = entry.getValue().instance();
-                    instance.init(matcher);
+                    instance.init(matcher, in);
                     return instance;
                 } catch (Throwable t) {
                     logger.error("Condition \"" + in + "\" parsing failed.");

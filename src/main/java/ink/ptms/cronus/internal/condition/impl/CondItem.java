@@ -15,9 +15,11 @@ import java.util.regex.Matcher;
 /**
  * @Author 坏黑
  * @Since 2019-05-29 11:12
+ *
+ * item.hand == diamond
  */
 @Cond(name = "item.slot", pattern = "item\\.(?<slot>\\S+) (?<symbol>\\S+) (?<value>.+)")
-public class CondItemInHand extends Condition {
+public class CondItem extends Condition {
 
     private int slot;
     private TEquipment equipment;
@@ -25,7 +27,7 @@ public class CondItemInHand extends Condition {
     private ItemStack itemStack;
 
     @Override
-    public void init(Matcher matcher) {
+    public void init(Matcher matcher, String text) {
         try {
             equipment = TEquipment.valueOf(matcher.group("slot").toUpperCase());
         } catch (Throwable ignored) {
@@ -50,7 +52,7 @@ public class CondItemInHand extends Condition {
 
     @Override
     public String toString() {
-        return "CondItemInHand{" +
+        return "CondItem{" +
                 "slot=" + slot +
                 ", equipment=" + equipment +
                 ", symbol='" + symbol + '\'' +

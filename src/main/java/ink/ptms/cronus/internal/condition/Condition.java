@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
  */
 public abstract class Condition {
 
-    abstract public void init(Matcher matcher);
+    abstract public void init(Matcher matcher, String text);
 
     abstract public boolean isValid(Player player, DataQuest quest, Event event);
 

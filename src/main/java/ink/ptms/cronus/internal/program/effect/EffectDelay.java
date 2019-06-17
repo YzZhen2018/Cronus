@@ -18,8 +18,6 @@ import java.util.regex.Matcher;
 @Auto
 public class EffectDelay extends Effect {
 
-    @TInject
-    private static TLogger logger;
     private String value;
 
     @Override
