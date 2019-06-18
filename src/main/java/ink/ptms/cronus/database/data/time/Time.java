@@ -79,4 +79,24 @@ public class Time {
             return new Time(in);
         }
     }
+
+    public TimeType getType() {
+        return type;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public long getTime() {
+        return time;
+    }
 }

@@ -24,7 +24,7 @@ public class CondWorldGuard extends Condition {
     @Override
     public void init(Matcher matcher, String text) {
         symbol = matcher.group("symbol");
-        name = matcher.group("name");;
+        name = matcher.group("name");
     }
 
     @Override

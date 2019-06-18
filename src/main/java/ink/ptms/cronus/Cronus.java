@@ -4,6 +4,7 @@ import com.ilummc.tlib.logger.TLogger;
 import com.ilummc.tlib.util.Strings;
 import me.skymc.taboolib.common.configuration.TConfiguration;
 import me.skymc.taboolib.common.inject.TInject;
+import me.skymc.taboolib.message.ChatCatcher;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,6 +45,7 @@ public class Cronus extends JavaPlugin {
     @Override
     public void onDisable() {
         cronusService.cancel();
+        ChatCatcher.getPlayerdata().clear();
     }
 
     public void reloadQuest() {

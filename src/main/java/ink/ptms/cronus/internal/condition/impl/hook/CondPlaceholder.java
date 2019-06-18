@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.condition.impl.argument;
+package ink.ptms.cronus.internal.condition.impl.hook;
 
 import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
