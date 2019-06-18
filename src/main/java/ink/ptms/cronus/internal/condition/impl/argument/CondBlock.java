@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
  *
  * block.world,0,100,0 = air
  */
-@Cond(name = "block", pattern = "block\\.(?<location>\\S+) (?<symbol>\\S+) (?<block>.+)")
+@Cond(name = "block", pattern = "block\\.(?<location>\\S+) (?<symbol>\\S+) (?<block>.+)", example = "block.[location] [symbol] [block]")
 public class CondBlock extends Condition {
 
     private Location location;
@@ -33,18 +33,7 @@ public class CondBlock extends Condition {
 
     @Override
     public boolean isValid(Player player, DataQuest quest, Event event) {
-        if (!location.isBukkit()) {
-            return false;
-        }
-        switch (symbol) {
-            case "=":
-            case "==":
-                return block.isSelect(location.toBukkit().getBlock());
-            case "!=":
-                return !block.isSelect(location.toBukkit().getBlock());
-            default:
-                return false;
-        }
+        return location.isBukkit() && symbol.startsWith("=") == block.isSelect(location.toBukkit().getBlock());
     }
 
     @Override

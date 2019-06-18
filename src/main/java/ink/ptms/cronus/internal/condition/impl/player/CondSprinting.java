@@ -10,11 +10,18 @@ import org.bukkit.event.Event;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "player.sprinting", pattern = "player\\.sprint(ing)?")
+@Cond(name = "player.sprinting", pattern = "player\\.sprint(ing)?", example = "player.sprinting")
 public class CondSprinting extends CondBoolean {
 
     @Override
     public boolean getBoolean(Player player, DataQuest quest, Event event) {
         return player.isSprinting();
+    }
+
+    @Override
+    public String toString() {
+        return "CondSprinting{" +
+                "negative=" + negative +
+                '}';
     }
 }

@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "effect", pattern = "effect\\.(?<effect>.+)")
+@Cond(name = "effect", pattern = "effect\\.(?<effect>.+)", example = "effect.[effect]")
 public class CondEffect extends Condition {
 
     private boolean negative;

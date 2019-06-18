@@ -2,7 +2,6 @@ package ink.ptms.cronus.util;
 
 import com.ilummc.tlib.logger.TLogger;
 import me.skymc.taboolib.common.inject.TInject;
-import org.bukkit.util.NumberConversions;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +14,7 @@ public class StringExpression {
 
     @TInject
     private static TLogger logger;
-    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|=|==|≈|≈≈)[ ]?(?<number>.+)");
+    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|=|==|!=|≈|≈≈|!≈)[ ]?(?<number>.+)");
     private String symbol;
     private StringNumber number;
 
@@ -34,9 +33,13 @@ public class StringExpression {
             case "=":
             case "==":
                 return number.getSource().equals(string);
+            case "!=":
+                return !number.getSource().equals(string);
             case "≈":
             case "≈≈":
                 return number.getSource().equalsIgnoreCase(string);
+            case "!≈":
+                return !number.getSource().equalsIgnoreCase(string);
             default:
                 return false;
         }

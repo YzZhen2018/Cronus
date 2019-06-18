@@ -8,9 +8,6 @@ import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import me.skymc.taboolib.inventory.ItemUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.List;

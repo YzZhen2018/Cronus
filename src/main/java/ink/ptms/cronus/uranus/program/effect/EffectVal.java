@@ -37,6 +37,11 @@ public class EffectVal extends Effect {
     }
 
     @Override
+    public String getExample() {
+        return "val.[name] [symbol] [content]";
+    }
+
+    @Override
     public void match(Matcher matcher) {
         name = matcher.group("name");
         value = matcher.group("value");

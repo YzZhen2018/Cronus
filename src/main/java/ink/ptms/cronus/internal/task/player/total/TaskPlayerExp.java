@@ -1,7 +1,6 @@
 package ink.ptms.cronus.internal.task.player.total;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.special.Uncountable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.StringExpression;

@@ -13,11 +13,18 @@ import org.bukkit.event.Event;
  *
  * random > 0.5
  */
-@Cond(name = "random", pattern = "random (?<expression>.+)")
+@Cond(name = "random", pattern = "random (?<expression>.+)", example = "random [expression]")
 public class CondRandom extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
         return NumberUtils.getRandom().nextDouble();
+    }
+
+    @Override
+    public String toString() {
+        return "CondRandom{" +
+                "expression=" + expression +
+                '}';
     }
 }

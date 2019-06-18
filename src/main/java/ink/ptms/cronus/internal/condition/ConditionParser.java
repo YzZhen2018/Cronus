@@ -2,7 +2,6 @@ package ink.ptms.cronus.internal.condition;
 
 import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.internal.condition.impl.CondNull;
 import me.skymc.taboolib.common.inject.TInject;
 
 import java.util.Map;

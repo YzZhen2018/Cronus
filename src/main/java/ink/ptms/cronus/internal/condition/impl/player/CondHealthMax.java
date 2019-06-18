@@ -10,11 +10,18 @@ import org.bukkit.event.Event;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "player.health", pattern = "player\\.health\\.max (?<expression>.+)")
+@Cond(name = "player.health", pattern = "player\\.health\\.max (?<expression>.+)", example = "player.health.max [expression]")
 public class CondHealthMax extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
         return player.getHealth();
+    }
+
+    @Override
+    public String toString() {
+        return "CondHealthMax{" +
+                "expression=" + expression +
+                '}';
     }
 }

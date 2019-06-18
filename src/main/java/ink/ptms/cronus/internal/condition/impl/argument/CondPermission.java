@@ -1,8 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Location;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import org.bukkit.entity.Player;
@@ -14,7 +12,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "permission", pattern = "permission\\.(?<permission>.+)")
+@Cond(name = "permission", pattern = "permission\\.(?<permission>.+)", example = "permission.[content]")
 public class CondPermission extends Condition {
 
     private boolean negative;

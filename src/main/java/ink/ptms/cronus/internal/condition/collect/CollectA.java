@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
-import ink.ptms.cronus.internal.condition.impl.CondNull;
+import ink.ptms.cronus.internal.condition.CondNull;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

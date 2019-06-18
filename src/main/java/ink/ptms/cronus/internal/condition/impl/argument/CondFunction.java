@@ -1,6 +1,5 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -18,7 +17,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "function", pattern = "func(tion)? (((?<function1>\\S+) (?<expression>.+))|(?<function2>.+))")
+@Cond(name = "function", pattern = "func(tion)? (((?<function1>\\S+) (?<expression>.+))|(?<function2>.+))", example = "function [function] [expression]")
 public class CondFunction extends Condition {
 
     private boolean negative;
@@ -45,5 +44,15 @@ public class CondFunction extends Condition {
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CondFunction{" +
+                "negative=" + negative +
+                ", booleanMode=" + booleanMode +
+                ", function='" + function + '\'' +
+                ", expression=" + expression +
+                '}';
     }
 }

@@ -22,6 +22,11 @@ public class EffectVar extends Effect {
     }
 
     @Override
+    public String getExample() {
+        return "var.[name] [symbol] [content]";
+    }
+
+    @Override
     public void match(Matcher matcher) {
         name = matcher.group("name");
         value = matcher.group("value");

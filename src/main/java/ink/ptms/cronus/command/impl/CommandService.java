@@ -9,9 +9,7 @@ import me.skymc.taboolib.commands.internal.type.CommandArgument;
 import me.skymc.taboolib.commands.internal.type.CommandRegister;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑

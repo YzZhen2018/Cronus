@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.program.effect;
+package ink.ptms.cronus.internal.program.effect.impl;
 
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
@@ -22,6 +22,11 @@ public class EffectQuestVar extends Effect {
     @Override
     public String pattern() {
         return "quest\\.var\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+    }
+
+    @Override
+    public String getExample() {
+        return "quest.var.[name] [symbol] [content]";
     }
 
     @Override

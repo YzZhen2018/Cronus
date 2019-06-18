@@ -1,11 +1,8 @@
 package ink.ptms.cronus.util;
 
-import ch.njol.skript.ScriptLoader;
 import com.ilummc.tlib.util.Strings;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
@@ -34,6 +31,13 @@ public class Utils {
 
     public static org.bukkit.inventory.ItemStack getUsingItem(Player player, Material material) {
         return player.getItemInHand().getType() == material ? player.getItemInHand() : player.getInventory().getItemInOffHand();
+    }
+
+    public static String toSimple(String in) {
+        if (in.length() > 20) {
+            return in.substring(0, in.length() - (in.length() - 10)) + "..." + in.substring(in.length() - 7);
+        }
+        return in;
     }
 
     public static boolean isInt(String in) {

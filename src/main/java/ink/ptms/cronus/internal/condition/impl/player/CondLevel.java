@@ -10,11 +10,18 @@ import org.bukkit.event.Event;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "player.level", pattern = "player\\.level (?<expression>.+)")
+@Cond(name = "player.level", pattern = "player\\.level (?<expression>.+)", example = "player.level [expression]")
 public class CondLevel extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
         return player.getLevel();
+    }
+
+    @Override
+    public String toString() {
+        return "CondLevel{" +
+                "expression=" + expression +
+                '}';
     }
 }

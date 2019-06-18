@@ -9,8 +9,8 @@ import ink.ptms.cronus.uranus.program.Program;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.particle.pack.ParticlePack;
 import me.skymc.taboolib.sound.SoundPack;
+import me.skymc.taboolib.string.ArrayUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
 
@@ -34,19 +34,26 @@ public class EffectDisplay extends Effect {
     }
 
     @Override
+    public String getExample() {
+        return "display.[action] [content]";
+    }
+
+    @Override
     public void match(Matcher matcher) {
-        type = matcher.group("type");
+        type = matcher.group("type").toLowerCase();
         value = matcher.group("value");
     }
 
     @Override
     public void eval(Program program) {
         String parsed = TLocale.Translate.setColored(FunctionParser.parseAll(program, value));
-        switch (type.toLowerCase()) {
+        switch (type) {
             case "text":
+            case "message":
                 program.getSender().sendMessage(parsed);
                 break;
             case "text.all":
+            case "message.all":
                 Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(parsed));
                 break;
             case "action":
@@ -66,16 +73,19 @@ public class EffectDisplay extends Effect {
                 Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> Bukkit.getOnlinePlayers().forEach(p -> sendTitle(p, parsed)));
                 break;
             case "particle":
+            case "particles":
                 if (program.getSender() instanceof Player) {
                     Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new ParticlePack(parsed).play(((Player) program.getSender()).getLocation().add(0, 1, 0)));
                 }
                 break;
             case "sound":
+            case "sounds":
                 if (program.getSender() instanceof Player) {
                     Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new SoundPack(parsed).play((Player) program.getSender()));
                 }
                 break;
             case "sound.all":
+            case "sounds.all":
                 Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> {
                     SoundPack sound = new SoundPack(parsed);
                     Bukkit.getOnlinePlayers().forEach(sound::play);
@@ -83,6 +93,8 @@ public class EffectDisplay extends Effect {
                 break;
             case "sound.loc":
             case "sound.location":
+            case "sounds.loc":
+            case "sounds.location":
                 if (program.getSender() instanceof Player) {
                     Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new SoundPack(parsed).play(((Player) program.getSender()).getLocation()));
                 }

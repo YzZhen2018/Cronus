@@ -2,12 +2,11 @@ package ink.ptms.cronus.internal.program;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.uranus.program.ProgramLoader;
+import ink.ptms.cronus.internal.program.effect.EffectParser;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Author 坏黑
@@ -18,7 +17,7 @@ public class QuestEffect {
     private List<Effect> effect = Lists.newArrayList();
 
     public QuestEffect(List<String> source) {
-        source.forEach(line -> Optional.ofNullable(ProgramLoader.parseEffect(line)).ifPresent(e -> effect.add(e.copy(line))));
+        source.stream().map(EffectParser::parse).forEach(e -> effect.add(e));
     }
 
     public void eval(Player player, DataQuest dataQuest) {

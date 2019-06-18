@@ -14,26 +14,16 @@ import java.util.regex.Matcher;
  */
 public abstract class CondString extends Condition {
 
-    protected String symbol;
-    protected String string;
+    protected StringExpression expression;
 
     @Override
     public void init(Matcher matcher, String text) {
-        symbol = String.valueOf(matcher.group("symbol"));
-        string = String.valueOf(matcher.group("string"));
+        expression = new StringExpression(matcher.group("expression"));
     }
 
     @Override
     public boolean isValid(Player player, DataQuest quest, Event event) {
-        switch (symbol) {
-            case "=":
-            case "==":
-                return string.equals(String.valueOf(getString(player, quest, event)));
-            case "≈":
-                return string.equalsIgnoreCase(String.valueOf(getString(player, quest, event)));
-            default:
-                return false;
-        }
+        return expression.isSelect(String.valueOf(getString(player, quest, event)));
     }
 
     abstract public String getString(Player player, DataQuest quest, Event event);

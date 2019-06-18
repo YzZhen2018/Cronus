@@ -10,11 +10,18 @@ import org.bukkit.event.Event;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "player.level", pattern = "player\\.firetick (?<expression>.+)")
+@Cond(name = "player.level", pattern = "player\\.firetick (?<expression>.+)", example = "player.firetick [expression]")
 public class CondFireTick extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
         return player.getFireTicks();
+    }
+
+    @Override
+    public String toString() {
+        return "CondFireTick{" +
+                "expression=" + expression +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 import me.skymc.taboolib.commands.TabooLibExecuteCommand;
 import me.skymc.taboolib.common.inject.TInject;
+import me.skymc.taboolib.string.ArrayUtils;
 import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
@@ -26,6 +27,11 @@ public class EffectCommand extends Effect {
     @Override
     public String pattern() {
         return "command\\.(?<type>\\S+) (?<value>.+)";
+    }
+
+    @Override
+    public String getExample() {
+        return "command.[action] [command]";
     }
 
     @Override

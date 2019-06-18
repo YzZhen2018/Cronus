@@ -70,7 +70,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             DataPlayer playerData = CronusAPI.getData(player);
@@ -130,7 +130,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             Quest quest = Cronus.getCronusService().getRegisteredQuest().get(args[1]);
@@ -167,7 +167,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             DataPlayer dataPlayer = CronusAPI.getData(player);
@@ -200,7 +200,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             DataPlayer dataPlayer = CronusAPI.getData(player);
@@ -234,7 +234,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             DataQuest dataQuest = CronusAPI.getData(player).getQuest(args[1]);
@@ -265,7 +265,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             QuestBook questBook = Cronus.getCronusService().getRegisteredQuestBook().get(args[1]);
@@ -298,7 +298,7 @@ public class Command extends CronusCommand {
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
             Player player = Bukkit.getPlayerExact(args[0]);
             if (player == null) {
-                error(sender, "玩家 &f" + args[0] + " &c离线.");
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
             Quest quest = Cronus.getCronusService().getRegisteredQuest().get(args[1]);
@@ -338,7 +338,7 @@ public class Command extends CronusCommand {
             CronusMirror.getMirrors().forEach((k, v) -> {
                 String name = k.substring(k.indexOf(":") + 1);
                 bookBuilder.addPages(ComponentSerializer.parse(TellrawJson.create()
-                        .append("  §1§l§n" + simple(name)).hoverText(name).newLine()
+                        .append("  §1§l§n" + Utils.toSimple(name)).hoverText(name).newLine()
                         .append("").newLine()
                         .append("  执行 " + v.getTimes() + " 次").newLine()
                         .append("  平均 " + v.getTimeLatest() + " 毫秒").newLine()
@@ -352,13 +352,6 @@ public class Command extends CronusCommand {
         @Override
         public CommandType getType() {
             return CommandType.PLAYER;
-        }
-
-        public String simple(String in) {
-            if (in.length() > 20) {
-                return in.substring(0, in.length() - (in.length() - 10)) + "..." + in.substring(in.length() - 7);
-            }
-            return in;
         }
     };
 

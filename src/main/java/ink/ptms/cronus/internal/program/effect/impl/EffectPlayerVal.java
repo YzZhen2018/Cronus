@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.program.effect;
+package ink.ptms.cronus.internal.program.effect.impl;
 
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
  * @Since 2019-05-11 15:24
  */
 @Auto
-public class EffectPlayerVar extends Effect {
+public class EffectPlayerVal extends Effect {
 
     private String name;
     private String symbol;
@@ -20,7 +20,12 @@ public class EffectPlayerVar extends Effect {
 
     @Override
     public String pattern() {
-        return "player\\.var\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+        return "player\\.val\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+    }
+
+    @Override
+    public String getExample() {
+        return "player.val.[name] [symbol] [content]";
     }
 
     @Override
@@ -33,13 +38,13 @@ public class EffectPlayerVar extends Effect {
     @Override
     public void eval(Program program) {
         if (program instanceof QuestProgram) {
-            ink.ptms.cronus.uranus.program.effect.EffectVal.eval(program, value, symbol, name, ((QuestProgram) program).getDataPlayer().getDataTemp());
+            ink.ptms.cronus.uranus.program.effect.EffectVal.eval(program, value, symbol, name, ((QuestProgram) program).getDataPlayer().getDataGlobal());
         }
     }
 
     @Override
     public String toString() {
-        return "EffectPlayerVar{" +
+        return "EffectPlayerVal{" +
                 "name='" + name + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", value='" + value + '\'' +

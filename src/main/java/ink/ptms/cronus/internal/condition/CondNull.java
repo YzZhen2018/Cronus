@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.condition.impl;
+package ink.ptms.cronus.internal.condition;
 
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Condition;

@@ -2,7 +2,6 @@ package ink.ptms.cronus.event;
 
 import ink.ptms.cronus.service.dialog.DialogPack;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

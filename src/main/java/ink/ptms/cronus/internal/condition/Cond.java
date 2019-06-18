@@ -17,4 +17,6 @@ public @interface Cond {
 
     String pattern();
 
+    String example() default "null";
+
 }

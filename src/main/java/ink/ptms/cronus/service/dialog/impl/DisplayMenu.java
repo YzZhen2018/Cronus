@@ -5,16 +5,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusDialogNextEvent;
-import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.service.dialog.DialogDisplay;
 import ink.ptms.cronus.service.dialog.DialogPack;
-import joptsimple.internal.Strings;
 import me.skymc.taboolib.inventory.ItemUtils;
 import me.skymc.taboolib.inventory.builder.v2.ClickType;
 import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
 import me.skymc.taboolib.javascript.ScriptHandler;
-import me.skymc.taboolib.string.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,8 +25,6 @@ import javax.script.SimpleBindings;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @Author 坏黑

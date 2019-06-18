@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "script", pattern = "(script|js) (?<script>.+)")
+@Cond(name = "script", pattern = "(script|js) (?<script>.+)", example = "script [script]")
 public class CondScript extends Condition {
 
     private CompiledScript script;

@@ -27,6 +27,11 @@ public class EffectLog extends Effect {
     }
 
     @Override
+    public String getExample() {
+        return "log.[action] [content]";
+    }
+
+    @Override
     public void match(Matcher matcher) {
         type = matcher.group("type");
         value = matcher.group("value");

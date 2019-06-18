@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "tag", pattern = "tag\\.(?<tag>.+)")
+@Cond(name = "tag", pattern = "tag\\.(?<tag>.+)", example = "tag.[content]")
 public class CondTag extends Condition {
 
     private boolean negative;

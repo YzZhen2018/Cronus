@@ -46,7 +46,7 @@ public class ProgramLoader {
             if (program instanceof String) {
                 Effect effect = parseEffect(program.toString());
                 if (effect == null) {
-                    throw new ProgramLoadException("无效语法: " + program.toString());
+                    throw new ProgramLoadException("Invalid Effect: " + program.toString());
                 }
                 programLine = append(programLine, program, effect);
             }
@@ -61,11 +61,11 @@ public class ProgramLoader {
         } else if (program instanceof Map) {
             map = (Map) program;
         } else {
-            throw new ProgramLoadException("无效格式: " + program);
+            throw new ProgramLoadException("Invalid Program: " + program);
         }
         Map.Entry<String, Object> firstEntry = map.entrySet().stream().findFirst().orElse(null);
         if (firstEntry == null) {
-            throw new ProgramLoadException("无效格式: " + program);
+            throw new ProgramLoadException("Invalid Program: " + program);
         }
         return firstEntry;
     }

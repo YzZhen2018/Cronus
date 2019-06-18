@@ -2,7 +2,6 @@ package ink.ptms.cronus.database.data;
 
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.CronusMirror;
 import ink.ptms.cronus.event.CronusQuestAcceptEvent;
 import ink.ptms.cronus.event.CronusQuestFailureEvent;
 import ink.ptms.cronus.internal.Quest;

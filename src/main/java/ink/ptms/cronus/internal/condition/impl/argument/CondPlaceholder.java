@@ -11,13 +11,12 @@ import org.bukkit.event.Event;
 import org.bukkit.util.NumberConversions;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @Author 坏黑
  * @Since 2019-05-29 11:12
  */
-@Cond(name = "placeholder", pattern = "(placeholder|papi) (((?<placeholder1>\\S+) (?<expression>.+))|(?<placeholder2>.+))")
+@Cond(name = "placeholder", pattern = "(placeholder|papi) (((?<placeholder1>\\S+) (?<expression>.+))|(?<placeholder2>.+))", example = "placeholder [placeholder] [expression]")
 public class CondPlaceholder extends Condition {
 
     private boolean negative;
@@ -44,5 +43,15 @@ public class CondPlaceholder extends Condition {
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CondPlaceholder{" +
+                "negative=" + negative +
+                ", booleanMode=" + booleanMode +
+                ", placeholder='" + placeholder + '\'' +
+                ", expression=" + expression +
+                '}';
     }
 }

@@ -17,6 +17,8 @@ public abstract class Effect {
 
     abstract public void eval(Program program);
 
+    abstract public String getExample();
+
     private Pattern pattern;
     private String source;
 
