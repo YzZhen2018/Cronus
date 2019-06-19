@@ -4,7 +4,9 @@ import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusQuestAcceptEvent;
 import ink.ptms.cronus.event.CronusQuestFailureEvent;
+import ink.ptms.cronus.event.CronusStageFailureEvent;
 import ink.ptms.cronus.internal.Quest;
+import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import me.skymc.taboolib.common.serialize.DoNotSerialize;
@@ -69,9 +71,18 @@ public class DataPlayer implements TSerializable {
     public void failureQuest(Player player, Quest quest) {
         DataQuest dataQuest = this.quest.remove(quest.getId());
         if (dataQuest != null) {
+            QuestProgram program = new QuestProgram(player, dataQuest);
+            // 阶段失败
+            QuestStage questStage = dataQuest.getStage();
+            if (questStage != null) {
+                CronusStageFailureEvent.call(player, quest, questStage);
+                // 执行动作
+                questStage.eval(program, Action.FAILURE);
+            }
+            // 任务失败
             CronusQuestFailureEvent.call(player, quest);
             // 执行动作
-            quest.eval(new QuestProgram(player, dataQuest), Action.FAILURE);
+            quest.eval(program, Action.FAILURE);
         }
     }
 

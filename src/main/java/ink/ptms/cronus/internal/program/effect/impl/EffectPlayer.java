@@ -8,6 +8,7 @@ import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.cronus.CronusUtils;
+import me.skymc.taboolib.economy.EcoUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
 
@@ -125,6 +126,23 @@ public class EffectPlayer extends Effect {
                             break;
                         case "=":
                             player.setLevel(Math.max(v, 0));
+                            break;
+                        default:
+                            logger.warn("Invalid Symbol: " + symbol + " " + value);
+                            break;
+                    }
+                }
+                case "money": {
+                    int v = NumberConversions.toInt(value);
+                    switch (symbol) {
+                        case "+":
+                            EcoUtils.add(player, v);
+                            break;
+                        case "-":
+                            EcoUtils.remove(player, v);
+                            break;
+                        case "=":
+                            EcoUtils.add(player, v - EcoUtils.get(player));
                             break;
                         default:
                             logger.warn("Invalid Symbol: " + symbol + " " + value);

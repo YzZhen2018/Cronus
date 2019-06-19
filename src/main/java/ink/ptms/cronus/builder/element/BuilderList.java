@@ -2,6 +2,7 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -12,6 +13,7 @@ import me.skymc.taboolib.inventory.ItemUtils;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;
 import me.skymc.taboolib.inventory.builder.v2.ClickType;
 import me.skymc.taboolib.inventory.builder.v2.CloseTask;
+import me.skymc.taboolib.json.tellraw.TellrawJson;
 import me.skymc.taboolib.message.ChatCatcher;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -28,14 +30,23 @@ import java.util.Map;
  */
 public class BuilderList extends BuilderQuest {
 
-    private String display;
-    private List<String> list;
-    private List<String> listOrigin;
-    private CloseTask close;
-    private int page;
-    private boolean toggle;
-    private boolean append;
-    private Map<Integer, Integer> map = Maps.newHashMap();
+    protected String display;
+    protected List<String> list;
+    protected List<String> listOrigin;
+    protected Player player;
+    protected CloseTask close;
+    protected Candidate candidate;
+    protected int page;
+    protected boolean toggle;
+    protected boolean append;
+    protected Map<Integer, Integer> map = Maps.newHashMap();
+    // 默认点击动作
+    protected ClickTask defaultEdit = index -> {
+        editString(player, display, list.get(index).equals("$append") ? "-" : list.get(index), r -> list.set(index, r), candidate);
+    };
+    protected ClickTask defaultDelete = index -> {
+        list.remove(index);
+    };
 
     public BuilderList(String display, List<String> list) {
         super(null);
@@ -44,9 +55,24 @@ public class BuilderList extends BuilderQuest {
         this.list = Lists.newArrayList(list);
     }
 
+    public void open(Player player) {
+        open(player, page, close, candidate);
+    }
+
+    public void open(Player player, int page) {
+        open(player, page, close, candidate);
+    }
+
     public void open(Player player, int page, CloseTask close) {
+        open(player, page, close, candidate);
+    }
+
+    public void open(Player player, int page, CloseTask close, Candidate candidate) {
         this.map.clear();
+        this.page = page;
         this.close = close;
+        this.player = player;
+        this.candidate = candidate;
         this.toggle = true;
         this.append = this.list.contains("$append") || this.list.add("$append");
         Inventory inventory = Builders.normal("结构编辑 : " + display, e -> {
@@ -60,17 +86,22 @@ public class BuilderList extends BuilderQuest {
                 else if (e.castClick().getRawSlot() == 53 && e.castClick().getCurrentItem().equals(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem())) {
                     open(player, page + 1, close);
                 }
+                // 返回
+                else if (e.castClick().getRawSlot() == 49) {
+                    toggle = true;
+                    close.run(null);
+                }
                 // 内容
                 else if (InventoryUtil.SLOT_OF_CENTENTS.contains(e.castClick().getRawSlot())) {
                     try {
                         int index = map.get(e.castClick().getRawSlot());
                         // 左键
                         if (e.castClick().getClick().isLeftClick()) {
-                            editString(e.getClicker(), display, list.get(index).equals("$append") ? "-" : list.get(index), r -> list.set(index, r));
+                            defaultEdit.run(index);
                         }
                         // 右键
                         else if (e.castClick().getClick().isRightClick()) {
-                            list.remove(index);
+                            defaultDelete.run(index);
                             open(player, page, close);
                         }
                     } catch (Throwable t) {
@@ -83,7 +114,9 @@ public class BuilderList extends BuilderQuest {
                 Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {
                     listOrigin.clear();
                     list.stream().filter(l -> !l.equals("$append")).forEach(listOrigin::add);
-                    close.run(c);
+                    if (close != null) {
+                        close.run(c);
+                    }
                 }, 1);
             }
         });
@@ -106,25 +139,44 @@ public class BuilderList extends BuilderQuest {
             map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), i);
         }
         if (page > 1) {
-            inventory.setItem(45, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§7上一页").lore("", "§7点击").build());
+            inventory.setItem(45, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
         }
-        if ((int) Math.ceil((double) this.listOrigin.size() / 28.0D) > page) {
-            inventory.setItem(53, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§7下一页").lore("", "§7点击").build());
+        if (page < (int) Math.floor(this.list.size() / 28D)) {
+            inventory.setItem(53, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a下一页").lore("", "§7点击").build());
         }
+        inventory.setItem(49, new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem()).name("§c上级目录").lore("", "§7点击").build());
         player.openInventory(inventory);
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         this.toggle = false;
     }
 
-    @Override
-    protected void editString(Player player, String display, String origin, EditTask edit) {
+    protected void editString(Player player, String display, String origin, EditTask edit, Candidate candidate) {
         ChatCatcher.call(player, new ChatCatcher.Catcher() {
             @Override
             public ChatCatcher.Catcher before() {
                 toggle = true;
                 player.closeInventory();
-                normal(player, "在对话框中输入新的" + display + ".");
-                normal(player, "当前: §f" + Utils.NonNull(origin));
+                TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入新的" + display + ". ")
+                        .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")
+                        .send(player);
+                TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7当前: ")
+                        .append("§f" + Utils.NonNull(origin)).clickSuggest(Utils.NonNull(origin))
+                        .send(player);
+                if (candidate != null) {
+                    Map<String, String> candidateMap = candidate.run();
+                    if (!candidateMap.isEmpty()) {
+                        TellrawJson json = TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7候选: §f");
+                        // element
+                        int i = 1;
+                        for (Map.Entry<String, String> entry : candidateMap.entrySet()) {
+                            json.append("§f" + entry.getKey()).hoverText("§f" + entry.getValue()).clickSuggest(TLocale.Translate.setUncolored(entry.getValue()));
+                            if (i++ < candidateMap.size()) {
+                                json.append("§8, ");
+                            }
+                        }
+                        json.send(player);
+                    }
+                }
                 return this;
             }
 
@@ -140,5 +192,15 @@ public class BuilderList extends BuilderQuest {
                 open(player, page, close);
             }
         });
+    }
+
+    interface Candidate {
+
+        Map<String, String> run();
+    }
+
+    interface ClickTask {
+
+        void run(int index);
     }
 }
