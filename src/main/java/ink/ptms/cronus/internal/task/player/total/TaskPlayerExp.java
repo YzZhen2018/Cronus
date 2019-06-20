@@ -1,12 +1,11 @@
 package ink.ptms.cronus.internal.task.player.total;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.special.Uncountable;
+import ink.ptms.cronus.internal.task.special.Uncountable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.StringExpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_exp")
-public class TaskPlayerExp extends Uncountable {
+public class TaskPlayerExp extends Uncountable<PlayerExpChangeEvent> {
 
     private StringExpression xp;
 
@@ -31,12 +30,12 @@ public class TaskPlayerExp extends Uncountable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        return xp == null || xp.isSelect(getCount(player, dataQuest, event));
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerExpChangeEvent e) {
+        return xp == null || xp.isSelect(getCount(player, dataQuest, e));
     }
 
     @Override
-    public int getCount(Player player, DataQuest dataQuest, Event event) {
-        return ((PlayerExpChangeEvent) event).getAmount();
+    public double getCount(Player player, DataQuest dataQuest, PlayerExpChangeEvent e) {
+        return e.getAmount();
     }
 }

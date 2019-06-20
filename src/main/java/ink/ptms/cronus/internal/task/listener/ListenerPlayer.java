@@ -1,24 +1,31 @@
 package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
-import ink.ptms.cronus.internal.task.other.TaskLocation;
 import ink.ptms.cronus.internal.task.player.*;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerAttack;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerDamaged;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerDeath;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerKill;
+import ink.ptms.cronus.internal.task.player.total.TaskPlayerExp;
 import me.skymc.taboolib.damage.DamageUtils;
+import me.skymc.taboolib.events.PlayerJumpEvent;
 import me.skymc.taboolib.inventory.ItemUtils;
 import me.skymc.taboolib.listener.TListener;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 
 /**
  * @Author 坏黑
@@ -65,6 +72,30 @@ public class ListenerPlayer implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerShearEntityEvent e) {
         CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerShear.class);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerJumpEvent e) {
+        CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerJump.class);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerExpChangeEvent e) {
+        CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerExp.class);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PotionSplashEvent e) {
+        if (e.getPotion().getShooter() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getPotion().getShooter(), e, TaskPlayerThrowPotion.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(ExpBottleEvent e) {
+        if (e.getEntity().getShooter() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getEntity().getShooter(), e, TaskPlayerThrowXpBottle.class);
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -117,6 +148,34 @@ public class ListenerPlayer implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(EntityPortalEnterEvent  e) {
+        if (e.getEntity() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getEntity(), e, TaskPlayerPortalEnter.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(EntityPortalExitEvent  e) {
+        if (e.getEntity() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getEntity(), e, TaskPlayerPortalExit.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(VehicleEnterEvent e) {
+        if (e.getEntered() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getEntered(), e, TaskPlayerVehicleEnter.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(VehicleExitEvent e) {
+        if (e.getExited() instanceof Player) {
+            CronusAPI.stageHandle((Player) e.getExited(), e, TaskPlayerVehicleExit.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(InventoryClickEvent e) {
         if (e.getInventory().getType() == InventoryType.MERCHANT && e.getRawSlot() == 2 && !ItemUtils.isNull(e.getCurrentItem())) {
             CronusAPI.stageHandle((Player) e.getWhoClicked(), e, TaskPlayerTrade.class);
@@ -126,7 +185,30 @@ public class ListenerPlayer implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerMoveEvent e) {
         if (!e.getFrom().getBlock().equals(e.getTo().getBlock())) {
-            CronusAPI.stageHandle(e.getPlayer(), e, TaskLocation.class, TaskPlayerWalk.class, TaskPlayerSwim.class, TaskPlayerRide.class);
+            CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerWalk.class, TaskPlayerSwim.class, TaskPlayerRide.class, TaskPlayerElytra.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerInteractEvent e) {
+        if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().name().endsWith("_PLATE")) {
+            CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerPressurePlate.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(EntityBlockFormEvent e) {
+        if (e.getEntity() instanceof Player && e.getBlock().getType() == Material.ICE) {
+            CronusAPI.stageHandle((Player) e.getEntity(), e, TaskPlayerWalkFrost.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(HorseJumpEvent e) {
+        for (Entity entity: e.getEntity().getPassengers()) {
+            if (entity instanceof Player) {
+                CronusAPI.stageHandle((Player) entity, e, TaskPlayerJumpHorse.class);
+            }
         }
     }
 

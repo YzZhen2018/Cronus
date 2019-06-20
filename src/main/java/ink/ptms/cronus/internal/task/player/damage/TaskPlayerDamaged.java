@@ -23,7 +23,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_damaged")
-public class TaskPlayerDamaged extends QuestTask {
+public class TaskPlayerDamaged extends QuestTask<Event> {
 
     private int damage;
     private Entity attacker;

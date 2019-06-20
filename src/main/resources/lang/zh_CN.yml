@@ -1,0 +1,5 @@
+action-quest-success: '&7任务 &f{0} &7完成.'
+action-quest-failure: '&c任务 &7{0} &c失败.'
+action-quest-accept: '&7任务 &f{0} &7接受.'
+action-quest-accept-fail: '&c任务 &7{0} &c接受条件不足.'
+action-quest-cooldown: '&c任务 &7{0} &c正在冷却.'

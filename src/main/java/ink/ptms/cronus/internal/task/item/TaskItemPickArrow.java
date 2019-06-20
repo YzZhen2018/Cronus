@@ -3,11 +3,10 @@ package ink.ptms.cronus.internal.task.item;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 
 import java.util.Map;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "item_pick_arrow")
-public class TaskItemPickArrow extends Countable {
+public class TaskItemPickArrow extends Countable<PlayerPickupArrowEvent> {
 
     private ItemStack item;
 
@@ -32,8 +31,7 @@ public class TaskItemPickArrow extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PlayerPickupArrowEvent e = ((PlayerPickupArrowEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerPickupArrowEvent e) {
         return item == null || item.isItem(e.getItem().getItemStack());
     }
 

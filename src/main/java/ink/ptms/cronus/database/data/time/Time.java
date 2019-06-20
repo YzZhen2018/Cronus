@@ -64,6 +64,10 @@ public class Time {
     }
 
     public static Time parse(String in) {
+        if (in == null) {
+            return null;
+        }
+        in = in.toLowerCase();
         if (in.equalsIgnoreCase("never") || in.equals("-1")) {
             return null;
         } else if (in.startsWith("day:")) {

@@ -4,11 +4,10 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "item_repair")
-public class TaskItemRepair extends Countable {
+public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
 
     private Block block;
     private ItemStack item;
@@ -35,8 +34,7 @@ public class TaskItemRepair extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PrepareAnvilEvent e = ((PrepareAnvilEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PrepareAnvilEvent e) {
         return (item == null || item.isItem(e.getResult())) && (block == null || (e.getInventory().getLocation() != null && block.isSelect(e.getInventory().getLocation().getBlock())));
     }
 

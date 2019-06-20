@@ -10,7 +10,7 @@ import org.bukkit.event.Event;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "player.name", pattern = "player\\.level (?<expression>.+)", example = "player.name [expression]")
+@Cond(name = "player.name", pattern = "player\\.name (?<expression>.+)", example = "player.name [expression]")
 public class CondName extends CondString {
 
     @Override

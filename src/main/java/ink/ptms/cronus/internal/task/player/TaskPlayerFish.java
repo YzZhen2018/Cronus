@@ -5,13 +5,12 @@ import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.FishState;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerFishEvent;
 
 import java.util.Map;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_fish")
-public class TaskPlayerFish extends Countable {
+public class TaskPlayerFish extends Countable<PlayerFishEvent> {
 
     private Entity entity;
     private ItemStack item;
@@ -40,8 +39,7 @@ public class TaskPlayerFish extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PlayerFishEvent e = ((PlayerFishEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerFishEvent e) {
         return (state == null || state.isSelect(e.getState())) && (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.FISHING_ROD)))) && (entity == null || (e.getCaught() != null && entity.isSelect(e.getCaught())));
     }
 

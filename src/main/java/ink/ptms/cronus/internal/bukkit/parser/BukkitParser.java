@@ -12,6 +12,10 @@ import java.util.Arrays;
  */
 public class BukkitParser {
 
+    public static BlockFace toBlockFace(Object str) {
+        return new BlockFace(String.valueOf(str));
+    }
+
     public static FishState toFishState(Object str) {
         return new FishState(String.valueOf(str));
     }
@@ -22,6 +26,14 @@ public class BukkitParser {
 
     public static Enchantment toEnchantment(Object str) {
         return new Enchantment(String.valueOf(str));
+    }
+
+    public static RegainReason toRegainReason(Object str) {
+        return new RegainReason(String.valueOf(str));
+    }
+
+    public static PotionEffect toPotionEffect(Object str) {
+        return new PotionEffect(String.valueOf(str));
     }
 
     public static Block toBlock(Object str) {

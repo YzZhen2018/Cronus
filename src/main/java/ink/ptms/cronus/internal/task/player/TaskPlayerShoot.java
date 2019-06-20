@@ -4,12 +4,11 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.StringExpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityShootBowEvent;
 
 import java.util.Map;
@@ -19,7 +18,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_shoot")
-public class TaskPlayerShoot extends Countable {
+public class TaskPlayerShoot extends Countable<EntityShootBowEvent> {
 
     private ItemStack bow;
     private Entity projectile;
@@ -38,8 +37,7 @@ public class TaskPlayerShoot extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        EntityShootBowEvent e = ((EntityShootBowEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, EntityShootBowEvent e) {
         return (bow == null || bow.isItem(e.getBow())) && (force == null || force.isSelect(e.getForce())) && (projectile == null || projectile.isSelect(e.getEntity()));
     }
 

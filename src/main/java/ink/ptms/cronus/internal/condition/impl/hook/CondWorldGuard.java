@@ -28,7 +28,7 @@ public class CondWorldGuard extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return symbol.startsWith("=") == SupportWorldGuard.INSTANCE.getRegionsAtLocation(player.getWorld(), player.getLocation()).stream().anyMatch(name::equalsIgnoreCase);
     }
 

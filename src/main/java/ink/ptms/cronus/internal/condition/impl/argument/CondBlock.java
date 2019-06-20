@@ -32,7 +32,7 @@ public class CondBlock extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return location.isBukkit() && symbol.startsWith("=") == block.isSelect(location.toBukkit().getBlock());
     }
 

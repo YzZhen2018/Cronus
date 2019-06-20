@@ -4,11 +4,10 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_bucket_empty")
-public class TaskPlayerBucketEmpty extends Countable {
+public class TaskPlayerBucketEmpty extends Countable<PlayerBucketEmptyEvent> {
 
     private Block block;
     private ItemStack bucket;
@@ -35,8 +34,7 @@ public class TaskPlayerBucketEmpty extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PlayerBucketEmptyEvent e = ((PlayerBucketEmptyEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerBucketEmptyEvent e) {
         return (block == null || block.isSelect(e.getBlockClicked())) && (bucket == null || bucket.isItem(e.getItemStack()));
     }
 

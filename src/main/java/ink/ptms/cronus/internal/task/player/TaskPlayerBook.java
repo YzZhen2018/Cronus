@@ -1,12 +1,11 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.StringExpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerEditBookEvent;
 
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_book")
-public class TaskPlayerBook extends Countable {
+public class TaskPlayerBook extends Countable<PlayerEditBookEvent> {
 
     private String title;
     private String content;
@@ -35,8 +34,7 @@ public class TaskPlayerBook extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PlayerEditBookEvent e = ((PlayerEditBookEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerEditBookEvent e) {
         return (title == null || e.getNewBookMeta().getTitle().contains(title)) && (content == null || String.join("", e.getNewBookMeta().getPages()).contains(content)) && (page == null || page.isSelect(e.getNewBookMeta().getPageCount()));
     }
 

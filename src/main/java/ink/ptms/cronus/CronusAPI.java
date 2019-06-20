@@ -50,15 +50,16 @@ public class CronusAPI {
 
     @SafeVarargs
     public static void stageHandle(Player player, Event event, Class<? extends QuestTask>... tasks) {
-        if (tasks.length > 0) {
+        if (tasks.length > 0 && event != null) {
             stageHandle(player, event, Lists.newArrayList(tasks));
         }
     }
 
     public static void stageHandle(Player player, Event event, List<Class<? extends QuestTask>> tasks) {
-        CronusMirror.Data mirror = CronusMirror.getMirror("StageHandle:" + (event == null ? "Period" : event.getEventName()));
-        DataPlayer playerData = CronusAPI.getData(player);
+        boolean ignored = CronusMirror.isIgnored(event.getClass()) || tasks.stream().anyMatch(CronusMirror::isIgnored);
         boolean changed = false;
+        CronusMirror.Data mirror = ignored ? CronusMirror.getMirror() : CronusMirror.getMirror("StageHandle:" + event.getEventName());
+        DataPlayer playerData = CronusAPI.getData(player);
         mirror.start();
         for (DataQuest dataQuest : playerData.getQuest().values()) {
             QuestStage questStage = dataQuest.getStage();
@@ -72,14 +73,15 @@ public class CronusAPI {
                         // 事件检测
                         && questTask.isValid(player, dataQuest, event)
                         // 条件检测
-                        && (questTask.getCondition() == null || questTask.getCondition().isValid(player, dataQuest, event))) {
+                        && (questTask.getCondition() == null || questTask.getCondition().check(player, dataQuest, event))) {
                     // 条目进行
                     questTask.next(player, dataQuest, event);
+                    questTask.eval(new QuestProgram(player, dataQuest), Action.NEXT);
                     // 条目完成
                     if (questTask.isCompleted(dataQuest)) {
                         CronusTaskSuccessEvent.call(player, dataQuest.getQuest(), questStage, questTask);
                         questTask.eval(new QuestProgram(player, dataQuest), Action.SUCCESS);
-                        dataQuest.checkAndComplete(player, dataQuest);
+                        dataQuest.checkAndComplete(player);
                     }
                     changed = true;
                 }

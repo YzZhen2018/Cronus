@@ -54,7 +54,7 @@ public class DataQuest implements TSerializable {
      * 如果完成所有条目则前往下个阶段
      * 如果是最终阶段则创建任务完成时间变量
      */
-    public void checkAndComplete(Player player, DataQuest dataQuest) {
+    public void checkAndComplete(Player player) {
         DataPlayer playerData = CronusAPI.getData(player);
         Quest quest = getQuest();
         if (quest == null) {
@@ -65,7 +65,7 @@ public class DataQuest implements TSerializable {
             return;
         }
         // 阶段已完成
-        if (!stage.isCompleted(dataQuest)) {
+        if (!stage.isCompleted(this)) {
             return;
         }
         // 获取阶段
@@ -76,28 +76,28 @@ public class DataQuest implements TSerializable {
             if (playerData.isQuestCompleted(quest.getId())) {
                 return;
             }
-            // 任务完成记录
-            playerData.setQuestCompleted(quest.getId(), true);
             // 执行阶段奖励
             CronusStageSuccessEvent.call(player, quest, stage);
-            stage.eval(new QuestProgram(player, dataQuest), Action.SUCCESS);
+            stage.eval(new QuestProgram(player, this), Action.SUCCESS);
             // 执行任务奖励
             CronusQuestSuccessEvent.call(player, quest);
-            quest.eval(new QuestProgram(player, dataQuest), Action.SUCCESS);
+            quest.eval(new QuestProgram(player, this), Action.SUCCESS);
+            // 更新任务状态
+            playerData.setQuestCompleted(quest.getId(), true);
         } else {
             QuestStage stageNext = quest.getStage().get(index);
-            // 任务完成取消
+            // 执行阶段奖励
+            CronusStageSuccessEvent.call(player, quest, stage);
+            stage.eval(new QuestProgram(player, this), Action.SUCCESS);
+            // 执行阶段奖励
+            CronusStageAcceptEvent.call(player, quest, stageNext);
+            stageNext.eval(new QuestProgram(player, this), Action.ACCEPT);
+            // 更新任务状态
             playerData.setQuestCompleted(quest.getId(), false);
             // 更新任务阶段
             currentStage = stageNext.getId();
             // 清空阶段数据
             dataStage = new YamlConfiguration();
-            // 执行阶段奖励
-            CronusStageSuccessEvent.call(player, quest, stage);
-            stage.eval(new QuestProgram(player, dataQuest), Action.SUCCESS);
-            // 执行阶段奖励
-            CronusStageAcceptEvent.call(player, quest, stageNext);
-            stageNext.eval(new QuestProgram(player, dataQuest), Action.ACCEPT);
         }
     }
 
@@ -120,12 +120,11 @@ public class DataQuest implements TSerializable {
     public BookBuilder toBuilder(Player player) {
         DataPlayer playerData = CronusAPI.getData(player);
         QuestStage stage = getStage();
-        QuestProgram program = new QuestProgram(player, this);
         BookBuilder bookBuilder = BookFormatter.writtenBook();
         for (List<String> content : playerData.isQuestCompleted(currentQuest) ? stage.getContentCompleted() : stage.getContent()) {
             TellrawJson json = TellrawJson.create();
             for (String line : content) {
-                QuestBook.appendLine(json, program, line);
+                QuestBook.appendLine(json, new QuestProgram(player, this), line);
             }
             bookBuilder.addPages(ComponentSerializer.parse(json.toRawMessage(player)));
         }

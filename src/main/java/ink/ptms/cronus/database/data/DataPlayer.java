@@ -7,6 +7,7 @@ import ink.ptms.cronus.event.CronusQuestFailureEvent;
 import ink.ptms.cronus.event.CronusStageFailureEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestStage;
+import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import me.skymc.taboolib.common.serialize.DoNotSerialize;
@@ -58,7 +59,17 @@ public class DataPlayer implements TSerializable {
         dataGlobal = new YamlConfiguration();
     }
 
-    public void acceptQuest(Player player, Quest quest) {
+    public void acceptQuest(Quest quest) {
+        // 条件判断
+        if (quest.getConditionAccept() != null && !quest.getConditionAccept().check(player)) {
+            quest.eval(new QuestProgram(player, new DataQuest(quest.getId(), quest.getFirstStage())), Action.ACCEPT_FAIL);
+            return;
+        }
+        // 冷却判断
+        if (isQuestCooldown(quest)) {
+            quest.eval(new QuestProgram(player, new DataQuest(quest.getId(), quest.getFirstStage())), Action.COOLDOWN);
+            return;
+        }
         CronusQuestAcceptEvent call = CronusQuestAcceptEvent.call(player, quest);
         if (!call.isCancelled()) {
             // 获取数据
@@ -68,22 +79,46 @@ public class DataPlayer implements TSerializable {
         }
     }
 
-    public void failureQuest(Player player, Quest quest) {
+    public void failureQuest(Quest quest) {
         DataQuest dataQuest = this.quest.remove(quest.getId());
         if (dataQuest != null) {
-            QuestProgram program = new QuestProgram(player, dataQuest);
             // 阶段失败
             QuestStage questStage = dataQuest.getStage();
             if (questStage != null) {
                 CronusStageFailureEvent.call(player, quest, questStage);
                 // 执行动作
-                questStage.eval(program, Action.FAILURE);
+                questStage.eval(new QuestProgram(player, dataQuest), Action.FAILURE);
             }
             // 任务失败
             CronusQuestFailureEvent.call(player, quest);
             // 执行动作
-            quest.eval(program, Action.FAILURE);
+            quest.eval(new QuestProgram(player, dataQuest), Action.FAILURE);
         }
+    }
+
+    public void completeQuest(Quest quest) {
+        if (isQuestCompleted(quest.getId())) {
+            return;
+        }
+        DataQuest dataQuest = this.quest.get(quest.getId());
+        if (dataQuest == null) {
+            return;
+        }
+        QuestStage questStage = dataQuest.getStage();
+        if (questStage == null) {
+            return;
+        }
+        // 将所有条目设定为完成状态
+        for (QuestTask questTask : questStage.getTask()) {
+            questTask.complete(dataQuest);
+        }
+        // 任务检查
+        dataQuest.checkAndComplete(player);
+        completeQuest(quest);
+    }
+
+    public boolean isQuestCooldown(Quest quest) {
+        return questCompleted.containsKey(quest.getId()) && (quest.getCooldown() == -1 || System.currentTimeMillis() - questCompleted.get(quest.getId()) < quest.getCooldown());
     }
 
     public boolean isQuestCompleted(String id) {

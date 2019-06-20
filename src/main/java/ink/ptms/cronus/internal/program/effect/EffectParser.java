@@ -18,7 +18,7 @@ public class EffectParser {
         Effect effect = ProgramLoader.parseEffect(in);
         if (effect == null) {
             logger.error("Effect \"" + in + "\" parsing failed.");
-            return new EffectNull();
+            return new EffectNull(in);
         }
         return effect.copy(in);
     }

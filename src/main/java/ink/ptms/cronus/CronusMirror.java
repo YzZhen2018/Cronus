@@ -21,6 +21,14 @@ public class CronusMirror {
         return dataMap.computeIfAbsent(id, i -> new Data());
     }
 
+    public static Data getMirror() {
+        return new Data();
+    }
+
+    public static boolean isIgnored(Class clazz) {
+        return clazz.isAnnotationPresent(Ignore.class);
+    }
+
     public static class Data {
 
         private double timeTotal;

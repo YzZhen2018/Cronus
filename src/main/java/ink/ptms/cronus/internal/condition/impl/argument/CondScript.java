@@ -30,11 +30,12 @@ public class CondScript extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         SimpleBindings bindings = new SimpleBindings();
-        bindings.put("player", player);
         bindings.put("server", Bukkit.getServer());
         bindings.put("plugin", Cronus.getInst());
+        bindings.put("player", player);
+        bindings.put("event", event);
         bindings.put("quest", quest);
         try {
             return NumberUtils.getBooleanAbbreviation(String.valueOf(this.script.eval(bindings)));

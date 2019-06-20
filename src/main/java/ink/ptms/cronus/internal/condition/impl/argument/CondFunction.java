@@ -37,7 +37,7 @@ public class CondFunction extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         String v = FunctionParser.parseAll(new QuestProgram(player, quest), function);
         if (booleanMode) {
             return negative == NumberUtils.getBooleanAbbreviation(v);

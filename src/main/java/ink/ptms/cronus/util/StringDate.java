@@ -9,6 +9,12 @@ import org.bukkit.util.NumberConversions;
 public class StringDate {
 
     public static long parse(String in) {
+        if (in == null) {
+            return 0;
+        }
+        if (in.equalsIgnoreCase("never") || in.equalsIgnoreCase("-1")) {
+            return -1;
+        }
         long time = 0;
         StringBuilder current = new StringBuilder();
         for (String charAt : in.toLowerCase().split("")) {

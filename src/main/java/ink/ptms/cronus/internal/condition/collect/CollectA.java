@@ -24,8 +24,8 @@ public class CollectA extends Collect {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
-        return condition.stream().allMatch(c -> c.isValid(player, quest, event));
+    public boolean check(Player player, DataQuest quest, Event event) {
+        return condition.stream().allMatch(c -> c.check(player, quest, event));
     }
 
     public static Collect valueOf(Map<String, Object> map) {

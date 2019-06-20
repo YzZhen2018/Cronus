@@ -46,7 +46,7 @@ public class CondItem extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         if (inventory) {
             return symbol.startsWith("=") == itemStack.hasItem(player);
         } else {

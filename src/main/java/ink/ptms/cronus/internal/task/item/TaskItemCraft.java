@@ -3,11 +3,10 @@ package ink.ptms.cronus.internal.task.item;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.inventory.CraftItemEvent;
 
 import java.util.Arrays;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "item_craft")
-public class TaskItemCraft extends Countable {
+public class TaskItemCraft extends Countable<CraftItemEvent> {
 
     private ItemStack result;
     private ItemStack matrix;
@@ -35,8 +34,7 @@ public class TaskItemCraft extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        CraftItemEvent e = ((CraftItemEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, CraftItemEvent e) {
         return (result == null || result.isItem(e.getInventory().getResult())) && (matrix == null || Arrays.stream(e.getInventory().getMatrix()).anyMatch(matrix::isItem));
     }
 

@@ -96,7 +96,7 @@ public class DialogPack {
     public DialogPack getPack(Player player, DataQuest dataQuest) {
         DialogPack pack = this;
         while (true) {
-            if (pack.getCondition() == null || !pack.getCondition().isValid(player, dataQuest, null)) {
+            if (pack.getCondition() == null || !pack.getCondition().check(player, dataQuest, null)) {
                 return pack;
             }
             pack = pack.getConditionDialog();

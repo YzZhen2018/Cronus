@@ -5,14 +5,14 @@ import ink.ptms.cronus.internal.bukkit.DamageCause;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import me.skymc.taboolib.damage.DamageUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_death")
-public class TaskPlayerDeath extends Countable {
+public class TaskPlayerDeath extends Countable<PlayerDeathEvent> {
 
     private Entity attacker;
     private ItemStack weapon;
@@ -40,7 +40,7 @@ public class TaskPlayerDeath extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerDeathEvent e) {
         if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
             LivingEntity a = DamageUtils.getLivingAttackerInDamageEvent((EntityDamageByEntityEvent) player.getLastDamageCause());
             return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || attacker.isSelect(a)) && (cause == null || cause.isSelect(player.getLastDamageCause().getCause()));

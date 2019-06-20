@@ -5,11 +5,10 @@ import ink.ptms.cronus.internal.bukkit.DamageCause;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.Map;
@@ -19,7 +18,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_kill")
-public class TaskPlayerKill extends Countable {
+public class TaskPlayerKill extends Countable<EntityDeathEvent> {
 
     private Entity victim;
     private ItemStack weapon;
@@ -38,8 +37,7 @@ public class TaskPlayerKill extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        EntityDeathEvent e = ((EntityDeathEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, EntityDeathEvent e) {
         return (weapon == null || weapon.isItem(player.getItemInHand())) && (victim == null || victim.isSelect(e.getEntity())) && (cause == null || cause.isSelect(e.getEntity().getLastDamageCause().getCause()));
     }
 

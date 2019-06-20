@@ -1,6 +1,8 @@
 package ink.ptms.cronus.internal.program;
 
 import com.google.common.collect.Maps;
+import com.ilummc.tlib.logger.TLogger;
+import me.skymc.taboolib.common.inject.TInject;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,8 @@ import java.util.Optional;
  */
 public abstract class Actionable {
 
+    @TInject
+    protected static TLogger logger;
     protected Map<Action, QuestEffect> action = Maps.newHashMap();
 
     public void load(Action action, List<String> effect) {
@@ -22,7 +26,7 @@ public abstract class Actionable {
         Optional.ofNullable(this.action.get(action)).ifPresent(effect -> effect.eval(program.getPlayer(), program.getDataQuest()));
     }
 
-    public Map<Action, QuestEffect> getAction() {
-        return action;
+    public boolean hasAction(Action action) {
+        return this.action.containsKey(action);
     }
 }

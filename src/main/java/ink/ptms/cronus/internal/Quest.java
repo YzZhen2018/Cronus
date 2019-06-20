@@ -1,8 +1,14 @@
 package ink.ptms.cronus.internal;
 
 import com.google.common.collect.Lists;
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.time.Time;
+import ink.ptms.cronus.event.CronusQuestInitEvent;
+import ink.ptms.cronus.internal.condition.Condition;
+import ink.ptms.cronus.internal.condition.ConditionParser;
+import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.Actionable;
+import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.util.StringDate;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -20,7 +26,9 @@ public class Quest extends Actionable {
     protected String display;
     protected Time timeout;
     protected long cooldown;
-    protected List<String> keyword;
+    protected Condition conditionAccept;
+    protected Condition conditionFailure;
+    protected List<String> bookTag;
     protected List<QuestStage> stage = Lists.newArrayList();
 
     public Quest(ConfigurationSection conf) {
@@ -28,12 +36,36 @@ public class Quest extends Actionable {
         this.id = conf.getName();
         this.label = conf.getString("label");
         this.display = conf.getString("display", id);
-        this.keyword = conf.getStringList("keyword");
-        if (conf.contains("cooldown")) {
-            this.cooldown = conf.getString("cooldown").equalsIgnoreCase("never") || conf.getString("cooldown").equals("-1") ? -1 : StringDate.parse(conf.getString("cooldown"));
+        this.bookTag = conf.getStringList("booktag");
+        this.timeout = Time.parse(conf.getString("timeout"));
+        this.cooldown = StringDate.parse(conf.getString("cooldown"));
+        this.conditionAccept = ConditionParser.fromObject(conf.get("condition.accept"));
+        this.conditionFailure = ConditionParser.fromObject(conf.get("condition.failure"));
+        CronusQuestInitEvent.call(this);
+    }
+
+    @Override
+    public void eval(QuestProgram program, Action action) {
+        if (hasAction(action)) {
+            super.eval(program, action);
+            return;
         }
-        if (conf.contains("timeout")) {
-            this.timeout = Time.parse(conf.getString("timeout").toLowerCase());
+        switch (action) {
+            case ACCEPT:
+                TLocale.sendTo(program.getPlayer(), "action-quest-accept", display);
+                break;
+            case ACCEPT_FAIL:
+                TLocale.sendTo(program.getPlayer(), "action-quest-accept-fail", display);
+                break;
+            case SUCCESS:
+                TLocale.sendTo(program.getPlayer(), "action-quest-success", display);
+                break;
+            case FAILURE:
+                TLocale.sendTo(program.getPlayer(), "action-quest-failure", display);
+                break;
+            case COOLDOWN:
+                TLocale.sendTo(program.getPlayer(), "action-quest-cooldown", display);
+                break;
         }
     }
 
@@ -49,8 +81,8 @@ public class Quest extends Actionable {
         return display;
     }
 
-    public List<String> getKeyword() {
-        return keyword;
+    public List<String> getBookTag() {
+        return bookTag;
     }
 
     public String getLabel() {
@@ -63,6 +95,14 @@ public class Quest extends Actionable {
 
     public long getCooldown() {
         return cooldown;
+    }
+
+    public Condition getConditionAccept() {
+        return conditionAccept;
+    }
+
+    public Condition getConditionFailure() {
+        return conditionFailure;
     }
 
     public List<QuestStage> getStage() {
@@ -78,10 +118,13 @@ public class Quest extends Actionable {
         return "Quest{" +
                 "config=" + config +
                 ", id='" + id + '\'' +
+                ", label='" + label + '\'' +
                 ", display='" + display + '\'' +
                 ", timeout=" + timeout +
                 ", cooldown=" + cooldown +
-                ", keyword=" + keyword +
+                ", conditionAccept=" + conditionAccept +
+                ", conditionFailure=" + conditionFailure +
+                ", bookTag=" + bookTag +
                 ", stage=" + stage +
                 ", action=" + action +
                 '}';

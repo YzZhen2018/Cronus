@@ -1,32 +1,25 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import me.skymc.taboolib.events.PlayerJumpEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-
-import java.util.Map;
 
 /**
  * @Author 坏黑
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_jump")
-public class TaskPlayerJump extends Countable {
+public class TaskPlayerJump extends Countable<PlayerJumpEvent> {
 
     public TaskPlayerJump(ConfigurationSection config) {
         super(config);
     }
 
     @Override
-    public void init(Map<String, Object> data) {
-        super.init(data);
-    }
-
-    @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerJumpEvent event) {
         return true;
     }
 

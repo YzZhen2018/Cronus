@@ -2,17 +2,24 @@ package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.item.TaskItemConsume;
+import ink.ptms.cronus.internal.task.item.TaskItemFurnace;
 import me.skymc.taboolib.listener.TListener;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Furnace;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+
+import java.util.List;
 
 /**
  * @Author 坏黑
@@ -50,6 +57,17 @@ public class ListenerItem implements Listener {
     public void e(PrepareAnvilEvent e) {
         if (!e.getViewers().isEmpty()) {
             CronusAPI.stageHandle((Player) e.getViewers().get(0), e, TaskItemConsume.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(FurnaceSmeltEvent e) {
+        BlockState blockState = e.getBlock().getState();
+        if (blockState instanceof Furnace) {
+            List<HumanEntity> humanEntities = ((Furnace) blockState).getInventory().getViewers();
+            if (!humanEntities.isEmpty()) {
+                CronusAPI.stageHandle((Player) humanEntities.get(0), e, TaskItemFurnace.class);
+            }
         }
     }
 }

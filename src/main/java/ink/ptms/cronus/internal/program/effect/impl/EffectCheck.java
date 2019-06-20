@@ -41,7 +41,7 @@ public class EffectCheck extends Effect {
     @Override
     public void eval(Program program) {
         if (program instanceof QuestProgram) {
-            if (condition.isValid(((QuestProgram) program).getPlayer(), ((QuestProgram) program).getDataQuest(), null)) {
+            if (condition.check(((QuestProgram) program).getPlayer(), ((QuestProgram) program).getDataQuest(), null)) {
                 effect1.eval(program);
             } else {
                 effect2.eval(program);

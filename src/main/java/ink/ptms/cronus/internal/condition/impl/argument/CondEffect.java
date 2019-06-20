@@ -25,7 +25,7 @@ public class CondEffect extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return negative == player.getActivePotionEffects().stream().anyMatch(e -> e.getType().getName().equalsIgnoreCase(effect));
     }
 

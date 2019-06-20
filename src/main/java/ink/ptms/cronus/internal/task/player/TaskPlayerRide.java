@@ -3,12 +3,12 @@ package ink.ptms.cronus.internal.task.player;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_ride")
-public class TaskPlayerRide extends Countable {
+public class TaskPlayerRide extends Countable<PlayerMoveEvent> {
 
     private Entity entity;
 
@@ -32,7 +32,7 @@ public class TaskPlayerRide extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerMoveEvent event) {
         return player.getVehicle() instanceof LivingEntity && (entity == null || entity.isSelect(player.getVehicle()));
     }
 

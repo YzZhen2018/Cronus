@@ -31,7 +31,7 @@ public class CondSkript extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return condition != null && condition.check(new PlayerCommandPreprocessEvent(player, ""));
     }
 

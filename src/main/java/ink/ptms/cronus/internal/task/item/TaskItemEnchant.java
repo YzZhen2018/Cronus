@@ -5,11 +5,10 @@ import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.Enchantment;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 
 import java.util.Map;
@@ -19,7 +18,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "item_enchant")
-public class TaskItemEnchant extends Countable {
+public class TaskItemEnchant extends Countable<EnchantItemEvent> {
 
     private Block block;
     private ItemStack item;
@@ -38,8 +37,7 @@ public class TaskItemEnchant extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        EnchantItemEvent e = ((EnchantItemEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, EnchantItemEvent e) {
         return (block == null || block.isSelect(e.getEnchantBlock()))
                 && (item == null || item.isItem(e.getItem()))
                 && (enchant == null || e.getEnchantsToAdd().entrySet().stream().anyMatch(a -> enchant.isSelect(a.getKey(), a.getValue())));

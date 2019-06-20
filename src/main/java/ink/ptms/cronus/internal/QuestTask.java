@@ -1,15 +1,14 @@
 package ink.ptms.cronus.internal;
 
-import com.ilummc.tlib.logger.TLogger;
 import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusInitQuestTaskEvent;
 import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.Actionable;
 import ink.ptms.cronus.service.guide.GuideWayCache;
-import me.skymc.taboolib.common.inject.TInject;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -20,24 +19,19 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-05-24 0:24
  */
-public abstract class QuestTask extends Actionable {
+public abstract class QuestTask<E extends Event> extends Actionable {
 
-    @TInject
-    protected static TLogger logger;
     protected String id;
     protected ConfigurationSection config;
     protected Condition condition;
+    protected Condition conditionRestart;
     protected GuideWayCache guide;
 
     public QuestTask(ConfigurationSection config) {
         this.id = config.getName();
         this.config = config;
-        Object condition = config.get("condition");
-        if (condition instanceof Condition) {
-            this.condition = (Condition) condition;
-        } else if (condition instanceof String) {
-            this.condition = ConditionParser.parse((String) condition);
-        }
+        this.condition = ConditionParser.fromObject(condition);
+        this.conditionRestart = ConditionParser.fromObject(config.get("restart"));
         if (config.contains("data")) {
             init(config.getConfigurationSection("data").getValues(false));
         }
@@ -49,15 +43,16 @@ public abstract class QuestTask extends Actionable {
                 logger.error("Guide Target \"" + config.getString("guide.target") + "\" parsing failed.");
             }
         }
+        CronusInitQuestTaskEvent.call(this);
     }
 
     abstract public void init(Map<String, Object> data);
 
     abstract public boolean isCompleted(DataQuest dataQuest);
 
-    abstract public boolean isValid(Player player, DataQuest dataQuest, Event event);
+    abstract public boolean isValid(Player player, DataQuest dataQuest, E event);
 
-    abstract public void next(Player player, DataQuest dataQuest, Event event);
+    abstract public void next(Player player, DataQuest dataQuest, E event);
 
     public void complete(DataQuest dataQuest) {
     }
@@ -75,6 +70,10 @@ public abstract class QuestTask extends Actionable {
 
     public Condition getCondition() {
         return condition;
+    }
+
+    public Condition getConditionRestart() {
+        return conditionRestart;
     }
 
     public GuideWayCache getGuide() {

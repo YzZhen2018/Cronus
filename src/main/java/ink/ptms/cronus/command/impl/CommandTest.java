@@ -2,13 +2,12 @@ package ink.ptms.cronus.command.impl;
 
 import com.ilummc.tlib.bungee.chat.ComponentSerializer;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.CronusMirror;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
+import ink.ptms.cronus.internal.condition.CondNull;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
-import ink.ptms.cronus.internal.condition.CondNull;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.internal.program.effect.EffectNull;
 import ink.ptms.cronus.internal.program.effect.EffectParser;
@@ -58,7 +57,7 @@ public class CommandTest extends CronusCommand {
                 error(sender, "条件格式错误.");
             } else {
                 try {
-                    normal(sender, "条件执行结果: " + (parse.isValid((Player) sender, new DataQuest(), null) ? "&a成功" : "&c失败"));
+                    normal(sender, "条件执行结果: " + (parse.check((Player) sender, new DataQuest(), null) ? "&a成功" : "&c失败"));
                 } catch (Throwable t) {
                     error(sender, "条件执行失败: " + t.getMessage());
                 }

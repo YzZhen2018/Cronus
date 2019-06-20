@@ -225,7 +225,7 @@ public class BuilderQuest extends CronusCommand {
     }
 
     protected Map<String, String> getKeyword() {
-        return Cronus.getCronusService().getRegisteredQuest().entrySet().stream().flatMap(entry -> entry.getValue().getKeyword().stream()).collect(Collectors.toMap(k -> k, k -> k, (a, b) -> b, Maps::newTreeMap));
+        return Cronus.getCronusService().getRegisteredQuest().entrySet().stream().flatMap(entry -> entry.getValue().getBookTag().stream()).collect(Collectors.toMap(k -> k, k -> k, (a, b) -> b, Maps::newTreeMap));
     }
 
     protected Map<String, String> getEffect() {

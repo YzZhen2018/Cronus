@@ -4,13 +4,12 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.special.Countable;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_shear")
-public class TaskPlayerShear extends Countable {
+public class TaskPlayerShear extends Countable<PlayerShearEntityEvent> {
 
     private Entity entity;
     private ItemStack item;
@@ -37,8 +36,7 @@ public class TaskPlayerShear extends Countable {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        PlayerShearEntityEvent e = ((PlayerShearEntityEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, PlayerShearEntityEvent e) {
         return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.SHEARS)))) && (entity == null || entity.isSelect(e.getEntity()));
     }
 

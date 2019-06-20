@@ -1,11 +1,13 @@
-package ink.ptms.cronus.internal.special;
+package ink.ptms.cronus.internal.task.special;
 
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Utils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.util.NumberConversions;
 
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-06-07 19:50
  */
-public abstract class Uncountable extends QuestTask {
+public abstract class Uncountable<C extends Event> extends QuestTask<C> {
 
     protected StringExpression total;
 
@@ -32,8 +34,9 @@ public abstract class Uncountable extends QuestTask {
     }
 
     @Override
-    public void next(Player player, DataQuest dataQuest, Event event) {
-        dataQuest.getDataStage().set(getId() + ".total", dataQuest.getDataStage().getInt(getId() + ".total") + getCount(player, dataQuest, event));
+    public void next(Player player, DataQuest dataQuest, C event) {
+        double v = dataQuest.getDataStage().getInt(getId() + ".total") + getCount(player, dataQuest, event);
+        dataQuest.getDataStage().set(getId() + ".total", Utils.isInt(v) ? NumberConversions.toInt(v) : v);
     }
 
     @Override
@@ -47,5 +50,5 @@ public abstract class Uncountable extends QuestTask {
         dataQuest.getDataStage().set(getId() + ".count", 0);
     }
 
-    abstract public int getCount(Player player, DataQuest dataQuest, Event event);
+    abstract public double getCount(Player player, DataQuest dataQuest, C event);
 }

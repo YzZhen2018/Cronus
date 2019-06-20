@@ -4,6 +4,7 @@ import com.ilummc.tlib.util.Strings;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.NumberConversions;
 
 import java.util.Optional;
 
@@ -38,6 +39,10 @@ public class Utils {
             return in.substring(0, in.length() - (in.length() - 10)) + "..." + in.substring(in.length() - 7);
         }
         return in;
+    }
+
+    public static boolean isInt(double in) {
+        return NumberConversions.toInt(in) == in;
     }
 
     public static boolean isInt(String in) {

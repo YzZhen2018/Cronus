@@ -6,11 +6,11 @@ package ink.ptms.cronus.internal.program;
  */
 public enum Action {
 
-    ACCEPT, SUCCESS, FAILURE;
+    ACCEPT, ACCEPT_FAIL, SUCCESS, FAILURE, COOLDOWN, RESTART, NEXT;
 
     public static Action fromName(String name) {
         try {
-            return valueOf(name.toUpperCase());
+            return valueOf(name.toUpperCase().replace("-", "_"));
         } catch (Throwable ignored) {
         }
         return null;

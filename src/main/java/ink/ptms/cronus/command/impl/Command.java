@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +49,7 @@ public class Command extends CronusCommand {
             label.add(quest.getId());
             label.add(quest.getLabel());
         }
-        return label;
+        return label.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @CommandRegister
@@ -139,11 +140,11 @@ public class Command extends CronusCommand {
                 return;
             }
             DataPlayer playerData = CronusAPI.getData(player);
-            if (playerData.getQuest().containsKey(args[1])) {
-                error(sender, "玩家 &7" + args[1] + " &c已接受该任务.");
+            if (playerData.getQuest().containsKey(args[1]) && !playerData.isQuestCompleted(quest.getId())) {
+                error(sender, "玩家 &7" + args[0] + " &c已接受该任务.");
                 return;
             }
-            playerData.acceptQuest(player, quest);
+            playerData.acceptQuest(quest);
             playerData.push();
         }
     };
@@ -173,10 +174,10 @@ public class Command extends CronusCommand {
             DataPlayer dataPlayer = CronusAPI.getData(player);
             DataQuest dataQuest = dataPlayer.getQuest(args[1]);
             if (dataQuest == null) {
-                error(sender, "玩家 &7" + args[1] + " &c未接受该任务.");
+                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
                 return;
             }
-            dataPlayer.failureQuest(player, dataQuest.getQuest());
+            dataPlayer.failureQuest(dataQuest.getQuest());
             dataPlayer.push();
         }
     };
@@ -206,12 +207,77 @@ public class Command extends CronusCommand {
             DataPlayer dataPlayer = CronusAPI.getData(player);
             DataQuest dataQuest = dataPlayer.getQuest(args[1]);
             if (dataQuest == null) {
-                error(sender, "玩家 &7" + args[1] + " &c未接受该任务.");
+                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
                 return;
             }
             dataPlayer.getQuest().remove(dataQuest.getQuest().getId());
             dataPlayer.push();
             CronusQuestStopEvent.call(player, dataQuest.getQuest());
+        }
+    };
+
+    @CommandRegister
+    BaseSubCommand complete = new BaseSubCommand() {
+
+        @Override
+        public CommandArgument[] getArguments() {
+            return new CommandArgument[] {
+                    new CommandArgument("玩家"), new CommandArgument("任务/标签", () -> getQuests())
+            };
+        }
+
+        @Override
+        public String getDescription() {
+            return "使玩家完成任务.";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
+                return;
+            }
+            DataPlayer dataPlayer = CronusAPI.getData(player);
+            DataQuest dataQuest = dataPlayer.getQuest(args[1]);
+            if (dataQuest == null) {
+                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
+                return;
+            }
+            if (dataPlayer.isQuestCompleted(args[1])) {
+                error(sender, "玩家 &7" + args[0] + " &c已完成该任务.");
+                return;
+            }
+            dataPlayer.completeQuest(dataQuest.getQuest());
+            dataPlayer.push();
+        }
+    };
+
+    @CommandRegister
+    BaseSubCommand reset = new BaseSubCommand() {
+
+        @Override
+        public CommandArgument[] getArguments() {
+            return new CommandArgument[] {
+                    new CommandArgument("玩家"), new CommandArgument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
+            };
+        }
+
+        @Override
+        public String getDescription() {
+            return "重置任务完成时间.";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
+                return;
+            }
+            DataPlayer dataPlayer = CronusAPI.getData(player);
+            dataPlayer.getQuestCompleted().remove(args[1]);
+            dataPlayer.push();
         }
     };
 
@@ -239,7 +305,7 @@ public class Command extends CronusCommand {
             }
             DataQuest dataQuest = CronusAPI.getData(player).getQuest(args[1]);
             if (dataQuest == null) {
-                error(sender, "玩家 &7" + args[1] + " &c未接受该任务.");
+                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
                 return;
             }
             dataQuest.open(player);

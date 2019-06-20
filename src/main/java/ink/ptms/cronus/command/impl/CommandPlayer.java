@@ -46,7 +46,7 @@ public class CommandPlayer {
                     DataPlayer dataPlayer = CronusAPI.getData((Player) sender);
                     DataQuest dataQuest = dataPlayer.getQuest(args[0]);
                     if (dataQuest != null) {
-                        dataPlayer.failureQuest((Player) sender, dataQuest.getQuest());
+                        dataPlayer.failureQuest(dataQuest.getQuest());
                         dataPlayer.push();
                     }
                 }

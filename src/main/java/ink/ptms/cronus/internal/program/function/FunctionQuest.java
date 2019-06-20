@@ -1,5 +1,7 @@
 package ink.ptms.cronus.internal.program.function;
 
+import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
@@ -20,17 +22,25 @@ public class FunctionQuest extends Function {
     @Override
     public Object eval(Program program, String... args) {
         if (program instanceof QuestProgram) {
+            DataQuest dataQuest = ((QuestProgram) program).getDataQuest();
+            Quest quest = dataQuest.getQuest();
+            if (quest == null) {
+                return "<Invalid-Quest>";
+            }
             switch (args[0].toLowerCase()) {
                 case "name":
-                    return ((QuestProgram) program).getDataQuest().getCurrentQuest();
-                case "name.stage":
-                    return ((QuestProgram) program).getDataQuest().getCurrentStage();
+                    return dataQuest.getCurrentQuest();
+                case "stage":
+                    return dataQuest.getCurrentStage();
+                case "stage.next":
+                    int index = dataQuest.getStageIndex(quest) + 1;
+                    return index >= quest.getStage().size() ? "-" : quest.getStage().get(index).getId();
                 case "time.start":
-                    return ((QuestProgram) program).getDataQuest().getTimeStart();
+                    return dataQuest.getTimeStart();
                 case "time.complete":
-                    return ((QuestProgram) program).getDataPlayer().getQuestCompleted().getOrDefault(((QuestProgram) program).getDataQuest().getCurrentQuest(), 0L);
+                    return ((QuestProgram) program).getDataPlayer().getQuestCompleted().getOrDefault(dataQuest.getCurrentQuest(), 0L);
                 default:
-                    return ((QuestProgram) program).getDataQuest().getCurrentQuest();
+                    return dataQuest.getCurrentQuest();
             }
         }
         return "<Non-Quest>";

@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.special;
+package ink.ptms.cronus.internal.task.special;
 
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.QuestTask;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-06-07 19:50
  */
-public abstract class Countable extends QuestTask {
+public abstract class Countable<C extends Event> extends QuestTask<C> {
 
     protected int count;
 
@@ -32,7 +32,7 @@ public abstract class Countable extends QuestTask {
     }
 
     @Override
-    public void next(Player player, DataQuest dataQuest, Event event) {
+    public void next(Player player, DataQuest dataQuest, C event) {
         dataQuest.getDataStage().set(getId() + ".count", dataQuest.getDataStage().getInt(getId() + ".count") + 1);
     }
 

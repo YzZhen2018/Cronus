@@ -20,7 +20,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_attack")
-public class TaskPlayerAttack extends QuestTask {
+public class TaskPlayerAttack extends QuestTask<EntityDamageByEntityEvent> {
 
     private int damage;
     private Entity victim;
@@ -45,14 +45,12 @@ public class TaskPlayerAttack extends QuestTask {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
-        EntityDamageByEntityEvent e = ((EntityDamageByEntityEvent) event);
+    public boolean isValid(Player player, DataQuest dataQuest, EntityDamageByEntityEvent e) {
         return (weapon == null || weapon.isItem(player.getItemInHand())) && (victim == null || victim.isSelect(e.getEntity())) && (cause == null || cause.isSelect(e.getCause()));
     }
 
     @Override
-    public void next(Player player, DataQuest dataQuest, Event event) {
-        EntityDamageByEntityEvent e = ((EntityDamageByEntityEvent) event);
+    public void next(Player player, DataQuest dataQuest, EntityDamageByEntityEvent e) {
         dataQuest.getDataStage().set(getId() + ".damage", dataQuest.getDataStage().getInt(getId() + ".damage") + e.getDamage());
     }
 

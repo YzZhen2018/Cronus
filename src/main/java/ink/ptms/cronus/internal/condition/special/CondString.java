@@ -22,7 +22,7 @@ public abstract class CondString extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return expression.isSelect(String.valueOf(getString(player, quest, event)));
     }
 

@@ -2,6 +2,9 @@ package ink.ptms.cronus.internal;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusInitQuestStageEvent;
+import ink.ptms.cronus.internal.condition.Condition;
+import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.Actionable;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -18,12 +21,14 @@ public class QuestStage extends Actionable {
     protected List<List<String>> content = Lists.newArrayList();
     protected List<List<String>> contentCompleted = Lists.newArrayList();
     protected List<String> contentGlobal;
+    protected Condition conditionRestart;
     protected ConfigurationSection config;
 
     public QuestStage(ConfigurationSection config) {
         this.id = config.getName();
         this.config = config;
         this.contentGlobal = config.getStringList("content-global");
+        this.conditionRestart = ConditionParser.fromObject(config.get("restart"));
         ConfigurationSection content = config.getConfigurationSection("content");
         if (content != null) {
             content.getKeys(false).forEach(id -> this.content.add(content.getStringList(id)));
@@ -32,6 +37,15 @@ public class QuestStage extends Actionable {
         if (contentCompleted != null) {
             contentCompleted.getKeys(false).forEach(id -> this.contentCompleted.add(contentCompleted.getStringList(id)));
         }
+        CronusInitQuestStageEvent.call(this);
+    }
+
+    public void reset(DataQuest quest) {
+        task.forEach(t -> t.reset(quest));
+    }
+
+    public void complete(DataQuest quest) {
+        task.forEach(t -> t.complete(quest));
     }
 
     public boolean isCompleted(DataQuest quest) {
@@ -58,6 +72,10 @@ public class QuestStage extends Actionable {
         return contentGlobal;
     }
 
+    public Condition getConditionRestart() {
+        return conditionRestart;
+    }
+
     public ConfigurationSection getConfig() {
         return config;
     }
@@ -69,6 +87,8 @@ public class QuestStage extends Actionable {
                 ", id='" + id + '\'' +
                 ", content=" + content +
                 ", contentCompleted=" + contentCompleted +
+                ", contentGlobal=" + contentGlobal +
+                ", conditionRestart=" + conditionRestart +
                 ", config=" + config +
                 ", action=" + action +
                 '}';

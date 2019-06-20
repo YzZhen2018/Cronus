@@ -1,11 +1,11 @@
 package ink.ptms.cronus.internal.task.other;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.QuestTask;
+import ink.ptms.cronus.internal.event.EventPeriod;
+import ink.ptms.cronus.internal.task.special.UnEvent;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "permission")
-public class TaskPermission extends QuestTask {
+public class TaskPermission extends UnEvent {
 
     private String permission;
 
@@ -28,28 +28,8 @@ public class TaskPermission extends QuestTask {
     }
 
     @Override
-    public boolean isCompleted(DataQuest dataQuest) {
-        return dataQuest.getDataStage().getInt(getId() + ".has") > 0;
-    }
-
-    @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+    public boolean isValid(Player player, DataQuest dataQuest, EventPeriod event) {
         return player.hasPermission(permission);
-    }
-
-    @Override
-    public void next(Player player, DataQuest dataQuest, Event event) {
-        dataQuest.getDataStage().set(getId() + ".has", 1);
-    }
-
-    @Override
-    public void complete(DataQuest dataQuest) {
-        dataQuest.getDataStage().set(getId() + ".has", 1);
-    }
-
-    @Override
-    public void reset(DataQuest dataQuest) {
-        dataQuest.getDataStage().set(getId() + ".has", 0);
     }
 
     @Override

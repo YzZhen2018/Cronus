@@ -6,6 +6,7 @@ import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
+import ink.ptms.cronus.event.CronusInitQuestBookEvent;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.util.Utils;
@@ -42,6 +43,7 @@ public class QuestBook {
         if (list != null) {
             list.getKeys(false).forEach(keyword -> this.list.put(keyword, list.getInt(keyword)));
         }
+        CronusInitQuestBookEvent.call(this);
     }
 
     public void open(Player player) {
@@ -60,13 +62,12 @@ public class QuestBook {
         playerData.getQuest().values().stream()
                 .filter(f -> {
                     Quest quest = f.getQuest();
-                    return quest != null && quest.getKeyword().stream().anyMatch(list::containsKey);
+                    return quest != null && quest.getBookTag().stream().anyMatch(list::containsKey);
                 })
-                .sorted((b, a) -> Integer.compare(a.getQuest().getKeyword().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0), b.getQuest().getKeyword().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0)))
+                .sorted((b, a) -> Integer.compare(a.getQuest().getBookTag().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0), b.getQuest().getBookTag().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0)))
                 .forEach(q -> {
                     try {
                         QuestStage questStage = q.getStage();
-                        QuestProgram program = new QuestProgram(player, q);
                         for (String f : format) {
                             if (f.contains("{content}")) {
                                 for (String c : questStage.getContentGlobal()) {
@@ -74,16 +75,14 @@ public class QuestBook {
                                         bookBuilder.addPages(ComponentSerializer.parse(json[0].toRawMessage(player)));
                                         json[0] = TellrawJson.create();
                                     }
-                                    appendLine(json[0], program, c);
+                                    appendLine(json[0], new QuestProgram(player, q), c);
                                 }
                             } else {
                                 if (line.incrementAndGet() == 15) {
                                     bookBuilder.addPages(ComponentSerializer.parse(json[0].toRawMessage(player)));
                                     json[0] = TellrawJson.create();
                                 }
-                                appendLine(json[0], program, f
-                                        .replace("{id}", q.getCurrentQuest())
-                                        .replace("{display}", q.getQuest().getDisplay()));
+                                appendLine(json[0], new QuestProgram(player, q), f.replace("{id}", q.getCurrentQuest()).replace("{display}", q.getQuest().getDisplay()));
                             }
                         }
                     } catch (Throwable t) {

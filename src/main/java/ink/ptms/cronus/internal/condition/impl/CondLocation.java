@@ -27,7 +27,7 @@ public class CondLocation extends Condition {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest quest, Event event) {
+    public boolean check(Player player, DataQuest quest, Event event) {
         return symbol.startsWith("=") == location.inSelect(player.getLocation());
     }
 
