@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.player;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondBoolean;
@@ -16,6 +17,15 @@ public class CondSneaking extends CondBoolean {
     @Override
     public boolean getBoolean(Player player, DataQuest quest, Event event) {
         return player.isSneaking();
+    }
+
+    @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-sneaking0");
+        } else {
+            return TLocale.asString("translate-condition-sneaking1");
+        }
     }
 
     @Override

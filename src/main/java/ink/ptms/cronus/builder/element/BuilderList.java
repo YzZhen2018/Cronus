@@ -79,17 +79,17 @@ public class BuilderList extends BuilderQuest {
             if (e.getClickType() == ClickType.CLICK && !ItemUtils.isNull(e.castClick().getCurrentItem())) {
                 e.castClick().setCancelled(true);
                 // 上一页
-                if (e.castClick().getRawSlot() == 45 && e.castClick().getCurrentItem().equals(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem())) {
+                if (e.castClick().getRawSlot() == 46 && e.castClick().getCurrentItem().equals(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem())) {
                     open(player, page - 1, close);
                 }
                 // 下一页
-                else if (e.castClick().getRawSlot() == 53 && e.castClick().getCurrentItem().equals(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem())) {
+                else if (e.castClick().getRawSlot() == 52 && e.castClick().getCurrentItem().equals(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem())) {
                     open(player, page + 1, close);
                 }
                 // 返回
                 else if (e.castClick().getRawSlot() == 49) {
                     toggle = true;
-                    close.run(null);
+                    player.closeInventory();
                 }
                 // 内容
                 else if (InventoryUtil.SLOT_OF_CENTENTS.contains(e.castClick().getRawSlot())) {
@@ -120,10 +120,10 @@ public class BuilderList extends BuilderQuest {
                 }, 1);
             }
         });
-        List<String> list = new SimpleIterator(this.list).listIterator(page * 28, (page + 1) * 28);
-        for (int i = 0; i < list.size(); i++) {
+        List<String> iterator = new SimpleIterator(this.list).listIterator(page * 28, (page + 1) * 28);
+        for (int i = 0; i < iterator.size(); i++) {
             // 追加
-            if (list.get(i).equals("$append")) {
+            if (iterator.get(i).equals("$append")) {
                 inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP)
                         .name("§f增加新的" + display)
                         .lore("", "§7点击")
@@ -132,17 +132,17 @@ public class BuilderList extends BuilderQuest {
             // 修改 & 删除
             else {
                 inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER)
-                        .name("§f" + list.get(i))
+                        .name("§f" + iterator.get(i))
                         .lore("", "§7左键修改 §8| §7右键删除")
                         .build());
             }
             map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), i);
         }
         if (page > 1) {
-            inventory.setItem(45, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
+            inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
         }
-        if (page < (int) Math.floor(this.list.size() / 28D)) {
-            inventory.setItem(53, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a下一页").lore("", "§7点击").build());
+        if (Utils.next(page, list.size(), 28)) {
+            inventory.setItem(52, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a下一页").lore("", "§7点击").build());
         }
         inventory.setItem(49, new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem()).name("§c上级目录").lore("", "§7点击").build());
         player.openInventory(inventory);
@@ -160,13 +160,12 @@ public class BuilderList extends BuilderQuest {
                         .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")
                         .send(player);
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7当前: ")
-                        .append("§f" + Utils.NonNull(origin)).clickSuggest(Utils.NonNull(origin))
+                        .append("§f" + Utils.NonNull(origin)).hoverText("§7点击").clickSuggest(Utils.NonNull(origin))
                         .send(player);
                 if (candidate != null) {
                     Map<String, String> candidateMap = candidate.run();
                     if (!candidateMap.isEmpty()) {
                         TellrawJson json = TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7候选: §f");
-                        // element
                         int i = 1;
                         for (Map.Entry<String, String> entry : candidateMap.entrySet()) {
                             json.append("§f" + entry.getKey()).hoverText("§f" + entry.getValue()).clickSuggest(TLocale.Translate.setUncolored(entry.getValue()));

@@ -1,8 +1,7 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Location;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import me.skymc.taboolib.support.SupportWorldGuard;
@@ -30,6 +29,15 @@ public class CondWorldGuard extends Condition {
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
         return symbol.startsWith("=") == SupportWorldGuard.INSTANCE.getRegionsAtLocation(player.getWorld(), player.getLocation()).stream().anyMatch(name::equalsIgnoreCase);
+    }
+
+    @Override
+    public String translate() {
+        if (symbol.startsWith("=")) {
+            return TLocale.asString("translate-condition-worldguard0", name);
+        } else {
+            return TLocale.asString("translate-condition-worldguard1", name);
+        }
     }
 
     @Override

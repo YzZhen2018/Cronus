@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
@@ -54,24 +55,25 @@ public class CondItem extends Condition {
         }
     }
 
-    public int getSlot() {
-        return slot;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public TEquipment getEquipment() {
-        return equipment;
-    }
-
-    public ItemStack getItemStack() {
-        return itemStack;
-    }
-
-    public boolean isInventory() {
-        return inventory;
+    @Override
+    public String translate() {
+        if (symbol.startsWith("=")) {
+            if (inventory) {
+                return TLocale.asString("translate-condition-item4", itemStack.asString());
+            } else if (equipment != null) {
+                return TLocale.asString("translate-condition-item0", TLocale.asString("translate-item-" + equipment.name().toLowerCase().replace("_", "")), itemStack.asString());
+            } else {
+                return TLocale.asString("translate-condition-item2", String.valueOf(slot), itemStack.asString());
+            }
+        } else {
+            if (inventory) {
+                return TLocale.asString("translate-condition-item5", itemStack.asString());
+            } else if (equipment != null) {
+                return TLocale.asString("translate-condition-item1", TLocale.asString("translate-item-" + equipment.name().toLowerCase().replace("_", "")), itemStack.asString());
+            } else {
+                return TLocale.asString("translate-condition-item3", String.valueOf(slot), itemStack.asString());
+            }
+        }
     }
 
     @Override

@@ -1,6 +1,9 @@
 package ink.ptms.cronus.internal.bukkit;
 
+import ink.ptms.cronus.util.Utils;
+
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
@@ -64,6 +67,14 @@ public class Location {
     public enum Mode {
 
         AREA, POINT
+    }
+
+    public String asString() {
+        if (mode == Mode.AREA) {
+            return Utils.fromLocation(area[0]) + "~" + Utils.fromLocation(area[1]);
+        } else {
+            return Arrays.stream(points).map(Utils::fromLocation).collect(Collectors.joining(";"));
+        }
     }
 
     @Override

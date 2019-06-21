@@ -1,6 +1,7 @@
 package ink.ptms.cronus.util;
 
 import com.ilummc.tlib.logger.TLogger;
+import com.ilummc.tlib.resources.TLocale;
 import me.skymc.taboolib.common.inject.TInject;
 
 import java.util.regex.Matcher;
@@ -14,7 +15,7 @@ public class StringExpression {
 
     @TInject
     private static TLogger logger;
-    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|=|==|!=|≈|≈≈|!≈)[ ]?(?<number>.+)");
+    private static Pattern pattern = Pattern.compile("(?<symbol>>|>=|<|<=|==|=|!=|≈≈|≈|!≈)[ ]?(?<number>.+)");
     private String symbol;
     private StringNumber number;
 
@@ -65,6 +66,23 @@ public class StringExpression {
             default:
                 return false;
         }
+    }
+
+    public String translate() {
+        switch (symbol) {
+            case ">":
+                return TLocale.asString("translate-expression-0") + " " + number.getSource();
+            case ">=":
+                return TLocale.asString("translate-expression-1") + " " + number.getSource();
+            case "<":
+                return TLocale.asString("translate-expression-2") + " " + number.getSource();
+            case "<=":
+                return TLocale.asString("translate-expression-3") + " " + number.getSource();
+            case "=":
+            case "==":
+                return TLocale.asString("translate-expression-4") + " " + number.getSource();
+        }
+        return symbol + " " + number.getSource();
     }
 
     @Override

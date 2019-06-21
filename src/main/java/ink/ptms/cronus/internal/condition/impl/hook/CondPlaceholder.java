@@ -46,6 +46,15 @@ public class CondPlaceholder extends Condition {
     }
 
     @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-placeholder0", placeholder + " " + expression.translate());
+        } else {
+            return TLocale.asString("translate-condition-placeholder1", placeholder + " " + expression.translate());
+        }
+    }
+
+    @Override
     public String toString() {
         return "CondPlaceholder{" +
                 "negative=" + negative +

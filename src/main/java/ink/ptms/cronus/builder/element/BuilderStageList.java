@@ -1,7 +1,6 @@
 package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
-import ink.ptms.cronus.util.Utils;
 import me.skymc.taboolib.inventory.builder.v2.CloseTask;
 import me.skymc.taboolib.json.tellraw.TellrawJson;
 import me.skymc.taboolib.message.ChatCatcher;

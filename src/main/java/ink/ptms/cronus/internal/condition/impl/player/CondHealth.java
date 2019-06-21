@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.player;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondNumber;
@@ -16,6 +17,11 @@ public class CondHealth extends CondNumber {
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
         return player.getHealth();
+    }
+
+    @Override
+    public String translate() {
+        return TLocale.asString("translate-condition-health", expression.translate());
     }
 
     @Override

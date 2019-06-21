@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -17,12 +18,14 @@ import java.util.regex.Matcher;
 @Cond(name = "skript", pattern = "sk(ript)? (?<script>.+)", example = "skript [skript]")
 public class CondSkript extends Condition {
 
+    private String origin;
     private ch.njol.skript.lang.Condition condition;
 
     @Override
     public void init(Matcher matcher, String text) {
         SkriptHook.toggleCurrentEvent(true);
         try {
+            origin = matcher.group("script");
             condition = ch.njol.skript.lang.Condition.parse(matcher.group("script"), null);
         } catch (Throwable t) {
             t.printStackTrace();
@@ -36,9 +39,15 @@ public class CondSkript extends Condition {
     }
 
     @Override
+    public String translate() {
+            return TLocale.asString("translate-condition-skript", origin);
+    }
+
+    @Override
     public String toString() {
         return "CondSkript{" +
-                "condition=" + condition +
+                "origin='" + origin + '\'' +
+                ", condition=" + condition +
                 '}';
     }
 }

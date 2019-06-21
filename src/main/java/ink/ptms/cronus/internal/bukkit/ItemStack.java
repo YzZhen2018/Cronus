@@ -102,6 +102,26 @@ public class ItemStack {
         return damage;
     }
 
+    public String asString() {
+        StringBuilder builder = new StringBuilder();
+        if (type != null) {
+            builder.append(type);
+        }
+        if (damage != -1) {
+            builder.append(":").append(damage);
+        }
+        if (name != null) {
+            builder.append(",").append("n=").append(name);
+        }
+        if (lore != null) {
+            builder.append(",").append("l=").append(lore);
+        }
+        if (amount > 1) {
+            builder.append(",").append("a=").append(amount);
+        }
+        return builder.toString();
+    }
+
     @Override
     public String toString() {
         return "ItemStack{" +

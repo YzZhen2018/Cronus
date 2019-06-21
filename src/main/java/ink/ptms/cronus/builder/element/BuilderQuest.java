@@ -3,6 +3,7 @@ package ink.ptms.cronus.builder.element;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
+import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.database.data.time.TimeType;
@@ -16,6 +17,7 @@ import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
 import me.skymc.taboolib.json.tellraw.TellrawJson;
 import me.skymc.taboolib.message.ChatCatcher;
 import me.skymc.taboolib.timeutil.TimeFormatter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -32,13 +34,17 @@ public class BuilderQuest extends CronusCommand {
 
     private String id;
     private String display;
-    private List<String> keyword = Lists.newArrayList();
+    private List<String> bookTag = Lists.newArrayList();
     private String label;
     private String cooldown;
     private String timeout;
     private List<String> actionAccept = Lists.newArrayList();
+    private List<String> actionAcceptFail = Lists.newArrayList();
     private List<String> actionSuccess = Lists.newArrayList();
     private List<String> actionFailure = Lists.newArrayList();
+    private List<String> actionCooldown = Lists.newArrayList();
+    private MatchEntry conditionAccept;
+    private MatchEntry conditionFailure;
     private BuilderStageList stageList;
 
     public BuilderQuest(String id) {
@@ -59,27 +65,31 @@ public class BuilderQuest extends CronusCommand {
                         .name("§b任务名称")
                         .lore("", (display == null ? "§f无" : "§f" + display))
                         .build())
-                .put('4', new ItemBuilder(Material.NAME_TAG)
+                .put('1', new ItemBuilder(Material.NAME_TAG)
                         .name("§b任务类型")
-                        .lore(toLore(keyword))
+                        .lore(toLore(bookTag))
                         .build())
-                .put('7', new ItemBuilder(Material.NAME_TAG)
+                .put('2', new ItemBuilder(Material.NAME_TAG)
                         .name("§b任务标签")
                         .lore("", (label == null ? "§f无" : "§f" + label))
                         .build())
-                .put('1', new ItemBuilder(Material.WATCH)
+                .put('3', new ItemBuilder(Material.WATCH)
                         .name("§b任务冷却时间")
                         .lore("", "§f" + (cooldown == null ? "无" : displayCooldown()))
                         .build())
-                .put('5', new ItemBuilder(Material.WATCH)
+                .put('4', new ItemBuilder(Material.WATCH)
                         .name("§b任务超时时间")
                         .lore("", "§f" + (timeout == null ? "无" : displayTimeout()))
                         .build())
-                .put('2', new ItemBuilder(Material.DIODE)
+                .put('5', new ItemBuilder(Material.DIODE)
                         .name("§b任务接受动作")
                         .lore(toLore(actionAccept))
                         .build())
                 .put('6', new ItemBuilder(Material.DIODE)
+                        .name("§b任务接受动作 (条件不足)")
+                        .lore(toLore(actionAcceptFail))
+                        .build())
+                .put('7', new ItemBuilder(Material.DIODE)
                         .name("§b任务完成动作")
                         .lore(toLore(actionSuccess))
                         .build())
@@ -87,7 +97,19 @@ public class BuilderQuest extends CronusCommand {
                         .name("§b任务失败动作")
                         .lore(toLore(actionFailure))
                         .build())
-                .put('3', new ItemBuilder(Material.BOOK)
+                .put('9', new ItemBuilder(Material.DIODE)
+                        .name("§b任务冷却动作")
+                        .lore(toLore(actionCooldown))
+                        .build())
+                .put('A', new ItemBuilder(Material.TRIPWIRE_HOOK)
+                        .name("§b任务接受条件")
+                        .lore(toLore(conditionAccept == null ? Lists.newArrayList() : conditionAccept.asList(0)))
+                        .build())
+                .put('B', new ItemBuilder(Material.TRIPWIRE_HOOK)
+                        .name("§b任务失败条件")
+                        .lore(toLore(conditionFailure == null ? Lists.newArrayList() : conditionFailure.asList(0)))
+                        .build())
+                .put('C', new ItemBuilder(Material.BOOK)
                         .name("§b任务阶段")
                         .lore(toLore(stageList.getStages().stream().map(BuilderStage::getId).collect(Collectors.toList())))
                         .build())
@@ -97,10 +119,10 @@ public class BuilderQuest extends CronusCommand {
                         .build())
                 .items(
                         "#########",
-                        "$0123   $",
-                        "$456    $",
-                        "$7 8    $",
-                        "$       $",
+                        "$01234  $",
+                        "$56789  $",
+                        "$AB     $",
+                        "$   C   $",
                         "####%####")
                 .event(e -> {
                     if (e.getClickType() == ClickType.CLICK) {
@@ -109,25 +131,13 @@ public class BuilderQuest extends CronusCommand {
                             case 10:
                                 editString(e.getClicker(), "任务名称", display, r -> display = r);
                                 break;
-                            case 28:
-                                editString(e.getClicker(), "任务标签", label, r -> label = r);
-                                break;
-                            case 19:
-                                new BuilderList("任务类型", keyword).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getKeyword);
+                            case 11:
+                                new BuilderList("任务索引", bookTag).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getBookTag);
                                 break;
                             case 12:
-                                new BuilderList("任务接受动作", actionAccept).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
-                                break;
-                            case 21:
-                                new BuilderList("任务完成动作", actionSuccess).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
-                                break;
-                            case 30:
-                                new BuilderList("任务失败动作", actionFailure).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                editString(e.getClicker(), "任务标签", label, r -> label = r);
                                 break;
                             case 13:
-                                stageList.open(e.getClicker(), 0, c -> open(e.getClicker()), Maps::newHashMap);
-                                break;
-                            case 11:
                                 editString(e.getClicker(), "任务冷却时间", cooldown, r -> cooldown = r);
                                 normal(e.getClicker(), "可用：");
                                 TellrawJson.create()
@@ -148,7 +158,7 @@ public class BuilderQuest extends CronusCommand {
                                                 "§fs §8(秒)"
                                         ))).clickSuggest("[number][time]").send(e.getClicker());
                                 break;
-                            case 20:
+                            case 14:
                                 editString(e.getClicker(), "任务超时时间", timeout, r -> timeout = r);
                                 normal(e.getClicker(), "可用：");
                                 TellrawJson.create()
@@ -211,6 +221,42 @@ public class BuilderQuest extends CronusCommand {
                                                 "§fmonth:1:00:00 §8(每月1日 00时00分)"
                                         ))).clickSuggest("month:[day]:[hour]:[minute]").send(e.getClicker());
                                 break;
+                            case 19:
+                                new BuilderListEffect("任务接受动作", actionAccept).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 20:
+                                new BuilderListEffect("任务接受动作 (条件不足)", actionAcceptFail).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 21:
+                                new BuilderListEffect("任务完成动作", actionSuccess).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 22:
+                                new BuilderListEffect("任务失败动作", actionFailure).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 23:
+                                new BuilderListEffect("任务冷却动作", actionCooldown).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 28: {
+                                BuilderCondition condition = new BuilderCondition(conditionAccept, e.getClicker(), "任务接受条件");
+                                condition.setCloseTask(c -> {
+                                    conditionAccept = condition.getEntry();
+                                    Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> open(e.getClicker()), 1);
+                                });
+                                condition.open(player, 0);
+                                break;
+                            }
+                            case 29: {
+                                BuilderCondition condition = new BuilderCondition(conditionFailure, e.getClicker(), "任务失败条件");
+                                condition.setCloseTask(c -> {
+                                    conditionFailure = condition.getEntry();
+                                    Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> open(e.getClicker()), 1);
+                                });
+                                condition.open(player, 0);
+                                break;
+                            }
+                            case 40:
+                                stageList.open(e.getClicker(), 0, c -> open(e.getClicker()), Maps::newHashMap);
+                                break;
                         }
                     }
                 }).build());
@@ -224,7 +270,7 @@ public class BuilderQuest extends CronusCommand {
         return "§7" + example.replaceAll("\\.", "§8$0§7").replaceAll("\\[(\\S+)]", "§e[§6$1§e]§7");
     }
 
-    protected Map<String, String> getKeyword() {
+    protected Map<String, String> getBookTag() {
         return Cronus.getCronusService().getRegisteredQuest().entrySet().stream().flatMap(entry -> entry.getValue().getBookTag().stream()).collect(Collectors.toMap(k -> k, k -> k, (a, b) -> b, Maps::newTreeMap));
     }
 
@@ -282,8 +328,8 @@ public class BuilderQuest extends CronusCommand {
         List<String> array = Lists.newArrayList("");
         array.addAll(list.isEmpty() ? Lists.newArrayList("§f无") : list.stream().map(k -> "§f" + k).collect(Collectors.toList()));
         boolean more = false;
-        while (array.size() > 5) {
-            array.remove(5);
+        while (array.size() > 8) {
+            array.remove(8);
             more = true;
         }
         if (more) {
@@ -301,7 +347,7 @@ public class BuilderQuest extends CronusCommand {
                         .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")
                         .send(player);
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7当前: ")
-                        .append("§f" + Utils.NonNull(origin)).clickSuggest(Utils.NonNull(origin))
+                        .append("§f" + Utils.NonNull(origin)).hoverText("§7点击").clickSuggest(Utils.NonNull(origin))
                         .send(player);
                 return this;
             }

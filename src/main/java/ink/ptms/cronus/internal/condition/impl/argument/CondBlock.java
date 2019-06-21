@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.Location;
@@ -34,6 +35,15 @@ public class CondBlock extends Condition {
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
         return location.isBukkit() && symbol.startsWith("=") == block.isSelect(location.toBukkit().getBlock());
+    }
+
+    @Override
+    public String translate() {
+        if (symbol.startsWith("=")) {
+            return TLocale.asString("translate-condition-block0", location.asString(), block.asString());
+        } else {
+            return TLocale.asString("translate-condition-block0", location.asString(), block.asString());
+        }
     }
 
     @Override

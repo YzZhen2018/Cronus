@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -27,6 +28,15 @@ public class CondTag extends Condition {
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
         return negative == player.getScoreboardTags().contains(tag);
+    }
+
+    @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-tag0", tag);
+        } else {
+            return TLocale.asString("translate-condition-tag1", tag);
+        }
     }
 
     @Override

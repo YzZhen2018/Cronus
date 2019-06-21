@@ -24,4 +24,8 @@ public abstract class Condition {
     public boolean check(Player player) {
         return check(player, new DataQuest(), new EventCondition());
     }
+
+    public String translate() {
+        return null;
+    }
 }

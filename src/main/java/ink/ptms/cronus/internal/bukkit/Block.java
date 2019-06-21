@@ -38,6 +38,10 @@ public class Block {
             return block.getType().name().equalsIgnoreCase(name) && (data == -1 || block.getData() == data);
         }
 
+        public String asString() {
+            return name + ":" + data;
+        }
+
         @Override
         public String toString() {
             return "Point{" +
@@ -45,6 +49,10 @@ public class Block {
                     ", data=" + data +
                     '}';
         }
+    }
+
+    public String asString() {
+        return String.join(";", points.stream().map(Point::asString).collect(Collectors.toList()));
     }
 
     @Override

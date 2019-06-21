@@ -1,6 +1,7 @@
 package ink.ptms.cronus.util;
 
 import com.ilummc.tlib.util.Strings;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,10 +36,18 @@ public class Utils {
     }
 
     public static String toSimple(String in) {
-        if (in.length() > 20) {
-            return in.substring(0, in.length() - (in.length() - 10)) + "..." + in.substring(in.length() - 7);
-        }
-        return in;
+        return in.length() > 20 ? in.substring(0, in.length() - (in.length() - 10)) + "..." + in.substring(in.length() - 7) : in;
+    }
+
+    public static String fromLocation(Location location) {
+        return location.getWorld().getName()
+                + "," + (isInt(location.getX()) ? NumberConversions.toInt(location.getX()) : location.getX())
+                + "," + (isInt(location.getY()) ? NumberConversions.toInt(location.getY()) : location.getY())
+                + "," + (isInt(location.getZ()) ? NumberConversions.toInt(location.getZ()) : location.getZ()) ;
+    }
+
+    public static boolean next(int page, int size, int entry) {
+        return page < (int) Math.floor(size / (double) entry);
     }
 
     public static boolean isInt(double in) {

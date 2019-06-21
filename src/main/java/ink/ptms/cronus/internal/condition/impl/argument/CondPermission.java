@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -27,6 +28,15 @@ public class CondPermission extends Condition {
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
         return negative == player.hasPermission(permission);
+    }
+
+    @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-permission0", permission);
+        } else {
+            return TLocale.asString("translate-condition-permission1", permission);
+        }
     }
 
     @Override

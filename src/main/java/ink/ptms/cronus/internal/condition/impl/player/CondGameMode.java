@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.player;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondString;
@@ -16,6 +17,15 @@ public class CondGameMode extends CondString {
     @Override
     public String getString(Player player, DataQuest quest, Event event) {
         return player.getGameMode().name();
+    }
+
+    @Override
+    public String translate() {
+        if (expression.getSymbol().startsWith("=")) {
+            return TLocale.asString("translate-condition-gamemode0", expression.getNumber().getSource());
+        } else {
+            return TLocale.asString("translate-condition-gamemode1", expression.getNumber().getSource());
+        }
     }
 
     @Override

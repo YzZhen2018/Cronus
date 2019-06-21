@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -43,6 +44,15 @@ public class CondFunction extends Condition {
             return negative == NumberUtils.getBooleanAbbreviation(v);
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
+        }
+    }
+
+    @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-function0", function + " " + expression.translate());
+        } else {
+            return TLocale.asString("translate-condition-function1", function + " " + expression.translate());
         }
     }
 

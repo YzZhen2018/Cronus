@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
@@ -22,10 +23,12 @@ import java.util.regex.Matcher;
 @Cond(name = "script", pattern = "(script|js) (?<script>.+)", example = "script [script]")
 public class CondScript extends Condition {
 
+    private String origin;
     private CompiledScript script;
 
     @Override
     public void init(Matcher matcher, String text) {
+        origin = matcher.group("script");
         script = ScriptHandler.compile(matcher.group("script"));
     }
 
@@ -46,9 +49,15 @@ public class CondScript extends Condition {
     }
 
     @Override
+    public String translate() {
+        return TLocale.asString("translate-condition-script", origin);
+    }
+
+    @Override
     public String toString() {
         return "CondScript{" +
-                "script=" + script +
+                "origin='" + origin + '\'' +
+                ", script=" + script +
                 '}';
     }
 }

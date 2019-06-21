@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.condition.impl.player;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondBoolean;
@@ -16,6 +17,15 @@ public class CondFlying extends CondBoolean {
     @Override
     public boolean getBoolean(Player player, DataQuest quest, Event event) {
         return player.isFlying();
+    }
+
+    @Override
+    public String translate() {
+        if (!negative) {
+            return TLocale.asString("translate-condition-flying0");
+        } else {
+            return TLocale.asString("translate-condition-flying1");
+        }
     }
 
     @Override
