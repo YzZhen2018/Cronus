@@ -49,10 +49,14 @@ public class CondFunction extends Condition {
 
     @Override
     public String translate() {
-        if (!negative) {
-            return TLocale.asString("translate-condition-function0", function + " " + expression.translate());
+        if (booleanMode) {
+            if (!negative) {
+                return TLocale.asString("translate-condition-function0", function);
+            } else {
+                return TLocale.asString("translate-condition-function1", function);
+            }
         } else {
-            return TLocale.asString("translate-condition-function1", function + " " + expression.translate());
+            return TLocale.asString("translate-condition-function2", function + " " + expression.translate());
         }
     }
 
