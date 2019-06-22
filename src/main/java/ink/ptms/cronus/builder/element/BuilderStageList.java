@@ -19,6 +19,22 @@ public class BuilderStageList extends BuilderList {
 
     public BuilderStageList() {
         super("任务阶段", Lists.newArrayList());
+        // 左移
+        this.defaultMoveLeft = index -> {
+            BuilderStage element = stages.remove(index);
+            stages.add(index - 1, element);
+        };
+        // 右移
+        this.defaultMoveRight = index -> {
+            BuilderStage element = stages.remove(index);
+            stages.add(index + 1, element);
+        };
+        // 删除
+        this.defaultDelete = index -> {
+            stages.remove(index);
+            open(player, page, close);
+        };
+        // 修改
         this.defaultEdit = index -> {
             // 新增
             if (list.get(index).equals("$append")) {
@@ -52,12 +68,9 @@ public class BuilderStageList extends BuilderList {
                     }
                 });
             } else {
+                toggle = true;
                 stages.get(index).open(player, this);
             }
-        };
-        this.defaultDelete = index -> {
-            stages.remove(index);
-            open(player, page, close);
         };
     }
 

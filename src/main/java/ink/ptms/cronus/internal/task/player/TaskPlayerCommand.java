@@ -29,7 +29,7 @@ public class TaskPlayerCommand extends Countable<PlayerCommandPreprocessEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerCommandPreprocessEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerCommandPreprocessEvent e) {
         return (command == null || e.getMessage().startsWith(command));
     }
 

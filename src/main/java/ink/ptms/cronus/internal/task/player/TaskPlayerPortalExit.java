@@ -33,7 +33,7 @@ public class TaskPlayerPortalExit extends Countable<EntityPortalExitEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityPortalExitEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, EntityPortalExitEvent event) {
         return (from == null || from.inSelect(event.getFrom())) && (to == null || to.inSelect(event.getFrom()));
     }
 

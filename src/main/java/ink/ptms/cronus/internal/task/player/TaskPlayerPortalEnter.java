@@ -31,7 +31,7 @@ public class TaskPlayerPortalEnter extends Countable<EntityPortalEnterEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityPortalEnterEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, EntityPortalEnterEvent event) {
         return location == null || location.inSelect(event.getLocation());
     }
 

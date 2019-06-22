@@ -36,7 +36,7 @@ public class TaskPlayerShear extends Countable<PlayerShearEntityEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerShearEntityEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerShearEntityEvent e) {
         return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.SHEARS)))) && (entity == null || entity.isSelect(e.getEntity()));
     }
 

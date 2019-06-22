@@ -31,7 +31,7 @@ public class TaskPlayerVehicleEnter extends Countable<VehicleEnterEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, VehicleEnterEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, VehicleEnterEvent event) {
         return vehicle == null || vehicle.isSelect(event.getVehicle());
     }
 

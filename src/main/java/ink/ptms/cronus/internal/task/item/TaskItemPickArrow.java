@@ -31,7 +31,7 @@ public class TaskItemPickArrow extends Countable<PlayerPickupArrowEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerPickupArrowEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerPickupArrowEvent e) {
         return item == null || item.isItem(e.getItem().getItemStack());
     }
 

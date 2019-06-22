@@ -39,7 +39,7 @@ public class TaskPlayerTrade extends Countable<InventoryClickEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, InventoryClickEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, InventoryClickEvent e) {
         org.bukkit.inventory.ItemStack[] recipe = AsmHandler.getImpl().getRecipe(e.getInventory());
         return recipe != null && (item == null || item.isItem(Utils.NonNull(recipe[0])) || item.isItem(Utils.NonNull(recipe[1]))) && (item1 == null || item1.isItem(Utils.NonNull(recipe[0]))) && (item2 == null || item2.isItem(Utils.NonNull(recipe[1]))) && (result == null || result.isItem(Utils.NonNull(recipe[2])));
     }

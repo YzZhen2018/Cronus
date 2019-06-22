@@ -32,7 +32,7 @@ public class TaskPlayerRide extends Countable<PlayerMoveEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerMoveEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerMoveEvent event) {
         return player.getVehicle() instanceof LivingEntity && (entity == null || entity.isSelect(player.getVehicle()));
     }
 

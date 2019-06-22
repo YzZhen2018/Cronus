@@ -34,7 +34,7 @@ public class TaskPlayerRegain extends Uncountable<EntityRegainHealthEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityRegainHealthEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityRegainHealthEvent e) {
         return (reason == null || reason.isSelect(e.getRegainReason())) && (health == null || health.isSelect(getCount(player, dataQuest, e)));
     }
 

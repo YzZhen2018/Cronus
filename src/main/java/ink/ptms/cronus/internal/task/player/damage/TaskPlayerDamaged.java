@@ -48,7 +48,7 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, Event event) {
+    public boolean check(Player player, DataQuest dataQuest, Event event) {
         if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
             LivingEntity a = DamageUtils.getLivingAttackerInDamageEvent(e);

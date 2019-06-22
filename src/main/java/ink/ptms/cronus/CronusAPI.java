@@ -71,7 +71,7 @@ public class CronusAPI {
                         // 尚未完成
                         && !questTask.isCompleted(dataQuest)
                         // 事件检测
-                        && questTask.isValid(player, dataQuest, event)
+                        && questTask.check(player, dataQuest, event)
                         // 条件检测
                         && (questTask.getCondition() == null || questTask.getCondition().check(player, dataQuest, event))) {
                     // 条目进行

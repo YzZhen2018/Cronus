@@ -37,7 +37,7 @@ public class TaskPlayerShoot extends Countable<EntityShootBowEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityShootBowEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityShootBowEvent e) {
         return (bow == null || bow.isItem(e.getBow())) && (force == null || force.isSelect(e.getForce())) && (projectile == null || projectile.isSelect(e.getEntity()));
     }
 

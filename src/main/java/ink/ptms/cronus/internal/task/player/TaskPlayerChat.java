@@ -29,7 +29,7 @@ public class TaskPlayerChat extends Countable<AsyncPlayerChatEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, AsyncPlayerChatEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, AsyncPlayerChatEvent e) {
         return (message == null || e.getMessage().contains(message));
     }
 

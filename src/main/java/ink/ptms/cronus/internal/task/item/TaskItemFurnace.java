@@ -33,7 +33,7 @@ public class TaskItemFurnace extends Countable<FurnaceSmeltEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, FurnaceSmeltEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, FurnaceSmeltEvent e) {
         return (source == null || source.isItem(e.getSource())) && (result == null || result.isItem(e.getResult()));
     }
 

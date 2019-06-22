@@ -28,7 +28,7 @@ public class TaskPermission extends UnEvent {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EventPeriod event) {
+    public boolean check(Player player, DataQuest dataQuest, EventPeriod event) {
         return player.hasPermission(permission);
     }
 

@@ -39,7 +39,7 @@ public class TaskPlayerFish extends Countable<PlayerFishEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerFishEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerFishEvent e) {
         return (state == null || state.isSelect(e.getState())) && (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.FISHING_ROD)))) && (entity == null || (e.getCaught() != null && entity.isSelect(e.getCaught())));
     }
 

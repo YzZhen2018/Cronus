@@ -40,7 +40,7 @@ public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityBreedEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityBreedEvent e) {
         return (item == null || item.isItem(e.getBredWith())) && (mother == null || mother.isSelect(e.getMother())) && (father == null || father.isSelect(e.getFather())) && (entity == null || entity.isSelect(e.getEntity()));
     }
 

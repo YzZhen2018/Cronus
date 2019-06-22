@@ -37,7 +37,7 @@ public class TaskItemEnchant extends Countable<EnchantItemEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EnchantItemEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EnchantItemEvent e) {
         return (block == null || block.isSelect(e.getEnchantBlock()))
                 && (item == null || item.isItem(e.getItem()))
                 && (enchant == null || e.getEnchantsToAdd().entrySet().stream().anyMatch(a -> enchant.isSelect(a.getKey(), a.getValue())));

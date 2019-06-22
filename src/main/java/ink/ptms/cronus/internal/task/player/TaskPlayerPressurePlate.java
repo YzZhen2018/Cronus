@@ -34,7 +34,7 @@ public class TaskPlayerPressurePlate extends Countable<PlayerInteractEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerInteractEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerInteractEvent e) {
         return (block == null || block.isSelect(e.getClickedBlock())) && (location == null || location.inSelect(e.getClickedBlock().getLocation()));
     }
 

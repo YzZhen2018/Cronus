@@ -34,7 +34,7 @@ public class TaskItemCraft extends Countable<CraftItemEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, CraftItemEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, CraftItemEvent e) {
         return (result == null || result.isItem(e.getInventory().getResult())) && (matrix == null || Arrays.stream(e.getInventory().getMatrix()).anyMatch(matrix::isItem));
     }
 

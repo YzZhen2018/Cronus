@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @Author 坏黑
@@ -32,23 +33,24 @@ import java.util.stream.Collectors;
  */
 public class BuilderQuest extends CronusCommand {
 
-    private String id;
-    private String display;
-    private List<String> bookTag = Lists.newArrayList();
-    private String label;
-    private String cooldown;
-    private String timeout;
-    private List<String> actionAccept = Lists.newArrayList();
-    private List<String> actionAcceptFail = Lists.newArrayList();
-    private List<String> actionSuccess = Lists.newArrayList();
-    private List<String> actionFailure = Lists.newArrayList();
-    private List<String> actionCooldown = Lists.newArrayList();
-    private MatchEntry conditionAccept;
-    private MatchEntry conditionFailure;
-    private BuilderStageList stageList;
+    protected String id;
+    protected String display;
+    protected List<String> bookTag = Lists.newArrayList();
+    protected String label;
+    protected String cooldown;
+    protected String timeout;
+    protected List<String> actionAccept = Lists.newArrayList();
+    protected List<String> actionAcceptFail = Lists.newArrayList();
+    protected List<String> actionSuccess = Lists.newArrayList();
+    protected List<String> actionFailure = Lists.newArrayList();
+    protected List<String> actionCooldown = Lists.newArrayList();
+    protected MatchEntry conditionAccept;
+    protected MatchEntry conditionFailure;
+    protected BuilderStageList stageList;
 
     public BuilderQuest(String id) {
         this.id = id;
+        this.bookTag.addAll(IntStream.range(1, 100).mapToObj(a -> "a:" + a).collect(Collectors.toList()));
     }
 
     public void open(Player player) {

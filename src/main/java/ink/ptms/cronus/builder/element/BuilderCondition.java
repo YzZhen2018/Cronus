@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
-import ink.ptms.cronus.builder.element.condition.Append;
+import ink.ptms.cronus.builder.element.condition.MatchAppend;
 import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.builder.element.condition.MatchType;
 import ink.ptms.cronus.command.CronusCommand;
@@ -58,8 +58,21 @@ public class BuilderCondition extends CronusCommand {
             e.castClick().setCancelled(true);
             // 关闭界面
             if (e.castClick().getRawSlot() == 49) {
-                toggle = false;
-                player.closeInventory();
+                toggle = true;
+                // 执行动作
+                if (closeTask != null) {
+                    closeTask.run(null);
+                }
+                return;
+            }
+            // 下一页
+            else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                open(player, page + 1);
+                return;
+            }
+            // 上一页
+            else if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                open(player, page - 1);
                 return;
             }
             // 新建内容
@@ -103,7 +116,7 @@ public class BuilderCondition extends CronusCommand {
             else if (this.entry.getType() != MatchType.SINGLE) {
                 MatchEntry matchEntry = entryMap.get(e.castClick().getRawSlot());
                 // 增加条件
-                if (matchEntry instanceof Append) {
+                if (matchEntry instanceof MatchAppend) {
                     // 左键
                     if (e.castClick().isLeftClick()) {
                         BuilderCondition condition = new BuilderCondition(null, e.getClicker(), display);
@@ -176,12 +189,12 @@ public class BuilderCondition extends CronusCommand {
             entryMap.clear();
             // 新增内容标记
             List<MatchEntry> entryCollect = Lists.newArrayList(entry.getCollect());
-            entryCollect.add(new Append());
+            entryCollect.add(new MatchAppend());
             // 获取有效内容
             List<MatchEntry> iterator = new SimpleIterator(entryCollect).listIterator(page * 28, (page + 1) * 28);
             for (int i = 0; i < iterator.size(); i++) {
                 MatchEntry entry = iterator.get(i);
-                if (entry instanceof Append) {
+                if (entry instanceof MatchAppend) {
                     if (entryCollect.size() == 1) {
                         inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7左键增加 §8| §7右键删除").build());
                     } else {
@@ -194,7 +207,7 @@ public class BuilderCondition extends CronusCommand {
                 }
                 entryMap.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), entry);
             }
-            if (page > 1) {
+            if (page > 0) {
                 inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
             }
             if (Utils.next(page, entryCollect.size(), 28)) {

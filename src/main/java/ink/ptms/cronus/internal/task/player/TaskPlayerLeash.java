@@ -36,7 +36,7 @@ public class TaskPlayerLeash extends Countable<PlayerLeashEntityEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerLeashEntityEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerLeashEntityEvent e) {
         return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), MaterialControl.LEAD.parseMaterial())))) && (entity == null || entity.isSelect(e.getEntity()));
     }
 

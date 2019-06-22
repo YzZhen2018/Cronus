@@ -27,7 +27,7 @@ public class TaskPlayerWalkFrost extends Countable<EntityBlockFormEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityBlockFormEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityBlockFormEvent e) {
         return e.getBlock().getType().equals(Material.ICE);
     }
 

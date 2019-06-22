@@ -1,5 +1,6 @@
 package ink.ptms.cronus.command.impl;
 
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.util.Utils;
@@ -9,7 +10,9 @@ import me.skymc.taboolib.commands.internal.type.CommandArgument;
 import me.skymc.taboolib.commands.internal.type.CommandRegister;
 import me.skymc.taboolib.commands.internal.type.CommandType;
 import me.skymc.taboolib.inventory.ItemUtils;
+import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -150,6 +153,44 @@ public class CommandItem extends CronusCommand {
             } else {
                 Cronus.getCronusService().getItemStorage().delItem(args[0]);
                 normal(sender, "物品 &f" + args[0] + " &7已删除.");
+            }
+        }
+    };
+
+    @CommandRegister
+    BaseSubCommand importGui = new BaseSubCommand() {
+
+        @Override
+        public String getLabel() {
+            return "import";
+        }
+
+        @Override
+        public String getDescription() {
+            return "批量储存任务物品";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            if (!Cronus.getCronusService().isNonHooked()) {
+                normal(sender, "该功能已被其他插件代替.");
+            } else {
+                ((Player) sender).playSound(((Player) sender).getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, 1f);
+                ((Player) sender).openInventory(MenuBuilder.builder(Cronus.getInst())
+                        .title("物品导入")
+                        .rows(3)
+                        .items()
+                        .close(e -> {
+                            for (ItemStack itemStack : e.getInventory()) {
+                                if (ItemUtils.isNull(itemStack)) {
+                                    continue;
+                                }
+                                String name = TLocale.Translate.setUncolored(ItemUtils.getCustomName(itemStack));
+                                Cronus.getCronusService().getItemStorage().addItem(name, itemStack);
+                                normal(sender, "物品 &f" + name + " &7已储存.");
+                                Utils.addItem((Player) sender, itemStack);
+                            }
+                        }).build());
             }
         }
     };

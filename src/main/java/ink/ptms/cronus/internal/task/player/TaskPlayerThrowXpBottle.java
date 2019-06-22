@@ -31,7 +31,7 @@ public class TaskPlayerThrowXpBottle extends Countable<ExpBottleEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, ExpBottleEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, ExpBottleEvent e) {
         return (bottle == null || bottle.isSelect(e.getEntity()));
     }
 

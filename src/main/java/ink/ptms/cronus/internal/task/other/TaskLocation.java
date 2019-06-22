@@ -33,7 +33,7 @@ public class TaskLocation extends UnEvent {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EventPeriod event) {
+    public boolean check(Player player, DataQuest dataQuest, EventPeriod event) {
         return location != null && location.isSelectWorld(player.getLocation()) && (location.getMode() == Location.Mode.AREA ? location.inSelect(player.getLocation()) : location.toBukkit().distance(player.getLocation()) <= radius);
     }
 

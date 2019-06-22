@@ -27,7 +27,7 @@ public class TaskPlayerWalk extends Countable<PlayerMoveEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerMoveEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerMoveEvent e) {
         return player.isOnGround() && player.getLocation().getBlock().getType() == Material.AIR;
     }
 

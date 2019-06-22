@@ -26,7 +26,7 @@ public class TaskPlayerSwim extends Countable<PlayerMoveEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerMoveEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerMoveEvent event) {
         String block = player.getLocation().getBlock().getType().name();
         return block.contains("WATER") || block.contains("LAVA");
     }

@@ -34,7 +34,7 @@ public class TaskPlayerJumpHorse extends Countable<HorseJumpEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, HorseJumpEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, HorseJumpEvent e) {
         return (horse == null || horse.isSelect(e.getEntity())) && (power == null || power.isSelect(e.getPower()));
     }
 

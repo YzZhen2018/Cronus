@@ -50,7 +50,7 @@ public abstract class QuestTask<E extends Event> extends Actionable {
 
     abstract public boolean isCompleted(DataQuest dataQuest);
 
-    abstract public boolean isValid(Player player, DataQuest dataQuest, E event);
+    abstract public boolean check(Player player, DataQuest dataQuest, E event);
 
     abstract public void next(Player player, DataQuest dataQuest, E event);
 

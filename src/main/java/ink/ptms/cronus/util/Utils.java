@@ -1,6 +1,8 @@
 package ink.ptms.cronus.util;
 
 import com.ilummc.tlib.util.Strings;
+import me.skymc.taboolib.common.inject.TInject;
+import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,6 +16,13 @@ import java.util.Optional;
  * @Since 2019-05-11 15:42
  */
 public class Utils {
+
+    @TInject
+    static CooldownPack2 actionCooldown = new CooldownPack2("Cronus:Action", 100);
+
+    public static boolean isActionCooldown(Player player) {
+        return actionCooldown.isCooldown(player.getName(), 0);
+    }
 
     public static boolean isNull(ItemStack item) {
         return item == null || item.getType().equals(Material.AIR);
@@ -47,7 +56,7 @@ public class Utils {
     }
 
     public static boolean next(int page, int size, int entry) {
-        return page < (int) Math.floor(size / (double) entry);
+        return size / (double) entry > page + 1;
     }
 
     public static boolean isInt(double in) {

@@ -30,7 +30,7 @@ public class TaskPlayerLevel extends Uncountable<PlayerLevelChangeEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerLevelChangeEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerLevelChangeEvent e) {
         return level == null || level.isSelect(getCount(player, dataQuest, e));
     }
 

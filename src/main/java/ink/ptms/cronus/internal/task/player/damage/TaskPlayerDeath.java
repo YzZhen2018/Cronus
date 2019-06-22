@@ -40,7 +40,7 @@ public class TaskPlayerDeath extends Countable<PlayerDeathEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerDeathEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerDeathEvent e) {
         if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
             LivingEntity a = DamageUtils.getLivingAttackerInDamageEvent((EntityDamageByEntityEvent) player.getLastDamageCause());
             return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || attacker.isSelect(a)) && (cause == null || cause.isSelect(player.getLastDamageCause().getCause()));

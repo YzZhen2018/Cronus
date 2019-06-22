@@ -30,7 +30,7 @@ public class TaskPlayerExp extends Uncountable<PlayerExpChangeEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerExpChangeEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerExpChangeEvent e) {
         return xp == null || xp.isSelect(getCount(player, dataQuest, e));
     }
 

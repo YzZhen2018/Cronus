@@ -36,7 +36,7 @@ public class TaskBlockPlace extends Countable<BlockPlaceEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, BlockPlaceEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, BlockPlaceEvent e) {
         return (block == null || block.isSelect(e.getBlockPlaced())) && (blockAgainst == null || blockAgainst.isSelect(e.getBlockAgainst())) && (location == null || location.inSelect(e.getBlock().getLocation()));
     }
 

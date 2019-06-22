@@ -31,7 +31,7 @@ public class TaskPlayerThrow extends Countable<ProjectileLaunchEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, ProjectileLaunchEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, ProjectileLaunchEvent e) {
         return (projectile == null || projectile.isSelect(e.getEntity()));
     }
 

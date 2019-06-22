@@ -34,7 +34,7 @@ public class TaskPlayerBook extends Countable<PlayerEditBookEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerEditBookEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerEditBookEvent e) {
         return (title == null || e.getNewBookMeta().getTitle().contains(title)) && (content == null || String.join("", e.getNewBookMeta().getPages()).contains(content)) && (page == null || page.isSelect(e.getNewBookMeta().getPageCount()));
     }
 

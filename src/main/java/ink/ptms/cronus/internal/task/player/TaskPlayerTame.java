@@ -31,7 +31,7 @@ public class TaskPlayerTame extends Countable<EntityTameEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityTameEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityTameEvent e) {
         return (entity == null || entity.isSelect(e.getEntity()));
     }
 

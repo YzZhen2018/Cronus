@@ -34,7 +34,7 @@ public class TaskPlayerBucketFill extends Countable<PlayerBucketFillEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerBucketFillEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerBucketFillEvent e) {
         return (block == null || block.isSelect(e.getBlockClicked())) && (bucket == null || bucket.isItem(e.getItemStack()));
     }
 

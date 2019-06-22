@@ -34,7 +34,7 @@ public class TaskPlayerThrowPotion extends Countable<PotionSplashEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PotionSplashEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PotionSplashEvent e) {
         return (affect == null || e.getAffectedEntities().stream().anyMatch(a -> affect.isSelect(a))) && (effect == null || e.getPotion().getEffects().stream().anyMatch(p -> effect.isSelect(p.getType(), p.getAmplifier())));
     }
 

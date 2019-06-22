@@ -34,7 +34,7 @@ public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PrepareAnvilEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PrepareAnvilEvent e) {
         return (item == null || item.isItem(e.getResult())) && (block == null || (e.getInventory().getLocation() != null && block.isSelect(e.getInventory().getLocation().getBlock())));
     }
 

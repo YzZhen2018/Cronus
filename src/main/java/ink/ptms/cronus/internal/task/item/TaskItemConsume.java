@@ -31,7 +31,7 @@ public class TaskItemConsume extends Countable<PlayerItemConsumeEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerItemConsumeEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerItemConsumeEvent e) {
         return item == null || item.isItem(e.getItem());
     }
 

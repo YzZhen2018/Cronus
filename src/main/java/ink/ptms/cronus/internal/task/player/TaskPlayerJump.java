@@ -19,7 +19,7 @@ public class TaskPlayerJump extends Countable<PlayerJumpEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, PlayerJumpEvent event) {
+    public boolean check(Player player, DataQuest dataQuest, PlayerJumpEvent event) {
         return true;
     }
 

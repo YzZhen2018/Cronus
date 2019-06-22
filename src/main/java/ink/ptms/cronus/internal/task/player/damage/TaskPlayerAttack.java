@@ -45,7 +45,7 @@ public class TaskPlayerAttack extends QuestTask<EntityDamageByEntityEvent> {
     }
 
     @Override
-    public boolean isValid(Player player, DataQuest dataQuest, EntityDamageByEntityEvent e) {
+    public boolean check(Player player, DataQuest dataQuest, EntityDamageByEntityEvent e) {
         return (weapon == null || weapon.isItem(player.getItemInHand())) && (victim == null || victim.isSelect(e.getEntity())) && (cause == null || cause.isSelect(e.getCause()));
     }
 
