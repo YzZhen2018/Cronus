@@ -228,6 +228,63 @@ public class BuilderList extends BuilderQuest {
         });
     }
 
+    @Override
+    public String getDisplay() {
+        return display;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public List<String> getListOrigin() {
+        return listOrigin;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public CloseTask getClose() {
+        return close;
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public boolean isToggle() {
+        return toggle;
+    }
+
+    public boolean isAppend() {
+        return append;
+    }
+
+    public Map<Integer, Integer> getMap() {
+        return map;
+    }
+
+    public ClickTask getDefaultEdit() {
+        return defaultEdit;
+    }
+
+    public ClickTask getDefaultDelete() {
+        return defaultDelete;
+    }
+
+    public ClickTask getDefaultMoveLeft() {
+        return defaultMoveLeft;
+    }
+
+    public ClickTask getDefaultMoveRight() {
+        return defaultMoveRight;
+    }
+
     interface Candidate {
 
         Map<String, String> run();

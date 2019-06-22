@@ -26,9 +26,9 @@ public class GuideWayData {
     private Location target;
     private List<ArmorStand> entity;
     private List<String> text;
-    private int distance;
+    private double distance;
 
-    GuideWayData(Player owner, Location target, List<ArmorStand> entity, List<String> text, int distance) {
+    GuideWayData(Player owner, Location target, List<ArmorStand> entity, List<String> text, double distance) {
         this.owner = owner;
         this.target = target;
         this.entity = entity;
@@ -36,7 +36,7 @@ public class GuideWayData {
         this.distance = distance;
     }
 
-    public static GuideWayData create(Player player, Location target, List<String> text, int distance) {
+    public static GuideWayData create(Player player, Location target, List<String> text, double distance) {
         Location midPoint = getMidPoint(player.getEyeLocation(), target, distance);
         if (midPoint != null) {
             String dis = doubleFormat.format(player.getLocation().distance(target));
@@ -84,7 +84,7 @@ public class GuideWayData {
         owner.spawnParticle(TabooLib.getVersionNumber() >= 10900 ? Particle.END_ROD : Particle.CLOUD, target, 500, 0, 100, 0, 0);
     }
 
-    public static Location getMidPoint(Location start, Location end, int distance) {
+    public static Location getMidPoint(Location start, Location end, double distance) {
         if (!start.getWorld().equals(end.getWorld())) {
             return null;
         }
@@ -117,7 +117,7 @@ public class GuideWayData {
         return text;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 }

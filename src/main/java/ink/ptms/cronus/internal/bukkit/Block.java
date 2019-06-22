@@ -1,6 +1,8 @@
 package ink.ptms.cronus.internal.bukkit;
 
+import ink.ptms.cronus.internal.version.MaterialControl;
 import me.skymc.taboolib.TabooLib;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Arrays;
@@ -23,6 +25,10 @@ public class Block {
         return points.stream().anyMatch(b -> b.isSelect(block));
     }
 
+    public boolean isSelect(ItemStack item) {
+        return points.stream().anyMatch(b -> b.isSelect(item));
+    }
+
     public class Point {
 
         private String name;
@@ -36,6 +42,11 @@ public class Block {
 
         public boolean isSelect(org.bukkit.block.Block block) {
             return block.getType().name().equalsIgnoreCase(name) && (data == -1 || block.getData() == data);
+        }
+
+        public boolean isSelect(ItemStack item) {
+            MaterialControl material = MaterialControl.requestXMaterial(name, (byte) data);
+            return material.isSameMaterial(item);
         }
 
         public String asString() {

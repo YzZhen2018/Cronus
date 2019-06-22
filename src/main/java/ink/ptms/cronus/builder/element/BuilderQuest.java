@@ -2,6 +2,7 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.command.CronusCommand;
@@ -25,7 +26,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @Author 坏黑
@@ -50,7 +50,6 @@ public class BuilderQuest extends CronusCommand {
 
     public BuilderQuest(String id) {
         this.id = id;
-        this.bookTag.addAll(IntStream.range(1, 100).mapToObj(a -> "a:" + a).collect(Collectors.toList()));
     }
 
     public void open(Player player) {
@@ -337,7 +336,7 @@ public class BuilderQuest extends CronusCommand {
         if (more) {
             array.add("§f...");
         }
-        return array;
+        return TLocale.Translate.setColored(array);
     }
 
     protected void editString(Player player, String display, String origin, EditTask edit) {
@@ -366,6 +365,58 @@ public class BuilderQuest extends CronusCommand {
                 open(player);
             }
         });
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getCooldown() {
+        return cooldown;
+    }
+
+    public String getTimeout() {
+        return timeout;
+    }
+
+    public List<String> getActionAccept() {
+        return actionAccept;
+    }
+
+    public List<String> getActionAcceptFail() {
+        return actionAcceptFail;
+    }
+
+    public List<String> getActionSuccess() {
+        return actionSuccess;
+    }
+
+    public List<String> getActionFailure() {
+        return actionFailure;
+    }
+
+    public List<String> getActionCooldown() {
+        return actionCooldown;
+    }
+
+    public MatchEntry getConditionAccept() {
+        return conditionAccept;
+    }
+
+    public MatchEntry getConditionFailure() {
+        return conditionFailure;
+    }
+
+    public BuilderStageList getStageList() {
+        return stageList;
     }
 
     interface EditTask {

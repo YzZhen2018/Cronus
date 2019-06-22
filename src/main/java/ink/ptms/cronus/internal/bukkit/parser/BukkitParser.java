@@ -44,6 +44,10 @@ public class BukkitParser {
         return new Entity(String.valueOf(str));
     }
 
+    public static Location toLocation(org.bukkit.Location in) {
+        return new Location(Location.Mode.POINT, null, new org.bukkit.Location[] {in});
+    }
+
     public static Location toLocation(Object in) {
         String str = String.valueOf(in);
         if (str.toLowerCase().startsWith("area=")) {

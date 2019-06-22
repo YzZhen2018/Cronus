@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.editor.EditorAPI;
@@ -24,21 +25,18 @@ import java.util.List;
  */
 public class BuilderStage extends BuilderQuest {
 
-    private List<String> actionRestart = Lists.newCopyOnWriteArrayList();
+    private List<String> actionRestart = Lists.newArrayList();
     private List<List<String>> content = Lists.newCopyOnWriteArrayList();
     private List<List<String>> contentCompeted = Lists.newCopyOnWriteArrayList();
-    private List<String> contentGlobal = Lists.newCopyOnWriteArrayList();
+    private List<String> contentGlobal = Lists.newArrayList();
     private MatchEntry conditionRestart;
     private Player player;
     private BuilderStageList list;
+    private BuilderTaskList listTask;
     private boolean toggle;
 
     public BuilderStage(String id) {
         super(id);
-    }
-
-    public String getId() {
-        return id;
     }
 
     @Override
@@ -47,6 +45,9 @@ public class BuilderStage extends BuilderQuest {
     }
 
     public void open(Player player, BuilderStageList list) {
+        if (listTask == null) {
+            listTask = new BuilderTaskList();
+        }
         this.player = player;
         this.list = list;
         Inventory inventory = Builders.normal("阶段编辑 : " + id,
@@ -94,9 +95,9 @@ public class BuilderStage extends BuilderQuest {
                                     open(player, list);
                                 });
                                 break;
-                            case 29: {
+                            case 28: {
                                 toggle = true;
-                                BuilderCondition condition = new BuilderCondition(conditionFailure, e.getClicker(), "任务失败条件");
+                                BuilderCondition condition = new BuilderCondition(conditionFailure, e.getClicker(), "阶段失败条件");
                                 condition.setCloseTask(c -> {
                                     conditionFailure = condition.getEntry();
                                     Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> open(e.getClicker()), 1);
@@ -104,6 +105,10 @@ public class BuilderStage extends BuilderQuest {
                                 condition.open(player, 0);
                                 break;
                             }
+                            case 40:
+                                toggle = true;
+                                listTask.open(e.getClicker(), 0, c -> open(e.getClicker()), Maps::newHashMap);
+                                break;
                             case 49:
                                 toggle = true;
                                 list.open(player);
@@ -151,7 +156,7 @@ public class BuilderStage extends BuilderQuest {
                 .build());
         inventory.setItem(40, new ItemBuilder(Material.PAPER)
                 .name("§b阶段条目")
-                .lore("", "§f无")
+                .lore(toLore(listTask.getListOrigin()))
                 .build());
         inventory.setItem(49, new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem())
                 .name("§c上级目录")
@@ -159,5 +164,41 @@ public class BuilderStage extends BuilderQuest {
                 .build());
         player.openInventory(inventory);
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+    }
+
+    public List<String> getActionRestart() {
+        return actionRestart;
+    }
+
+    public List<List<String>> getContent() {
+        return content;
+    }
+
+    public List<List<String>> getContentCompeted() {
+        return contentCompeted;
+    }
+
+    public List<String> getContentGlobal() {
+        return contentGlobal;
+    }
+
+    public MatchEntry getConditionRestart() {
+        return conditionRestart;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public BuilderStageList getList() {
+        return list;
+    }
+
+    public BuilderTaskList getListTask() {
+        return listTask;
+    }
+
+    public boolean isToggle() {
+        return toggle;
     }
 }

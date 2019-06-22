@@ -37,9 +37,9 @@ public class CronusService {
 
     @TInject
     private static TLogger logger;
-    private DatabaseType databaseType;
     private boolean purtmarsHooked;
     private boolean asgardHooked;
+    private DatabaseType databaseType;
     private Map<String, Service> services = Maps.newHashMap();
     private Map<String, Quest> registeredQuest = Maps.newHashMap();
     private Map<String, QuestBook> registeredQuestBook = Maps.newHashMap();

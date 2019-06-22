@@ -294,4 +294,36 @@ public class BuilderCondition extends CronusCommand {
     public MatchEntry getEntry() {
         return entry;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public BuilderCondition getParent() {
+        return parent;
+    }
+
+    public Map<Integer, MatchEntry> getEntryMap() {
+        return entryMap;
+    }
+
+    public ClickTask getClickTask() {
+        return clickTask;
+    }
+
+    public CloseTask getCloseTask() {
+        return closeTask;
+    }
+
+    public boolean isToggle() {
+        return toggle;
+    }
+
+    public int getPage() {
+        return page;
+    }
 }

@@ -5,6 +5,7 @@ import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.NumberConversions;
@@ -20,8 +21,8 @@ public class Utils {
     @TInject
     static CooldownPack2 actionCooldown = new CooldownPack2("Cronus:Action", 100);
 
-    public static boolean isActionCooldown(Player player) {
-        return actionCooldown.isCooldown(player.getName(), 0);
+    public static boolean isActionCooldown(CommandSender sender) {
+        return actionCooldown.isCooldown(sender.getName(), 0);
     }
 
     public static boolean isNull(ItemStack item) {

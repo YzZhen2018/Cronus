@@ -950,7 +950,7 @@ public enum MaterialControl {
         return false;
     }
 
-    public MaterialControl fromMaterial(Material mat) {
+    public static MaterialControl fromMaterial(Material mat) {
         try {
             return MaterialControl.valueOf(mat.toString());
         } catch (IllegalArgumentException e) {
@@ -963,7 +963,7 @@ public enum MaterialControl {
         return null;
     }
 
-    public boolean isDamageable(MaterialControl type) {
+    public static boolean isDamageable(MaterialControl type) {
         switch (type.toString()) {
             case "HELMET":
                 return true;

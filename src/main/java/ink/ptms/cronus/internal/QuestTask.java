@@ -38,7 +38,7 @@ public abstract class QuestTask<E extends Event> extends Actionable {
         if (config.contains("guide")) {
             Location target = BukkitParser.toLocation(config.getString("guide.target"));
             if (target.isBukkit()) {
-                guide = new GuideWayCache(config.getInt("guide.distance", 2), target, TLocale.Translate.setColored(config.getStringList("guide.text")));
+                guide = new GuideWayCache(config.getDouble("guide.distance", 2), target, TLocale.Translate.setColored(config.getStringList("guide.text")));
             } else {
                 logger.error("Guide Target \"" + config.getString("guide.target") + "\" parsing failed.");
             }

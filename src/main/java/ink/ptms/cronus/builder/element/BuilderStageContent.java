@@ -2,6 +2,7 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.editor.EditorAPI;
@@ -152,7 +153,7 @@ public class BuilderStageContent extends CronusCommand {
                 if (content.isEmpty()) {
                     list.add("§f无内容");
                 } else {
-                    list.addAll(content.stream().map(s -> "§f" + s).collect(Collectors.toList()));
+                    list.addAll(content.stream().map(s -> "§f" + TLocale.Translate.setColored(s)).collect(Collectors.toList()));
                 }
                 list.addAll(Lists.newArrayList("§8§m                  ", "§7修改: §8左键", "§7删除: §8右键", "§7左移: §8SHIFT+左键", "§7右移: §8SHIFT+右键"));
                 inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER).name("§f第 " + (((page + 1) * i) + 1) + " 页").lore(list).build());
@@ -178,5 +179,41 @@ public class BuilderStageContent extends CronusCommand {
 
     public boolean isAppend(List<String> content) {
         return content.size() == 1 && content.get(0).equals("$append");
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public BuilderStage getBuilderStage() {
+        return builderStage;
+    }
+
+    public List<List<String>> getContent() {
+        return content;
+    }
+
+    public Map<Integer, List<String>> getMap() {
+        return map;
+    }
+
+    public Map<Integer, Integer> getMapIndex() {
+        return mapIndex;
+    }
+
+    public boolean isToggle() {
+        return toggle;
+    }
+
+    public boolean isAppend() {
+        return append;
+    }
+
+    public int getPage() {
+        return page;
     }
 }
