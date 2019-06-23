@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import me.skymc.taboolib.inventory.builder.v2.CloseTask;
 import me.skymc.taboolib.json.tellraw.TellrawJson;
 import me.skymc.taboolib.message.ChatCatcher;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -17,8 +18,18 @@ public class BuilderStageList extends BuilderList {
 
     private List<BuilderStage> stages = Lists.newArrayList();
 
+    public BuilderStageList(ConfigurationSection section) {
+        super("任务阶段", Lists.newArrayList());
+        section.getKeys(false).forEach(key -> stages.add(new BuilderStage(section.getConfigurationSection(key))));
+        init();
+    }
+
     public BuilderStageList() {
         super("任务阶段", Lists.newArrayList());
+        init();
+    }
+
+    public void init() {
         // 左移
         this.defaultMoveLeft = index -> {
             BuilderStage element = stages.remove(index);
@@ -79,6 +90,10 @@ public class BuilderStageList extends BuilderList {
         this.list = Lists.newArrayList(stages.stream().map(BuilderStage::getId).collect(Collectors.toList()));
         this.listOrigin = Lists.newArrayList();
         super.open(player, page, close, candidate);
+    }
+
+    public void export(ConfigurationSection section) {
+        stages.forEach(builderStage -> builderStage.export(section.contains(builderStage.getId()) ? section.getConfigurationSection(builderStage.getId()) : section.createSection(builderStage.getId())));
     }
 
     public List<BuilderStage> getStages() {

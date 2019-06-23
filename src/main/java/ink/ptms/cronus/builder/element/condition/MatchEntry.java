@@ -1,9 +1,15 @@
 package ink.ptms.cronus.builder.element.condition;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import ink.ptms.cronus.internal.condition.ConditionParser;
+import ink.ptms.cronus.internal.condition.collect.Collect;
+import ink.ptms.cronus.internal.condition.collect.CollectA;
+import ink.ptms.cronus.internal.condition.collect.CollectO;
+import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -26,6 +32,36 @@ public class MatchEntry {
     public MatchEntry(MatchType type, List<MatchEntry> collect) {
         this.type = type;
         this.collect = collect;
+    }
+
+    public MatchEntry(Object obj) {
+        if (obj instanceof String) {
+            type = MatchType.SINGLE;
+            single = String.valueOf(obj);
+        } else if (obj instanceof Collect) {
+            type = obj instanceof CollectA ? MatchType.ALL_MATCH : MatchType.ANY_MATCH;
+            Object predicate = ((Collect) obj).serialize().get("predicate");
+            if (predicate == null) {
+                return;
+            }
+            for (Object element : ((List) predicate)) {
+                collect.add(new MatchEntry(element));
+            }
+        }
+    }
+
+    public void save(ConfigurationSection section, String key) {
+        section.set(key, toObject());
+    }
+
+    public Object toObject() {
+        if (type == MatchType.SINGLE) {
+            return single;
+        } else {
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("predicate", collect.stream().map(MatchEntry::toObject).collect(Collectors.toList()));
+            return type == MatchType.ALL_MATCH ? new CollectA(Lists.newArrayList(), map) : new CollectO(Lists.newArrayList(), map);
+        }
     }
 
     public List<String> asList(int index) {

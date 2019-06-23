@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import me.skymc.taboolib.inventory.builder.v2.CloseTask;
 import me.skymc.taboolib.json.tellraw.TellrawJson;
 import me.skymc.taboolib.message.ChatCatcher;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -17,8 +18,18 @@ public class BuilderTaskList extends BuilderList {
 
     private List<BuilderTask> tasks = Lists.newArrayList();
 
+    public BuilderTaskList(ConfigurationSection section) {
+        super("阶段条目", Lists.newArrayList());
+        section.getKeys(false).forEach(key -> tasks.add(new BuilderTask(section.getConfigurationSection(key))));
+        init();
+    }
+
     public BuilderTaskList() {
         super("阶段条目", Lists.newArrayList());
+        init();
+    }
+
+    public void init() {
         // 左移
         this.defaultMoveLeft = index -> {
             BuilderTask element = tasks.remove(index);
@@ -79,6 +90,10 @@ public class BuilderTaskList extends BuilderList {
         this.list = Lists.newArrayList(tasks.stream().map(BuilderTask::getId).collect(Collectors.toList()));
         this.listOrigin = Lists.newArrayList();
         super.open(player, page, close, candidate);
+    }
+
+    public void export(ConfigurationSection section) {
+        tasks.forEach(builderTask -> builderTask.export(section.contains(builderTask.getId()) ? section.getConfigurationSection(builderTask.getId()) : section.createSection(builderTask.getId())));
     }
 
     public List<BuilderTask> getTasks() {

@@ -27,7 +27,7 @@ import java.util.List;
  * @Author 坏黑
  * @Since 2019-05-26 23:19
  */
-class CronusLoader {
+public class CronusLoader {
 
     @TInject
     private static TLogger logger;
@@ -170,5 +170,9 @@ class CronusLoader {
             }
             questStage.getTask().add(questTask);
         }
+    }
+
+    public File getFolder() {
+        return folder;
     }
 }

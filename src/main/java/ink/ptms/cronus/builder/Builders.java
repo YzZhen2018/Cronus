@@ -46,6 +46,10 @@ public class Builders {
         });
     }
 
+    public static TaskEntry fromType(String in) {
+        return taskEntries.stream().filter(taskEntry -> taskEntry.getKey().equals(in)).findFirst().orElse(null);
+    }
+
     public static Inventory normal(String title, ClickTask click, CloseTask close) {
         return MenuBuilder.builder(Cronus.getInst())
                 .title(title)

@@ -12,6 +12,8 @@ import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.program.ProgramLoader;
 import ink.ptms.cronus.util.StringDate;
 import ink.ptms.cronus.util.Utils;
+import me.skymc.taboolib.fileutils.ConfigUtils;
+import me.skymc.taboolib.fileutils.FileUtils;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;
 import me.skymc.taboolib.inventory.builder.v2.ClickType;
 import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
@@ -21,8 +23,11 @@ import me.skymc.taboolib.timeutil.TimeFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,8 +42,8 @@ public class BuilderQuest extends CronusCommand {
     protected String display;
     protected List<String> bookTag = Lists.newArrayList();
     protected String label;
-    protected String cooldown;
     protected String timeout;
+    protected String cooldown;
     protected List<String> actionAccept = Lists.newArrayList();
     protected List<String> actionAcceptFail = Lists.newArrayList();
     protected List<String> actionSuccess = Lists.newArrayList();
@@ -50,6 +55,92 @@ public class BuilderQuest extends CronusCommand {
 
     public BuilderQuest(String id) {
         this.id = id;
+    }
+
+    public BuilderQuest(File file) {
+        YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+        for (String id : yaml.getKeys(false)) {
+            import0(yaml.getConfigurationSection(id));
+            return;
+        }
+    }
+
+    public void import0(ConfigurationSection section) {
+        id = section.getName();
+        display = section.getString("display");
+        label = section.getString("label");
+        timeout = section.getString("timeout");
+        cooldown = section.getString("cooldown");
+        if (section.contains("booktag")) {
+            bookTag = section.getStringList("booktag");
+        }
+        if (section.contains("action.accept")) {
+            actionAccept = section.getStringList("action.accept");
+        }
+        if (section.contains("action.accept")) {
+            actionAcceptFail = section.getStringList("action.accept-fail");
+        }
+        if (section.contains("action.success")) {
+            actionSuccess = section.getStringList("action.success");
+        }
+        if (section.contains("action.failure")) {
+            actionFailure = section.getStringList("action.failure");
+        }
+        if (section.contains("action.cooldown")) {
+            actionCooldown = section.getStringList("action.cooldown");
+        }
+        if (section.contains("condition.accept")) {
+            conditionAccept = new MatchEntry(section.get("condition.accept"));
+        }
+        if (section.contains("condition.failure")) {
+            conditionFailure = new MatchEntry(section.get("condition.failure"));
+        }
+        if (section.contains("stage")) {
+            stageList = new BuilderStageList(section.getConfigurationSection("stage"));
+        }
+    }
+
+    public void export() {
+        File file = new File(Cronus.getCronusLoader().getFolder(), "builder/" + id + ".yml");
+        FileUtils.createNewFileAndPath(file);
+        YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+        yaml.set(id + ".display", display);
+        yaml.set(id + ".label", label);
+        yaml.set(id + ".timeout", timeout);
+        yaml.set(id + ".cooldown", cooldown);
+        if (!bookTag.isEmpty()) {
+            yaml.set(id + ".booktag", bookTag);
+        }
+        if (!actionAccept.isEmpty()) {
+            yaml.set(id + ".action.accept", actionAccept);
+        }
+        if (!actionAcceptFail.isEmpty()) {
+            yaml.set(id + ".action.accept-fail", actionAcceptFail);
+        }
+        if (!actionSuccess.isEmpty()) {
+            yaml.set(id + ".action.success", actionSuccess);
+        }
+        if (!actionFailure.isEmpty()) {
+            yaml.set(id + ".action.failure", actionFailure);
+        }
+        if (!actionCooldown.isEmpty()) {
+            yaml.set(id + ".action.cooldown", actionCooldown);
+        }
+        ConfigurationSection section = yaml.contains(id + ".condition") ? yaml.getConfigurationSection(id + ".condition") : yaml.createSection(id + ".condition");
+        if (conditionAccept != null) {
+            conditionAccept.save(section, "accept");
+        }
+        if (conditionFailure != null) {
+            conditionFailure.save(section, "failure");
+        }
+        if (stageList != null) {
+            stageList.export(yaml.contains(id + ".stage") ? yaml.getConfigurationSection(id + ".stage") : yaml.createSection(id + ".stage"));
+        }
+        try {
+            yaml.save(file);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public void open(Player player) {
@@ -74,31 +165,31 @@ public class BuilderQuest extends CronusCommand {
                         .name("§b任务标签")
                         .lore("", (label == null ? "§f无" : "§f" + label))
                         .build())
-                .put('3', new ItemBuilder(Material.WATCH)
+                .put('3', new ItemBuilder(MaterialControl.CLOCK.parseMaterial())
                         .name("§b任务冷却时间")
                         .lore("", "§f" + (cooldown == null ? "无" : displayCooldown()))
                         .build())
-                .put('4', new ItemBuilder(Material.WATCH)
+                .put('4', new ItemBuilder(MaterialControl.CLOCK.parseMaterial())
                         .name("§b任务超时时间")
                         .lore("", "§f" + (timeout == null ? "无" : displayTimeout()))
                         .build())
-                .put('5', new ItemBuilder(Material.DIODE)
+                .put('5', new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                         .name("§b任务接受动作")
                         .lore(toLore(actionAccept))
                         .build())
-                .put('6', new ItemBuilder(Material.DIODE)
+                .put('6', new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                         .name("§b任务接受动作 (条件不足)")
                         .lore(toLore(actionAcceptFail))
                         .build())
-                .put('7', new ItemBuilder(Material.DIODE)
+                .put('7', new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                         .name("§b任务完成动作")
                         .lore(toLore(actionSuccess))
                         .build())
-                .put('8', new ItemBuilder(Material.DIODE)
+                .put('8', new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                         .name("§b任务失败动作")
                         .lore(toLore(actionFailure))
                         .build())
-                .put('9', new ItemBuilder(Material.DIODE)
+                .put('9', new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                         .name("§b任务冷却动作")
                         .lore(toLore(actionCooldown))
                         .build())
@@ -114,7 +205,7 @@ public class BuilderQuest extends CronusCommand {
                         .name("§b任务阶段")
                         .lore(toLore(stageList.getStages().stream().map(BuilderStage::getId).collect(Collectors.toList())))
                         .build())
-                .put('%', new ItemBuilder(Material.BOOK_AND_QUILL)
+                .put('%', new ItemBuilder(MaterialControl.WRITABLE_BOOK.parseMaterial())
                         .name("§a保存配置")
                         .lore("", "§7文件位置", "§8§nplugins/Cronus/quests/builder/" + id + ".yml")
                         .build())
@@ -257,6 +348,17 @@ public class BuilderQuest extends CronusCommand {
                             }
                             case 40:
                                 stageList.open(e.getClicker(), 0, c -> open(e.getClicker()), Maps::newHashMap);
+                                break;
+                            case 49:
+                                player.closeInventory();
+                                normal(player, "正在导出...");
+                                try {
+                                    export();
+                                    normal(player, "导出完成!");
+                                } catch (Throwable t) {
+                                    t.printStackTrace();
+                                    error(player, "导出失败: " + t.getMessage());
+                                }
                                 break;
                         }
                     }

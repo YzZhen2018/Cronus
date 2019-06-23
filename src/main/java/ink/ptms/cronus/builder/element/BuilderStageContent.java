@@ -56,7 +56,7 @@ public class BuilderStageContent extends CronusCommand {
         this.map.clear();
         this.page = page;
         this.toggle = true;
-        this.append = hasAppend() || content.add(Lists.newArrayList("$append"));
+        this.append = hasAppend() || content.add(Lists.newCopyOnWriteArrayList(Lists.newArrayList("$append")));
         Inventory inventory = Builders.normal(display,
                 e -> {
                     if (e.getClickType() == ClickType.CLICK) {
@@ -68,11 +68,11 @@ public class BuilderStageContent extends CronusCommand {
                             builderStage.open(player);
                         }
                         // 下一页
-                        else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                        else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                             open(page + 1);
                         }
                         // 上一页
-                        else if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                        else if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                             open(page - 1);
                         }
                         List<String> content = map.get(e.castClick().getRawSlot());
@@ -85,18 +85,16 @@ public class BuilderStageContent extends CronusCommand {
                             open(page);
                         }
                         // 修改
-                        else {
+                        else if (mapIndex.containsKey(e.castClick().getRawSlot())) {
                             int index = mapIndex.get(e.castClick().getRawSlot());
                             // 左键
                             if (e.castClick().isLeftClick()) {
-                                if (e.castClick().getClick().isLeftClick()) {
-                                    // 左移
-                                    if (e.castClick().isShiftClick()) {
-                                        // 有效
-                                        if (index > 0 && !Utils.isActionCooldown(player)) {
-                                            List<String> element = this.content.remove(index);
-                                            this.content.add(index - 1, element);
-                                        }
+                                // 左移
+                                if (e.castClick().getClick().isShiftClick()) {
+                                    // 有效
+                                    if (index > 0 && !Utils.isActionCooldown(player)) {
+                                        List<String> element = this.content.remove(index);
+                                        this.content.add(index - 1, element);
                                     }
                                 } else {
                                     toggle = true;
@@ -126,7 +124,7 @@ public class BuilderStageContent extends CronusCommand {
                                     }
                                 } else {
                                     content.add("$delete");
-                                    content.stream().filter(c -> c.contains("$delete")).forEach(content::remove);
+                                    this.content.stream().filter(c -> c.contains("$delete")).forEach(this.content::remove);
                                     open(page);
                                 }
                             }

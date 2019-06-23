@@ -58,7 +58,7 @@ public class BuilderList extends BuilderQuest {
     };
 
     public BuilderList(String display, List<String> list) {
-        super(null);
+        super("");
         this.display = display;
         this.listOrigin = list;
         this.list = Lists.newArrayList(list);
@@ -90,11 +90,11 @@ public class BuilderList extends BuilderQuest {
                     if (e.getClickType() == ClickType.CLICK && !ItemUtils.isNull(e.castClick().getCurrentItem())) {
                         e.castClick().setCancelled(true);
                         // 上一页
-                        if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                        if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                             open(player, page - 1, close);
                         }
                         // 下一页
-                        else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+                        else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                             open(player, page + 1, close);
                         }
                         // 返回

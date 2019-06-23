@@ -18,7 +18,7 @@ public abstract class EnumEntry<E extends Enum<E>> {
     protected List<E> data = Lists.newArrayList();
 
     public EnumEntry(String in) {
-        for (String state : in.split(";")) {
+        for (String state : in.split("[,;]")) {
             Object entry = Enums.getIfPresent(origin(), state.toUpperCase()).orNull();
             if (entry != null) {
                 data.add((E) entry);
@@ -30,6 +30,10 @@ public abstract class EnumEntry<E extends Enum<E>> {
 
     public boolean isSelect(E element) {
         return data.contains(element);
+    }
+
+    public List<E> getData() {
+        return data;
     }
 
     abstract public Class origin();

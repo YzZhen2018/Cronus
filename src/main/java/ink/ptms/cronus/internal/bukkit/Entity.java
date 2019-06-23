@@ -15,7 +15,7 @@ public class Entity {
     private List<Point> points;
 
     public Entity(String in) {
-        points = Arrays.stream(in.split(";")).map(Point::new).collect(Collectors.toList());
+        points = Arrays.stream(in.split("[,;]")).map(Point::new).collect(Collectors.toList());
     }
 
     public boolean isSelect(org.bukkit.entity.Entity entity) {

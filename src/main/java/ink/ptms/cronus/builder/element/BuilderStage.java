@@ -14,6 +14,7 @@ import me.skymc.taboolib.inventory.builder.v2.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -37,6 +38,63 @@ public class BuilderStage extends BuilderQuest {
 
     public BuilderStage(String id) {
         super(id);
+    }
+
+    public BuilderStage(ConfigurationSection section) {
+        super(section.getName());
+        if (section.contains("action.restart")) {
+            actionRestart = section.getStringList("action.restart");
+        }
+        if (section.contains("action.success")) {
+            actionSuccess = section.getStringList("action.success");
+        }
+        if (section.contains("content")) {
+            ConfigurationSection content = section.getConfigurationSection("content");
+            content.getKeys(false).forEach(index -> this.content.add(Lists.newCopyOnWriteArrayList(content.getStringList(index))));
+        }
+        if (section.contains("content-completed")) {
+            ConfigurationSection content = section.getConfigurationSection("content-completed");
+            content.getKeys(false).forEach(index -> this.contentCompeted.add(Lists.newCopyOnWriteArrayList(content.getStringList(index))));
+        }
+        if (section.contains("content-global")) {
+            contentGlobal = section.getStringList("content-global");
+        }
+        if (section.contains("restart")) {
+            conditionRestart = new MatchEntry(section.get("restart"));
+        }
+        if (section.contains("task")) {
+            listTask = new BuilderTaskList(section.getConfigurationSection("task"));
+        }
+    }
+
+    public void export(ConfigurationSection section) {
+        if (!actionRestart.isEmpty()) {
+            section.set("action.restart", actionRestart);
+        }
+        if (!actionSuccess.isEmpty()) {
+            section.set("action.success", actionSuccess);
+        }
+        if (!content.isEmpty()) {
+            int index = 0;
+            for (List<String> content : content) {
+                section.set("content.t" + index++, content);
+            }
+        }
+        if (!contentCompeted.isEmpty()) {
+            int index = 0;
+            for (List<String> content : contentCompeted) {
+                section.set("content-completed.t" + index++, content);
+            }
+        }
+        if (!contentGlobal.isEmpty()) {
+            section.set("content-global", contentGlobal);
+        }
+        if (conditionRestart != null) {
+            conditionRestart.save(section, "restart");
+        }
+        if (listTask != null) {
+            listTask.export(section.contains("task") ? section.getConfigurationSection("task") : section.createSection("task"));
+        }
     }
 
     @Override
@@ -122,31 +180,31 @@ public class BuilderStage extends BuilderQuest {
                         }, 1);
                     }
                 });
-        inventory.setItem(10, new ItemBuilder(Material.DIODE)
+        inventory.setItem(10, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b阶段开始动作")
                 .lore(toLore(actionAccept))
                 .build());
-        inventory.setItem(11, new ItemBuilder(Material.DIODE)
+        inventory.setItem(11, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b阶段完成动作")
                 .lore(toLore(actionSuccess))
                 .build());
-        inventory.setItem(12, new ItemBuilder(Material.DIODE)
+        inventory.setItem(12, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b阶段失败动作")
                 .lore(toLore(actionFailure))
                 .build());
-        inventory.setItem(13, new ItemBuilder(Material.DIODE)
+        inventory.setItem(13, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b阶段重置动作")
                 .lore(toLore(actionRestart))
                 .build());
-        inventory.setItem(19, new ItemBuilder(Material.BOOK_AND_QUILL)
+        inventory.setItem(19, new ItemBuilder(MaterialControl.WRITABLE_BOOK.parseMaterial())
                 .name("§b阶段笔记")
                 .lore("", content.isEmpty() ? "§f无内容" : "§f...")
                 .build());
-        inventory.setItem(20, new ItemBuilder(Material.BOOK_AND_QUILL)
+        inventory.setItem(20, new ItemBuilder(MaterialControl.WRITABLE_BOOK.parseMaterial())
                 .name("§b阶段笔记 (完成)")
                 .lore("", contentCompeted.isEmpty() ? "§f无内容" : "§f...")
                 .build());
-        inventory.setItem(21, new ItemBuilder(Material.BOOK_AND_QUILL)
+        inventory.setItem(21, new ItemBuilder(MaterialControl.WRITABLE_BOOK.parseMaterial())
                 .name("§b阶段笔记 (纵览)")
                 .lore(toLore(contentGlobal))
                 .build());

@@ -18,7 +18,7 @@ public class Block {
     private List<Point> points;
 
     public Block(String in) {
-        points = Arrays.stream(in.split(";")).map(Point::new).collect(Collectors.toList());
+        points = Arrays.stream(in.split("[,;]")).map(Point::new).collect(Collectors.toList());
     }
 
     public boolean isSelect(org.bukkit.block.Block block) {
@@ -45,12 +45,20 @@ public class Block {
         }
 
         public boolean isSelect(ItemStack item) {
-            MaterialControl material = MaterialControl.requestXMaterial(name, (byte) data);
-            return material.isSameMaterial(item);
+            MaterialControl material = MaterialControl.matchMaterialControl(name, (byte) data);
+            return material != null && material.isSimilar(item);
         }
 
         public String asString() {
             return name + ":" + data;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getData() {
+            return data;
         }
 
         @Override
@@ -64,6 +72,10 @@ public class Block {
 
     public String asString() {
         return String.join(";", points.stream().map(Point::asString).collect(Collectors.toList()));
+    }
+
+    public List<Point> getPoints() {
+        return points;
     }
 
     @Override

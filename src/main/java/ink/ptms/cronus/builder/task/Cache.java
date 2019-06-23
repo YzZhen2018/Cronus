@@ -6,7 +6,6 @@ import ink.ptms.cronus.internal.version.MaterialControl;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,18 +35,23 @@ public class Cache {
         NOT_ITEM.add("ACACIA_DOOR");
         NOT_ITEM.add("DARK_OAK_DOOR");
         NOT_ITEM.add("FROSTED_ICE");
+        // 1.13+
+        NOT_ITEM.add("CORAL_WALL_FAN");
+        NOT_ITEM.add("COLUMN");
+        NOT_ITEM.add("KELP_PLANT");
+        NOT_ITEM.add("MOVING_PISTON");
+        NOT_ITEM.add("PISTON_HEAD");
+        NOT_ITEM.add("TALL_SEAGRASS");
         // 获取方块
         if (MaterialControl.isNewVersion()) {
-            Arrays.stream(MaterialControl.values()).map(material -> {
-                try {
-                    ItemStack parseItem = material.parseItem();
-                    if (parseItem != null && parseItem.getType().isBlock() && !parseItem.getType().isTransparent() && !NOT_ITEM.contains(material.name())) {
-                        return parseItem;
+            for (Material material : Material.values()) {
+                if (material.isBlock() && !material.isTransparent() && MaterialControl.matchMaterialControl(material) != null && NOT_ITEM.stream().noneMatch(s -> material.name().endsWith(s))) {
+                    try {
+                        BLOCKS.add(new ItemStack(material));
+                    } catch (Throwable ignored) {
                     }
-                } catch (Throwable ignored) {
                 }
-                return null;
-            }).forEach(BLOCKS::add);
+            }
         } else {
             // 附加值特例
             DAMAGEABLE.put(Material.STONE, 6);
@@ -89,7 +93,7 @@ public class Cache {
             }
             // 获取物品
             for (Material material : Material.values()) {
-                if (material.isBlock() && !material.isTransparent() && MaterialControl.fromMaterial(material) != null && !NOT_ITEM.contains(material.name())) {
+                if (material.isBlock() && !material.isTransparent() && MaterialControl.matchMaterialControl(material) != null && !NOT_ITEM.contains(material.name())) {
                     try {
                         if (DAMAGEABLE.containsKey(material)) {
                             int damage = DAMAGEABLE.get(material);

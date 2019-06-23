@@ -23,7 +23,7 @@ public class Enchantment {
     private List<Point> points;
 
     public Enchantment(String in) {
-        points = Arrays.stream(in.split(";")).map(Point::new).collect(Collectors.toList());
+        points = Arrays.stream(in.split("[,;]")).map(Point::new).collect(Collectors.toList());
     }
 
     public boolean isSelect(org.bukkit.enchantments.Enchantment enchant, int level) {

@@ -23,7 +23,7 @@ public class PotionEffect {
     private List<Point> points;
 
     public PotionEffect(String in) {
-        points = Arrays.stream(in.split(";")).map(Point::new).collect(Collectors.toList());
+        points = Arrays.stream(in.split("[,;]")).map(Point::new).collect(Collectors.toList());
     }
 
     public boolean isSelect(org.bukkit.potion.PotionEffectType potionType, int level) {

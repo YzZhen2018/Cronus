@@ -4,7 +4,6 @@ import com.ilummc.tlib.resources.TLocale;
 import me.skymc.taboolib.commands.internal.BaseMainCommand;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
-import me.skymc.taboolib.other.NumberUtils;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,10 +16,10 @@ public abstract class CronusCommand extends BaseMainCommand {
 
     @TInject
     private static CooldownPack2 cooldown = new CooldownPack2("Cronus:CommandSound", 100);
-    private String normal = "§7§l[§f§lCronus§7§l] §7";
-    private String error = "§c§l[§4§lCronus§c§l] §c";
+    private static String normal = "§7§l[§f§lCronus§7§l] §7";
+    private static String error = "§c§l[§4§lCronus§c§l] §c";
 
-    protected void normal(CommandSender sender, String args) {
+    public static void normal(CommandSender sender, String args) {
         sender.sendMessage(normal + TLocale.Translate.setColored(args));
         // 音效
         if (sender instanceof Player && !cooldown.isCooldown(sender.getName(), 0)) {
@@ -28,7 +27,7 @@ public abstract class CronusCommand extends BaseMainCommand {
         }
     }
 
-    protected void error(CommandSender sender, String args) {
+    public static void error(CommandSender sender, String args) {
         sender.sendMessage(error + TLocale.Translate.setColored(args));
         // 音效
         if (sender instanceof Player && !cooldown.isCooldown(sender.getName(), 0)) {

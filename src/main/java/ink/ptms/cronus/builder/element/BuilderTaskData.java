@@ -43,6 +43,10 @@ public class BuilderTaskData {
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+    public void save() {
+        dataInstance.forEach(taskData -> builderTask.getData().put(taskData.getKey(), taskData.getData()));
+    }
+
     public void open() {
         this.map.clear();
         this.toggle = false;
@@ -54,6 +58,7 @@ public class BuilderTaskData {
                         if (e.castClick().getRawSlot() == 49) {
                             toggle = true;
                             builderTask.open(player);
+                            save();
                         } else if (map.containsKey(e.castClick().getRawSlot())) {
                             toggle = true;
                             TaskData taskData = map.get(e.castClick().getRawSlot());
@@ -67,6 +72,7 @@ public class BuilderTaskData {
                     if (!toggle) {
                         Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {
                             builderTask.open(player);
+                            save();
                         }, 1);
                     }
                 }

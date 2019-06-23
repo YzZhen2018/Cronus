@@ -66,12 +66,12 @@ public class BuilderCondition extends CronusCommand {
                 return;
             }
             // 下一页
-            else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+            else if (e.castClick().getRawSlot() == 52 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                 open(player, page + 1);
                 return;
             }
             // 上一页
-            else if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSameMaterial(e.castClick().getCurrentItem())) {
+            else if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
                 open(player, page - 1);
                 return;
             }

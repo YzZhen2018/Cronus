@@ -17,6 +17,7 @@ import me.skymc.taboolib.inventory.builder.v2.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.util.NumberConversions;
@@ -41,12 +42,72 @@ public class BuilderTask extends BuilderQuest {
     private MatchEntry conditionRestart;
     private double guideDistance = 2;
     private Location guideTarget;
-    private List<String> guideText;
+    private List<String> guideText = Lists.newArrayList(id, "距离 {distance}m");
     private boolean toggle;
 
     public BuilderTask(String id) {
         super(id);
-        guideText = Lists.newArrayList(id, "距离 {distance}m");
+    }
+
+    public BuilderTask(ConfigurationSection section) {
+        super(section.getName());
+        if (section.contains("type")) {
+            typeEntry = Builders.fromType(type = section.getString("type"));
+        }
+        if (section.contains("data")) {
+            data = section.getConfigurationSection("data").getValues(false);
+        }
+        if (section.contains("action.next")) {
+            actionNext = section.getStringList("action.next");
+        }
+        if (section.contains("action.restart")) {
+            actionRestart = section.getStringList("action.restart");
+        }
+        if (section.contains("action.success")) {
+            actionSuccess = section.getStringList("action.success");
+        }
+        if (section.contains("condition")) {
+            conditionNext = new MatchEntry(section.get("condition"));
+        }
+        if (section.contains("restart")) {
+            conditionRestart = new MatchEntry(section.get("restart"));
+        }
+        if (section.contains("guide.distance")) {
+            guideDistance = section.getDouble("guide.distance");
+        }
+        if (section.contains("guide.target")) {
+            guideTarget = BukkitParser.toLocation(section.getString("guide.target"));
+        }
+        if (section.contains("guide.text")) {
+            guideText = section.getStringList("guide.text");
+        }
+    }
+
+    public void export(ConfigurationSection section) {
+        section.set("type", type);
+        if (!data.isEmpty()) {
+            section.set("data", data);
+        }
+        if (!actionNext.isEmpty()) {
+            section.set("action.next", actionNext);
+        }
+        if (!actionRestart.isEmpty()) {
+            section.set("action.restart", actionRestart);
+        }
+        if (!actionSuccess.isEmpty()) {
+            section.set("action.success", actionSuccess);
+        }
+        if (conditionNext != null) {
+            conditionNext.save(section, "condition");
+        }
+        if (conditionRestart != null) {
+            conditionRestart.save(section, "restart");
+        }
+        if (guideTarget != null) {
+            section.set("guide.distance", guideDistance);
+            section.set("guide.target", Utils.fromLocation(guideTarget.toBukkit()));
+            section.set("guide.text", guideText);
+        }
     }
 
     @Override
@@ -172,15 +233,15 @@ public class BuilderTask extends BuilderQuest {
                 .name("§b条目重置条件")
                 .lore(toLore(conditionRestart == null ? Lists.newArrayList() : conditionRestart.asList(0)))
                 .build());
-        inventory.setItem(19, new ItemBuilder(Material.DIODE)
+        inventory.setItem(19, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b条目进行动作")
                 .lore(toLore(actionNext))
                 .build());
-        inventory.setItem(20, new ItemBuilder(Material.DIODE)
+        inventory.setItem(20, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b条目完成动作")
                 .lore(toLore(actionSuccess))
                 .build());
-        inventory.setItem(21, new ItemBuilder(Material.DIODE)
+        inventory.setItem(21, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b条目重置动作")
                 .lore(toLore(actionRestart))
                 .build());

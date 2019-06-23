@@ -28,6 +28,10 @@ public abstract class TaskData {
         this.data = data;
     }
 
+    public void saveData(Object data) {
+        builderTaskData.getBuilderTask().getData().put(getKey(), data);
+    }
+
     abstract public String getKey();
 
     abstract public ItemStack getItem();

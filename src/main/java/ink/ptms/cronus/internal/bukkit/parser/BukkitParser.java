@@ -1,6 +1,8 @@
 package ink.ptms.cronus.internal.bukkit.parser;
 
+import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.internal.bukkit.*;
+import me.skymc.taboolib.common.inject.TInject;
 import org.bukkit.Bukkit;
 import org.bukkit.util.NumberConversions;
 
@@ -11,6 +13,9 @@ import java.util.Arrays;
  * @Since 2019-05-23 22:43
  */
 public class BukkitParser {
+
+    @TInject
+    static TLogger logger;
 
     public static BlockFace toBlockFace(Object str) {
         return new BlockFace(String.valueOf(str));
@@ -50,10 +55,25 @@ public class BukkitParser {
 
     public static Location toLocation(Object in) {
         String str = String.valueOf(in);
-        if (str.toLowerCase().startsWith("area=")) {
-            String[] area = str.substring("area=".length()).split("~");
-            return new Location(Location.Mode.AREA, new org.bukkit.Location[] {toBukkitLocation(area[0]), toBukkitLocation(area[area.length > 1 ? 1 : 0])}, null);
-        } else {
+        // 区域
+        // world:0,80,0~0,90,0
+        if (str.contains(":") && str.contains("~")) {
+            String[] area = str.split("~");
+            try {
+                return new Location(Location.Mode.AREA, new org.bukkit.Location[] {toBukkitLocation(area[0].replace(":", ",")), toBukkitLocation(area[0].split(":")[0] + "," + area[1])}, null);
+            } catch (Throwable ignored) {
+                return new Location(Location.Mode.AREA, null, null);
+            }
+        }
+        // 范围
+        // world:0,80,0 r:10
+        else if (str.contains("r:")) {
+            String[] range = str.split("r:");
+            return new Location(Location.Mode.RANGE, new org.bukkit.Location[] {toBukkitLocation(range[0].replace(":", ","))}, NumberConversions.toInt(range[1]));
+        }
+        // 单项
+        // world,0,80,0;world,0,90,0
+        else {
             return new Location(Location.Mode.POINT, null, Arrays.stream(str.split(";")).map(BukkitParser::toBukkitLocation).toArray(org.bukkit.Location[]::new));
         }
     }
@@ -93,7 +113,7 @@ public class BukkitParser {
     }
 
     public static org.bukkit.Location toBukkitLocation(Object in) {
-        String[] v = String.valueOf(in).split(",");
+        String[] v = String.valueOf(in).trim().split(",");
         return new org.bukkit.Location(
                 v.length > 0 ? Bukkit.getWorld(v[0]) : Bukkit.getWorlds().iterator().next(),
                 v.length > 1 ? NumberConversions.toDouble(v[1]) : 0,
