@@ -91,7 +91,7 @@ public class CronusService {
         // 加载
         services.values().forEach(Service::init);
         // 下载数据
-        Bukkit.getOnlinePlayers().forEach(this::refreshData);
+        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> Bukkit.getOnlinePlayers().forEach(this::refreshData));
     }
 
     public void cancel() {

@@ -208,6 +208,7 @@ public class Block extends TaskData {
                             MaterialControl material = mapDelete.get(c.castClick().getRawSlot());
                             if (material != null) {
                                 selected.remove(material);
+                                mapDelete.remove(c.castClick().getRawSlot());
                                 openDelete(page);
                             }
                         }

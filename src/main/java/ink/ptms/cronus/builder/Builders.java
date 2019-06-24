@@ -1,23 +1,18 @@
 package ink.ptms.cronus.builder;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.builder.element.BuilderQuest;
 import ink.ptms.cronus.builder.task.TaskEntry;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.configuration.TConfiguration;
 import me.skymc.taboolib.common.function.TFunction;
-import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.inventory.builder.v2.ClickTask;
 import me.skymc.taboolib.inventory.builder.v2.CloseTask;
 import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
 import org.bukkit.inventory.Inventory;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author 坏黑
@@ -26,9 +21,6 @@ import java.util.Map;
 @TFunction(enable = "init")
 public class Builders {
 
-    @TInject("builder.yml")
-    private static TConfiguration conf;
-    private static Map<String, BuilderQuest> quest = Maps.newHashMap();
     private static List<TaskEntry> taskEntries = Lists.newArrayList();
 
     static void init() {
@@ -73,14 +65,6 @@ public class Builders {
     //        Getter and Setter
     //
     // *********************************
-
-    public static TConfiguration getConf() {
-        return conf;
-    }
-
-    public static Map<String, BuilderQuest> getQuest() {
-        return quest;
-    }
 
     public static List<TaskEntry> getTaskEntries() {
         return taskEntries;

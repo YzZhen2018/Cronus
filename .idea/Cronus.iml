@@ -4,7 +4,7 @@
     <facet type="minecraft" name="Minecraft">
       <configuration>
         <autoDetectTypes>
-          <platformType>SPIGOT</platformType>
+          <platformType>PAPER</platformType>
           <platformType>BUNGEECORD</platformType>
         </autoDetectTypes>
       </configuration>
@@ -34,6 +34,15 @@
       <library name="Maven: 2:1:1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/1_13_R2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: 21:1:1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/1_14_R1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

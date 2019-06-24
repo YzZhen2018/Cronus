@@ -13,6 +13,7 @@ public class CronusDataPullEvent extends Event {
     private DataPlayer dataPlayer;
 
     public CronusDataPullEvent(Player player, DataPlayer dataPlayer) {
+        super(true);
         this.player = player;
         this.dataPlayer = dataPlayer;
     }

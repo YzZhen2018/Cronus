@@ -35,6 +35,23 @@ public class Cache {
         NOT_ITEM.add("ACACIA_DOOR");
         NOT_ITEM.add("DARK_OAK_DOOR");
         NOT_ITEM.add("FROSTED_ICE");
+        // 1.11-
+        NOT_ITEM.add("BED_BLOCK");
+        NOT_ITEM.add("STATIONARY_WATER");
+        NOT_ITEM.add("STATIONARY_LAVA");
+        NOT_ITEM.add("DOUBLE_STEP");
+        NOT_ITEM.add("BURNING_FURNACE");
+        NOT_ITEM.add("SIGN_POST");
+        NOT_ITEM.add("WOODEN_DOOR");
+        NOT_ITEM.add("IRON_DOOR_BLOCK");
+        NOT_ITEM.add("GLOWING_REDSTONE_ORE");
+        NOT_ITEM.add("CAKE_BLOCK");
+        NOT_ITEM.add("REDSTONE_LAMP_ON");
+        NOT_ITEM.add("WOOD_DOUBLE_STEP");
+        NOT_ITEM.add("STANDING_BANNER");
+        NOT_ITEM.add("DAYLIGHT_DETECTOR_INVERTED");
+        NOT_ITEM.add("DOUBLE_STONE_SLAB2");
+        NOT_ITEM.add("PURPUR_DOUBLE_SLAB");
         // 1.13+
         NOT_ITEM.add("CORAL_WALL_FAN");
         NOT_ITEM.add("COLUMN");
@@ -42,6 +59,13 @@ public class Cache {
         NOT_ITEM.add("MOVING_PISTON");
         NOT_ITEM.add("PISTON_HEAD");
         NOT_ITEM.add("TALL_SEAGRASS");
+        // 1.14+
+        NOT_ITEM.add("BAMBOO_SAPLING");
+        NOT_ITEM.add("POTTED_BAMBOO");
+        NOT_ITEM.add("POTTED_CORNFLOWER");
+        NOT_ITEM.add("POTTED_LILY_OF_THE_VALLEY");
+        NOT_ITEM.add("POTTED_WITHER_ROSE");
+        NOT_ITEM.add("SWEET_BERRY_BUSH");
         // 获取方块
         if (MaterialControl.isNewVersion()) {
             for (Material material : Material.values()) {

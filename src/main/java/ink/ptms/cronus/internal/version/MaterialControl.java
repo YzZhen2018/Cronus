@@ -816,7 +816,9 @@ public enum MaterialControl {
     RED_TULIP(4, "RED_ROSE"),
     RED_WALL_BANNER(1, "WALL_BANNER"),
     RED_WOOL(14, "WOOL"),
-    REPEATER(0, "DIODE", "DIODE_BLOCK_ON", "DIODE_BLOCK_OFF"),
+
+    // remove "DIODE_BLOCK_ON", "DIODE_BLOCK_OFF"
+    REPEATER(0, "DIODE"),
     REPEATING_COMMAND_BLOCK(0, "COMMAND", "COMMAND_REPEATING"),
     ROSE_BUSH(4, "DOUBLE_PLANT"),
     ROTTEN_FLESH(0, ""),
@@ -1068,7 +1070,9 @@ public enum MaterialControl {
      * @return true if 1.13 or higher.
      */
     public static boolean isNewVersion() {
-        if (isNewVersion != null) return isNewVersion;
+        if (isNewVersion != null) {
+            return isNewVersion;
+        }
         return isNewVersion = isVersionOrHigher(MinecraftVersion.VERSION_1_13);
     }
 
@@ -1082,7 +1086,9 @@ public enum MaterialControl {
      * @return the current server version.
      */
     public static MinecraftVersion getVersion() {
-        if (version != null) return version;
+        if (version != null) {
+            return version;
+        }
         return version = valueOfVersion(Bukkit.getVersion());
     }
 
@@ -1095,7 +1101,9 @@ public enum MaterialControl {
     private static MaterialControl requestOldMaterialControl(String name, byte data) {
         MaterialControl cached = CACHED_SEARCH.get(name + "," + data);
 
-        if (cached != null) return cached;
+        if (cached != null) {
+            return cached;
+        }
         Optional<MaterialControl> search = data == -1 ? Arrays.stream(MaterialControl.VALUES).filter(mat -> mat.matchAnyLegacy(name)).findFirst()
                 : Arrays.stream(MaterialControl.VALUES).filter(mat -> mat.matchAnyLegacy(name) && mat.data == data).findFirst();
 
@@ -1145,12 +1153,14 @@ public enum MaterialControl {
         Validate.notEmpty(name, "Material name cannot be null or empty");
         name = format(name);
 
-        if ((contains(name) && data <= 0) && (isNewVersion() || !isDuplicated(name)))
+        if ((contains(name) && data <= 0) && (isNewVersion() || !isDuplicated(name))) {
             return valueOf(name);
+        }
 
         // TODO Temporary but works - Please find a more reasonable fix for duplicated materials.
-        if (isDuplicated(name) && !isNewVersion())
+        if (isDuplicated(name) && !isNewVersion()) {
             return requestDuplicatedMaterialControl(name, data);
+        }
 
         return requestOldMaterialControl(name, data);
     }
@@ -1197,7 +1207,9 @@ public enum MaterialControl {
      * @return the material name with the version removed.
      */
     private static String parseLegacyVersionMaterialName(String name) {
-        if (!name.contains("/")) return name;
+        if (!name.contains("/")) {
+            return name;
+        }
         return name.substring(0, name.indexOf('/'));
     }
 
@@ -1210,9 +1222,15 @@ public enum MaterialControl {
     public static boolean isVersionOrHigher(MinecraftVersion version) {
         MinecraftVersion current = getVersion();
 
-        if (version == current) return true;
-        if (version == MinecraftVersion.UNKNOWN) return false;
-        if (current == MinecraftVersion.UNKNOWN) return true;
+        if (version == current) {
+            return true;
+        }
+        if (version == MinecraftVersion.UNKNOWN) {
+            return false;
+        }
+        if (current == MinecraftVersion.UNKNOWN) {
+            return true;
+        }
 
         int ver = Integer.parseInt(version.name().replace("VERSION_", "").replace("_", ""));
         int currentVer = Integer.parseInt(current.name().replace("VERSION_", "").replace("_", ""));
@@ -1250,11 +1268,16 @@ public enum MaterialControl {
      */
     public static String getExactMajorVersion(String version) {
         // getBukkitVersion()
-        if (version.contains("SNAPSHOT") || version.contains("-R"))
+        if (version.contains("SNAPSHOT") || version.contains("-R")) {
             version = version.substring(0, version.indexOf("-"));
+        }
         // getVersion()
-        if (version.contains("git")) version = version.substring(version.indexOf("MC:") + 4).replace(")", "");
-        if (version.split(Pattern.quote(".")).length > 2) version = version.substring(0, version.lastIndexOf("."));
+        if (version.contains("git")) {
+            version = version.substring(version.indexOf("MC:") + 4).replace(")", "");
+        }
+        if (version.split(Pattern.quote(".")).length > 2) {
+            version = version.substring(0, version.lastIndexOf("."));
+        }
         return version;
     }
 
@@ -1267,10 +1290,13 @@ public enum MaterialControl {
      */
     private static MinecraftVersion valueOfVersion(String version) {
         version = getExactMajorVersion(version);
-        if (version.equals("1.10") || version.equals("1.11") || version.equals("1.12"))
+        if (version.equals("1.10") || version.equals("1.11") || version.equals("1.12")) {
             return MinecraftVersion.VERSION_1_9;
+        }
         version = version.replace(".", "_");
-        if (!version.startsWith("VERSION_")) version = "VERSION_" + version;
+        if (!version.startsWith("VERSION_")) {
+            version = "VERSION_" + version;
+        }
         String check = version;
         return Arrays.stream(MinecraftVersion.VALUES).anyMatch(v -> v.name().equals(check)) ? MinecraftVersion.valueOf(version) : MinecraftVersion.UNKNOWN;
     }
@@ -1379,7 +1405,9 @@ public enum MaterialControl {
         // If the name is not null it's probably the new version.
         // So you can still use this name even if it's a duplicated name.
         // Since duplicated names only apply to older versions.
-        if (newMat != null && (isNewVersion() || !this.isDuplicated())) return newMat;
+        if (newMat != null && (isNewVersion() || !this.isDuplicated())) {
+            return newMat;
+        }
         return requestOldMaterial(suggest);
     }
 
@@ -1392,25 +1420,34 @@ public enum MaterialControl {
     private Material requestOldMaterial(boolean suggest) {
         Material oldMat;
         boolean isNew = getVersionIfNew() != MinecraftVersion.UNKNOWN;
-        for (int i = this.legacy.length - 1; i >= 0; i--) {
-            String legacyName = this.legacy[i];
+        for (int i = legacy.length - 1; i >= 0; i--) {
+            String legacyName = legacy[i];
             // Slash means it's just another name for the material in another version.
             if (legacyName.contains("/")) {
                 oldMat = Material.getMaterial(parseLegacyVersionMaterialName(legacyName));
 
-                if (oldMat != null) return oldMat;
-                else continue;
+                if (oldMat != null) {
+                    return oldMat;
+                } else {
+                    continue;
+                }
             }
             if (isNew) {
                 if (suggest) {
                     oldMat = Material.getMaterial(legacyName);
-                    if (oldMat != null) return oldMat;
-                } else return null;
+                    if (oldMat != null) {
+                        return oldMat;
+                    }
+                } else {
+                    return null;
+                }
                 // According to the suggestion format list, all the other names continuing
                 // from here are considered as a "suggestion" if there's no slash anymore.
             }
             oldMat = Material.getMaterial(legacyName);
-            if (oldMat != null) return oldMat;
+            if (oldMat != null) {
+                return oldMat;
+            }
         }
         return null;
     }
@@ -1434,7 +1471,9 @@ public enum MaterialControl {
      * @return a list of suggested material names.
      */
     public String[] getSuggestions() {
-        if (!this.legacy[0].contains(".")) return new String[0];
+        if (!this.legacy[0].contains(".")) {
+            return new String[0];
+        }
         return Arrays.stream(this.legacy).filter(mat -> !mat.contains(".")).toArray(String[]::new);
     }
 
@@ -1476,15 +1515,21 @@ public enum MaterialControl {
      * @see #parseMaterial()
      */
     public MaterialControl suggestOldMaterialIfNew() {
-        if (getVersionIfNew() == MinecraftVersion.UNKNOWN || this.legacy.length == 1) return null;
+        if (getVersionIfNew() == MinecraftVersion.UNKNOWN || this.legacy.length == 1) {
+            return null;
+        }
 
         // We need a loop because: Newest -> Oldest
         for (int i = this.legacy.length - 1; i >= 0; i--) {
             String legacyName = this.legacy[i];
 
-            if (legacyName.contains("/")) continue;
+            if (legacyName.contains("/")) {
+                continue;
+            }
             MaterialControl mat = matchMaterialControl(parseLegacyVersionMaterialName(legacyName), this.data);
-            if (mat != null && this != mat) return mat;
+            if (mat != null && this != mat) {
+                return mat;
+            }
         }
         return null;
     }

@@ -120,13 +120,6 @@ public class ListenerPlayer implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void e(EntityBreedEvent e) {
-        if (e.getBreeder() instanceof Player) {
-            CronusAPI.stageHandle((Player) e.getBreeder(), e, TaskPlayerBreed.class);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             CronusAPI.stageHandle((Player) e.getEntity(), e, TaskPlayerDamaged.class);
