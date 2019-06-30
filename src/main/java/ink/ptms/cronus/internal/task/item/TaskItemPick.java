@@ -38,11 +38,14 @@ public class TaskItemPick extends Countable<PlayerPickupItemEvent> {
     @Override
     public String toString() {
         return "TaskItemPick{" +
-                "count=" + count +
-                ", item=" + item +
-                ", action=" + action +
+                "item=" + item +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", action=" + action +
                 '}';
     }
 }

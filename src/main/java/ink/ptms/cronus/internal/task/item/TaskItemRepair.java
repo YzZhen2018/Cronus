@@ -3,9 +3,10 @@ package ink.ptms.cronus.internal.task.item;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
+import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -20,7 +21,8 @@ import java.util.Map;
 public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
 
     private Block block;
-    private ItemStack item;
+    private Location location;
+    private ItemStack result;
 
     public TaskItemRepair(ConfigurationSection config) {
         super(config);
@@ -29,24 +31,29 @@ public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
+        result = data.containsKey("result") ? BukkitParser.toItemStack(data.get("result")) : null;
         block = data.containsKey("block") ? BukkitParser.toBlock(data.get("block")) : null;
+        location = data.containsKey("location") ? BukkitParser.toLocation(data.get("location")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PrepareAnvilEvent e) {
-        return (item == null || item.isItem(e.getResult())) && (block == null || (e.getInventory().getLocation() != null && block.isSelect(e.getInventory().getLocation().getBlock())));
+        return (result == null || result.isItem(e.getResult())) && (location == null || (e.getInventory().getLocation() != null && location.inSelect(e.getInventory().getLocation()))) && (block == null || (e.getInventory().getLocation() != null && block.isSelect(e.getInventory().getLocation().getBlock())));
     }
 
     @Override
     public String toString() {
         return "TaskItemRepair{" +
-                "count=" + count +
-                ", block=" + block +
-                ", item=" + item +
-                ", action=" + action +
+                "block=" + block +
+                ", result=" + result +
+                ", location=" + location +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", action=" + action +
                 '}';
     }
 }

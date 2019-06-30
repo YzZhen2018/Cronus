@@ -121,7 +121,7 @@ public class Cache {
                     try {
                         if (DAMAGEABLE.containsKey(material)) {
                             int damage = DAMAGEABLE.get(material);
-                            for (int i = 0; i < damage; i++) {
+                            for (int i = 0; i < damage + 1; i++) {
                                 // 木半砖特例
                                 if (material == Material.STEP && i == 2) {
                                     continue;

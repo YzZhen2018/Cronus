@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -34,9 +35,9 @@ import java.util.stream.Collectors;
  */
 public class Block extends TaskData {
 
-    protected List<MaterialControl> selected = Lists.newArrayList();
-    protected Map<Integer, MaterialControl> mapSelect = Maps.newHashMap();
-    protected Map<Integer, MaterialControl> mapDelete = Maps.newHashMap();
+    protected List<ItemStack> selected = Lists.newArrayList();
+    protected Map<Integer, ItemStack> mapSelect = Maps.newHashMap();
+    protected Map<Integer, ItemStack> mapDelete = Maps.newHashMap();
     private boolean toggle;
 
     public Block(Player player, BuilderTaskData builderTaskData) {
@@ -51,9 +52,8 @@ public class Block extends TaskData {
         if (data == null || Strings.isEmpty((String) data)) {
             return;
         }
-        ink.ptms.cronus.internal.bukkit.Block block = BukkitParser.toBlock(data);
-        for (ink.ptms.cronus.internal.bukkit.Block.Point point : block.getPoints()) {
-            selected.add(MaterialControl.matchMaterialControl(point.getName(), (byte) point.getData()));
+        for (ink.ptms.cronus.internal.bukkit.Block.Point point : BukkitParser.toBlock(data).getPoints()) {
+            selected.add(MaterialControl.isNewVersion() ? new ItemStack(ItemUtils.asMaterial(point.getName())) : new ItemStack(ItemUtils.asMaterial(point.getName()), 1, (short) point.getData()));
         }
     }
 
@@ -69,7 +69,7 @@ public class Block extends TaskData {
             lore.add("§f无");
         }
         for (int i = 0; i < selected.size() && i < 8; i++) {
-            lore.add("§f" + ItemUtils.getCustomName(selected.get(i).parseItem()));
+            lore.add("§f" + ItemUtils.getCustomName(selected.get(i)));
         }
         if (selected.size() > 8) {
             lore.add("§f...");
@@ -105,16 +105,18 @@ public class Block extends TaskData {
                             if (ItemUtils.isNull(itemStack) || !itemStack.getType().isBlock()) {
                                 continue;
                             }
-                            MaterialControl materialControl = MaterialControl.fromItem(itemStack);
-                            if (materialControl != null && !selected.contains(materialControl)) {
-                                selected.add(materialControl);
+                            if (!selected.contains(MaterialControl.isNewVersion() ? new ItemStack(itemStack.getType()) : new ItemStack(itemStack.getType(), 1, itemStack.getDurability()))) {
+                                selected.add(itemStack);
                                 i++;
                             }
                         }
                         if (i > 0) {
                             player.sendMessage("§7§l[§f§lCronus§7§l] §7导入 §f" + i + " §7种方块.");
                         }
-                        Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> builderTaskData.open(), 1);
+                        Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {
+                            save();
+                            builderTaskData.open();
+                        }, 1);
                     }).build());
         }
     }
@@ -125,11 +127,12 @@ public class Block extends TaskData {
     }
 
     public void save() {
-        saveData(selected.stream().map(s -> MaterialControl.isNewVersion() ? s.name() : s.name() + ":" + s.getData()).collect(Collectors.joining(",")));
+        saveData(selected.stream().filter(Objects::nonNull).map(s -> MaterialControl.isNewVersion() ? s.getType().name() : s.getType().name() + ":" + s.getDurability()).collect(Collectors.joining(",")));
     }
 
     public void openSelect(int page) {
         toggle = true;
+        mapSelect.clear();
         Inventory inventory = Builders.normal("实例选择 : 方块类型",
                 c -> {
                     if (c.getClickType() == ClickType.CLICK) {
@@ -143,7 +146,7 @@ public class Block extends TaskData {
                             save();
                             builderTaskData.open();
                         } else {
-                            MaterialControl selectItem = mapSelect.get(c.castClick().getRawSlot());
+                            ItemStack selectItem = mapSelect.get(c.castClick().getRawSlot());
                             if (selectItem != null) {
                                 if (selected.contains(selectItem)) {
                                     selected.remove(selectItem);
@@ -167,13 +170,12 @@ public class Block extends TaskData {
         for (int i = 0; i < iterator.size(); i++) {
             ItemStack parseItem = iterator.get(i).clone();
             try {
-                MaterialControl fromItem = MaterialControl.fromItem(parseItem);
-                if (selected.contains(fromItem)) {
+                if (selected.contains(parseItem)) {
                     inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(parseItem).lore("", "§8取消").shiny().build());
                 } else {
                     inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(parseItem).lore("", "§8选择").build());
                 }
-                mapSelect.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), fromItem);
+                mapSelect.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), parseItem);
             } catch (Throwable t) {
                 t.printStackTrace();
             }
@@ -192,6 +194,7 @@ public class Block extends TaskData {
 
     public void openDelete(int page) {
         toggle = true;
+        mapDelete.clear();
         Inventory inventory = Builders.normal("实例删除 : 方块类型",
                 c -> {
                     if (c.getClickType() == ClickType.CLICK) {
@@ -205,10 +208,9 @@ public class Block extends TaskData {
                             save();
                             builderTaskData.open();
                         } else {
-                            MaterialControl material = mapDelete.get(c.castClick().getRawSlot());
-                            if (material != null) {
-                                selected.remove(material);
-                                mapDelete.remove(c.castClick().getRawSlot());
+                            ItemStack item = mapDelete.get(c.castClick().getRawSlot());
+                            if (item != null) {
+                                selected.remove(item);
                                 openDelete(page);
                             }
                         }
@@ -222,11 +224,10 @@ public class Block extends TaskData {
                         }, 1);
                     }
                 });
-        List<MaterialControl> iterator = new SimpleIterator(selected).listIterator(page * 28, (page + 1) * 28);
+        List<ItemStack> iterator = new SimpleIterator(selected).listIterator(page * 28, (page + 1) * 28);
         for (int i = 0; i < iterator.size(); i++) {
             try {
-                ItemStack parseItem = iterator.get(i).parseItem();
-                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(parseItem).lore("", "§8删除").build());
+                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(iterator.get(i)).lore("", "§8删除").build());
                 mapDelete.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), iterator.get(i));
             } catch (Throwable t) {
                 t.printStackTrace();

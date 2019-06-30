@@ -32,7 +32,7 @@ public class BlockAgainst extends Block {
             lore.add("§f无");
         }
         for (int i = 0; i < selected.size() && i < 8; i++) {
-            lore.add("§f" + ItemUtils.getCustomName(selected.get(i).parseItem()));
+            lore.add("§f" + ItemUtils.getCustomName(selected.get(i)));
         }
         if (selected.size() > 8) {
             lore.add("§f...");

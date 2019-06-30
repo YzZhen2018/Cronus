@@ -53,6 +53,10 @@ public class Enchantment {
             return enchant.equals(this.enchant) && expression.isSelect(level);
         }
 
+        public String asString() {
+            return enchant.getName() + " " + expression.translate();
+        }
+
         @Override
         public String toString() {
             return "Point{" +
@@ -60,6 +64,14 @@ public class Enchantment {
                     ", expression=" + expression +
                     '}';
         }
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public String asString() {
+        return points.stream().map(Point::asString).collect(Collectors.joining(", "));
     }
 
     @Override

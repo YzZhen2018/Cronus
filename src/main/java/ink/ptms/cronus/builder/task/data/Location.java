@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
  */
 public class Location extends TaskData {
 
-    private ink.ptms.cronus.internal.bukkit.Location.Mode mode;
-    private List<org.bukkit.Location> location = Lists.newArrayList();
-    private org.bukkit.Location[] locationArea = new org.bukkit.Location[2];
+    protected ink.ptms.cronus.internal.bukkit.Location.Mode mode;
+    protected List<org.bukkit.Location> location = Lists.newArrayList();
+    protected org.bukkit.Location[] locationArea = new org.bukkit.Location[2];
 
     public Location(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
@@ -46,9 +46,7 @@ public class Location extends TaskData {
                 lore.add("§7...");
             }
             lore.addAll(Lists.newArrayList("§8§m                  ", "§7单项: §8左键", "§7区域: §8右键", "§7范围: §8中键"));
-            return new ItemBuilder(Material.MAP)
-                    .name("§7目标坐标")
-                    .lore(lore).build();
+            return new ItemBuilder(Material.MAP).name("§7目标坐标").lore(lore).build();
         } else {
             return new ItemBuilder(Material.MAP)
                     .name("§7目标坐标")

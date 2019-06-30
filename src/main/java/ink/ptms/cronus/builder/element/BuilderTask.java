@@ -24,6 +24,8 @@ import org.bukkit.util.NumberConversions;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
@@ -86,7 +88,7 @@ public class BuilderTask extends BuilderQuest {
     public void export(ConfigurationSection section) {
         section.set("type", type);
         if (!data.isEmpty()) {
-            section.set("data", data);
+            section.set("data", data.entrySet().stream().filter(entry -> Objects.nonNull(entry.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b)));
         }
         if (!actionNext.isEmpty()) {
             section.set("action.next", actionNext);

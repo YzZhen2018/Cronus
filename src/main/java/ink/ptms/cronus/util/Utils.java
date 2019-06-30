@@ -33,6 +33,10 @@ public class Utils {
         player.getInventory().addItem(item).values().forEach(e -> player.getWorld().dropItem(player.getLocation(), e));
     }
 
+    public static String NonNull(Object in) {
+        return in == null || Strings.isBlank(String.valueOf(in)) ? "-" : String.valueOf(in);
+    }
+
     public static String NonNull(String in) {
         return Strings.isBlank(in) ? "-" : in;
     }

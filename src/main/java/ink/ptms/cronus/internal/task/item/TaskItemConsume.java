@@ -38,11 +38,14 @@ public class TaskItemConsume extends Countable<PlayerItemConsumeEvent> {
     @Override
     public String toString() {
         return "TaskItemConsume{" +
-                "count=" + count +
-                ", item=" + item +
-                ", action=" + action +
+                "item=" + item +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", action=" + action +
                 '}';
     }
 }

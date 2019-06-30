@@ -15,6 +15,11 @@ public class ItemStack {
     private String lore;
     private int damage;
     private int amount;
+    private org.bukkit.inventory.ItemStack bukkitItem;
+
+    public ItemStack(org.bukkit.inventory.ItemStack bukkitItem) {
+        this.bukkitItem = bukkitItem;
+    }
 
     public ItemStack(String type, String name, String lore, int damage, int amount) {
         this.type = type;
@@ -100,6 +105,10 @@ public class ItemStack {
 
     public int getDamage() {
         return damage;
+    }
+
+    public org.bukkit.inventory.ItemStack getBukkitItem() {
+        return bukkitItem;
     }
 
     public String asString() {

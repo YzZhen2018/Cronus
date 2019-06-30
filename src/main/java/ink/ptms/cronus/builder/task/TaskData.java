@@ -32,6 +32,10 @@ public abstract class TaskData {
         builderTaskData.getBuilderTask().getData().put(getKey(), data);
     }
 
+    public void open() {
+        builderTaskData.open();
+    }
+
     abstract public String getKey();
 
     abstract public ItemStack getItem();

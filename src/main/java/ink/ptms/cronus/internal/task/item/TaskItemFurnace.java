@@ -46,6 +46,7 @@ public class TaskItemFurnace extends Countable<FurnaceSmeltEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
                 ", action=" + action +
                 '}';

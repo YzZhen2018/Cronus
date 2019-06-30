@@ -3,6 +3,7 @@ package ink.ptms.cronus.internal.bukkit.parser;
 import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.internal.bukkit.*;
 import me.skymc.taboolib.common.inject.TInject;
+import me.skymc.taboolib.common.serialize.TSerializerElementGeneral;
 import org.bukkit.Bukkit;
 import org.bukkit.util.NumberConversions;
 
@@ -78,13 +79,22 @@ public class BukkitParser {
         }
     }
 
+    public static String fromItemStack(org.bukkit.inventory.ItemStack item) {
+        return "bukkit:" + TSerializerElementGeneral.ITEM_STACK.getSerializer().write(item);
+    }
+
     public static ItemStack toItemStack(Object in) {
+        // bukkit item
+        if (String.valueOf(in).startsWith("bukkit:")) {
+            return new ItemStack((org.bukkit.inventory.ItemStack) TSerializerElementGeneral.ITEM_STACK.getSerializer().read(String.valueOf(in).substring("bukkit:".length())));
+        }
+        // cronus item
         String type = null;
         String name = null;
         String lore = null;
         int damage = -1;
         int amount = 1;
-        for (String v : String.valueOf(in).split(",")) {
+        for (String v : String.valueOf(in).split("[,;]")) {
             if (v.toLowerCase().startsWith("type=")) {
                 type = v.substring("type=".length());
             } else if (v.toLowerCase().startsWith("t=")) {
