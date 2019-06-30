@@ -1,6 +1,7 @@
 package ink.ptms.cronus.service.dialog;
 
 import com.ilummc.tlib.resources.TLocale;
+import ink.ptms.cronus.event.CronusInitDialogEvent;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -32,22 +33,31 @@ public class DialogGroup {
         this.display = new DisplayMenu();
         this.open = config.contains("open") ? new QuestEffect(config.getStringList("open")) : null;
         this.close = config.contains("close") ? new QuestEffect(config.getStringList("close")) : null;
+        CronusInitDialogEvent.call(this);
     }
 
     public void openEval(Player player) {
-        new NoneProgram(player).eval(open.getEffect());
+        if (open != null) {
+            new NoneProgram(player).eval(open.getEffect());
+        }
     }
 
     public void openEval(QuestProgram program) {
-        open.eval(program.getPlayer(), program.getDataQuest());
+        if (open != null) {
+            open.eval(program.getPlayer(), program.getDataQuest());
+        }
     }
 
     public void closeEval(Player player) {
-        new NoneProgram(player).eval(close.getEffect());
+        if (close != null) {
+            new NoneProgram(player).eval(close.getEffect());
+        }
     }
 
     public void closeEval(QuestProgram program) {
-        close.eval(program.getPlayer(), program.getDataQuest());
+        if (close != null) {
+            close.eval(program.getPlayer(), program.getDataQuest());
+        }
     }
 
     public String getTitle() {

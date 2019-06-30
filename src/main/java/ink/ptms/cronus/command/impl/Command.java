@@ -13,6 +13,8 @@ import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestBook;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
+import ink.ptms.cronus.service.dialog.Dialog;
+import ink.ptms.cronus.service.dialog.DialogGroup;
 import ink.ptms.cronus.util.Utils;
 import me.skymc.taboolib.bookformatter.BookFormatter;
 import me.skymc.taboolib.bookformatter.builder.BookBuilder;
@@ -379,6 +381,38 @@ public class Command extends CronusCommand {
             }
             DataQuest dataQuest = CronusAPI.getData(player).getQuest().getOrDefault(quest.getId(), new DataQuest(quest.getId(), quest.getFirstStage()));
             quest.eval(new QuestProgram(player, dataQuest), action);
+        }
+    };
+
+    @CommandRegister
+    BaseSubCommand dialog = new BaseSubCommand() {
+
+        @Override
+        public CommandArgument[] getArguments() {
+            return new CommandArgument[] {
+                    new CommandArgument("玩家"),
+                    new CommandArgument("对话", () -> Lists.newArrayList(Cronus.getCronusService().getService(Dialog.class).getDialogs().stream().map(DialogGroup::getId).collect(Collectors.toList()))),
+            };
+        }
+
+        @Override
+        public String getDescription() {
+            return "使玩家打开任务对话.";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
+                return;
+            }
+            DialogGroup dialog = Cronus.getCronusService().getService(Dialog.class).getDialog(args[1]);
+            if (dialog == null) {
+                error(sender, "对话 &7" + args[1] + " &c无效.");
+                return;
+            }
+            dialog.getDialog().display(player);
         }
     };
 

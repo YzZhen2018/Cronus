@@ -23,8 +23,8 @@ public class AsmHandlerImpl extends AsmHandler {
     public Entity getEntityByEntityId(int id) {
         if (TabooLib.getVersionNumber() >= 11400) {
             for (World world : Bukkit.getWorlds()) {
-                net.minecraft.server.v1_14_R1.Entity entity = ((org.bukkit.craftbukkit.v1_14_R1.CraftWorld) world).getHandle().getEntity(id);
-                return entity != null ? entity.getBukkitEntity() : null;
+                Object entity = ((org.bukkit.craftbukkit.v1_14_R1.CraftWorld) world).getHandle().getEntity(id);
+                return entity != null ? ((net.minecraft.server.v1_14_R1.Entity) entity).getBukkitEntity() : null;
             }
         }
         for (World world : Bukkit.getWorlds()) {

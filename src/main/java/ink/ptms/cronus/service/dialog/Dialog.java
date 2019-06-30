@@ -97,7 +97,15 @@ public class Dialog implements Service, Listener {
         }
     }
 
+    public DialogGroup getDialog(String id) {
+        return dialogs.stream().filter(d -> d.getId().equals(id)).findFirst().orElse(null);
+    }
+
     public List<DialogGroup> getDialogs() {
         return dialogs;
+    }
+
+    public File getFolder() {
+        return folder;
     }
 }

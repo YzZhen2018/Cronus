@@ -30,7 +30,7 @@ def_0:
               - 'send.title &r|我也觉得|10|20|10'
     - text:
       - '&7我有钻石'
-      condition: 'item.hand == diamond'
+      condition: 'item.hand != diamond'
       condition-dialog:
         text:
         - '&c我没钻石'

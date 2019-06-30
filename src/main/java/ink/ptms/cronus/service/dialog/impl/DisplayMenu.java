@@ -71,8 +71,7 @@ public class DisplayMenu extends DialogDisplay {
                                 if (event.getPack().getDialog() != null) {
                                     closed[0] = true;
                                     display(e.getClicker(), event.getPack().getDialog());
-                                }
-                                else if (event.getPack().getEffect() != null) {
+                                } else if (event.getPack().getEffect() != null) {
                                     closed[0] = true;
                                     e.getClicker().closeInventory();
                                     event.getPack().effectEval(e.getClicker());
@@ -118,14 +117,14 @@ public class DisplayMenu extends DialogDisplay {
         if (ItemUtils.isNull(itemStack)) {
             itemStack.setType(Material.STONE);
         }
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        if (!list.isEmpty()) {
+        if (list.size() > 0) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(list.get(0));
+            List<String> lore = Lists.newArrayList(list);
+            lore.remove(0);
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
         }
-        List<String> lore = Lists.newArrayList(list);
-        lore.remove(0);
-        itemMeta.setLore(lore);
-        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

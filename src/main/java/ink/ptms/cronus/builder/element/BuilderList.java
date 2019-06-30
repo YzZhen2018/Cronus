@@ -285,12 +285,12 @@ public class BuilderList extends BuilderQuest {
         return defaultMoveRight;
     }
 
-    interface Candidate {
+    public interface Candidate {
 
         Map<String, String> run();
     }
 
-    interface ClickTask {
+    public interface ClickTask {
 
         void run(int index);
     }

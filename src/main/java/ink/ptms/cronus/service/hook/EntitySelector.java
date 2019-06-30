@@ -7,12 +7,15 @@ import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
+import io.lumine.xikage.mythicmobs.mobs.MythicMob;
 import net.citizensnpcs.Citizens;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.NumberConversions;
+
+import java.util.UUID;
 
 /**
  * @Author 坏黑
@@ -24,7 +27,6 @@ public class EntitySelector implements Service {
     private Plugin citizens;
     private Plugin mythicmobs;
     private Plugin shopkeepers;
-
 
     @Override
     public void init() {
@@ -46,14 +48,52 @@ public class EntitySelector implements Service {
                 case "npc":
                     return isCitizensSelect(entity, v[1]);
                 case "mythicmobs":
+                case "mythicmob":
                 case "mm":
                     return isMythicMobsSelect(entity, v[1]);
+                case "shopkeepers":
                 case "shopkeeper":
                 case "shop":
                     return isShopkeepersSelect(entity, v[1]);
             }
         }
         return BukkitParser.toEntity(in).isSelect(entity);
+    }
+
+    public String getSelectDisplay(String in) {
+        String[] v = in.split("=");
+        if (v.length > 1) {
+            switch (v[0].toLowerCase()) {
+                case "citizens":
+                case "npc":
+                    if (isCitizensHooked()) {
+                        NPC npc = ((Citizens) citizens).getNPCRegistry().getById(NumberConversions.toInt(v[1]));
+                        return npc == null ? "?" : npc.getName();
+                    }
+                    return "No Hooked";
+                case "mythicmobs":
+                case "mythicmob":
+                case "mm":
+                    if (isMythicMobsHooked()) {
+                        MythicMob mythicMob = ((MythicMobs) mythicmobs).getMobManager().getMythicMob(v[1]);
+                        return mythicMob == null ? "?" : mythicMob.getDisplayName();
+                    }
+                    return "No Hooked";
+                case "shopkeepers":
+                case "shopkeeper":
+                case "shop":
+                    if (isShopkeepersHooked()) {
+                        try {
+                            Shopkeeper shopkeeper = ((ShopkeepersPlugin) shopkeepers).getShopkeeper(UUID.fromString(v[1]));
+                            return shopkeeper == null ? "?" : shopkeeper.getName();
+                        } catch (Throwable ignored) {
+                        }
+                        return "Invalid UUID";
+                    }
+                    return "No Hooked";
+            }
+        }
+        return in;
     }
 
     public boolean isCitizensSelect(Entity entity, String in) {
