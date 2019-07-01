@@ -36,12 +36,14 @@ public class TaskPlayerChat extends Countable<AsyncPlayerChatEvent> {
     @Override
     public String toString() {
         return "TaskPlayerChat{" +
-                "count=" + count +
-                ", message='" + message + '\'' +
-                ", action=" + action +
+                "message='" + message + '\'' +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", action=" + action +
                 '}';
     }
 }

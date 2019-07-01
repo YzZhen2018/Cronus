@@ -1,4 +1,4 @@
-package ink.ptms.cronus.builder.task.data;
+package ink.ptms.cronus.builder.task;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -6,7 +6,6 @@ import com.ilummc.tlib.util.Strings;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
-import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
 import me.skymc.taboolib.common.util.SimpleIterator;
@@ -29,12 +28,12 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-06-22 22:24
  */
-public abstract class EnumSet<T extends Enum> extends TaskData {
+public abstract class TaskEnum<T extends Enum> extends TaskData {
 
     protected List<T> selected = Lists.newArrayList();
     private boolean toggle;
 
-    public EnumSet(Player player, BuilderTaskData builderTaskData) {
+    public TaskEnum(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 

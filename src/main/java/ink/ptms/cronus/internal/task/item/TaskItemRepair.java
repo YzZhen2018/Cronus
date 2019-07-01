@@ -20,7 +20,7 @@ import java.util.Map;
 @Task(name = "item_repair")
 public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
 
-    private Block block;
+    private Block anvil;
     private Location location;
     private ItemStack result;
 
@@ -32,19 +32,19 @@ public class TaskItemRepair extends Countable<PrepareAnvilEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         result = data.containsKey("result") ? BukkitParser.toItemStack(data.get("result")) : null;
-        block = data.containsKey("block") ? BukkitParser.toBlock(data.get("block")) : null;
+        anvil = data.containsKey("anvil") ? BukkitParser.toBlock(data.get("anvil")) : null;
         location = data.containsKey("location") ? BukkitParser.toLocation(data.get("location")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PrepareAnvilEvent e) {
-        return (result == null || result.isItem(e.getResult())) && (location == null || (e.getInventory().getLocation() != null && location.inSelect(e.getInventory().getLocation()))) && (block == null || (e.getInventory().getLocation() != null && block.isSelect(e.getInventory().getLocation().getBlock())));
+        return (result == null || result.isItem(e.getResult())) && (location == null || (e.getInventory().getLocation() != null && location.inSelect(e.getInventory().getLocation()))) && (anvil == null || (e.getInventory().getLocation() != null && anvil.isSelect(e.getInventory().getLocation().getBlock())));
     }
 
     @Override
     public String toString() {
         return "TaskItemRepair{" +
-                "block=" + block +
+                "anvil=" + anvil +
                 ", result=" + result +
                 ", location=" + location +
                 ", count=" + count +

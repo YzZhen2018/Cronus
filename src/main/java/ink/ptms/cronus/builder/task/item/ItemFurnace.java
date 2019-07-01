@@ -1,8 +1,8 @@
 package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.ItemResult;
-import ink.ptms.cronus.builder.task.data.ItemSource;
+import ink.ptms.cronus.builder.task.data.item.ItemResult;
+import ink.ptms.cronus.builder.task.data.item.ItemSource;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemFurnace;
 import ink.ptms.cronus.uranus.annotations.Auto;

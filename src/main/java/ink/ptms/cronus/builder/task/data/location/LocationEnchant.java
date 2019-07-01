@@ -1,7 +1,8 @@
-package ink.ptms.cronus.builder.task.data;
+package ink.ptms.cronus.builder.task.data.location;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
+import ink.ptms.cronus.builder.task.data.Location;
 import ink.ptms.cronus.util.Utils;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;
 import org.bukkit.Material;
@@ -14,9 +15,9 @@ import java.util.List;
  * @Author 坏黑
  * @Since 2019-06-30 16:24
  */
-public class EnchantBlock extends Location {
+public class LocationEnchant extends Location {
 
-    public EnchantBlock(Player player, BuilderTaskData builderTaskData) {
+    public LocationEnchant(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 

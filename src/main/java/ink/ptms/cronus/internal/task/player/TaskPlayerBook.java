@@ -48,6 +48,7 @@ public class TaskPlayerBook extends Countable<PlayerEditBookEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
                 ", action=" + action +
                 '}';

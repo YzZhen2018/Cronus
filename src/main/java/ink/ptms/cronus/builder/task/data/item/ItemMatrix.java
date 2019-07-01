@@ -1,6 +1,7 @@
-package ink.ptms.cronus.builder.task.data;
+package ink.ptms.cronus.builder.task.data.item;
 
 import ink.ptms.cronus.builder.element.BuilderTaskData;
+import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import me.skymc.taboolib.inventory.ItemUtils;
@@ -11,9 +12,9 @@ import org.bukkit.entity.Player;
  * @Author 坏黑
  * @Since 2019-06-30 16:00
  */
-public class ItemSource extends Item {
+public class ItemMatrix extends Item {
 
-    public ItemSource(Player player, BuilderTaskData builderTaskData) {
+    public ItemMatrix(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 
@@ -21,7 +22,7 @@ public class ItemSource extends Item {
     public org.bukkit.inventory.ItemStack getItem() {
         ink.ptms.cronus.internal.bukkit.ItemStack cronusItem = data == null ? null : BukkitParser.toItemStack(data);
         return new ItemBuilder(MaterialControl.APPLE.parseMaterial())
-                .name("§7目标物品 (原本)")
+                .name("§7目标物品 (合成)")
                 .lore(
                         "",
                         "§f" + (data == null ? "无" : (cronusItem.getBukkitItem() == null ? cronusItem.asString() : "bukkit:" + ItemUtils.getCustomName(cronusItem.getBukkitItem()))),
@@ -33,6 +34,6 @@ public class ItemSource extends Item {
 
     @Override
     public String getKey() {
-        return "source";
+        return "matrix";
     }
 }

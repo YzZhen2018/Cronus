@@ -19,6 +19,7 @@ public class ItemStack {
 
     public ItemStack(org.bukkit.inventory.ItemStack bukkitItem) {
         this.bukkitItem = bukkitItem;
+        this.amount = bukkitItem.getAmount();
     }
 
     public ItemStack(String type, String name, String lore, int damage, int amount) {
@@ -50,7 +51,7 @@ public class ItemStack {
     }
 
     public boolean isItem(org.bukkit.inventory.ItemStack itemStack) {
-        return isType(itemStack) && isName(itemStack) && isLore(itemStack) && isDamage(itemStack) && isAmount(itemStack);
+        return bukkitItem == null ? isType(itemStack) && isName(itemStack) && isLore(itemStack) && isDamage(itemStack) && isAmount(itemStack) : bukkitItem.isSimilar(itemStack) && bukkitItem.getAmount() <= itemStack.getAmount();
     }
 
     public boolean hasItem(Player player) {

@@ -127,7 +127,8 @@ public class Block extends TaskData {
     }
 
     public void save() {
-        saveData(selected.stream().filter(Objects::nonNull).map(s -> MaterialControl.isNewVersion() ? s.getType().name() : s.getType().name() + ":" + s.getDurability()).collect(Collectors.joining(",")));
+        String block = selected.stream().filter(Objects::nonNull).map(s -> MaterialControl.isNewVersion() ? s.getType().name() : s.getType().name() + ":" + s.getDurability()).collect(Collectors.joining(","));
+        saveData(!block.isEmpty() ? block : null);
     }
 
     public void openSelect(int page) {

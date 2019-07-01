@@ -27,7 +27,12 @@ public class Enchantment {
     }
 
     public boolean isSelect(org.bukkit.enchantments.Enchantment enchant, int level) {
-        return points.stream().anyMatch(b -> b.isSelect(enchant, level));
+        for (Point b : points) {
+            if (b.isSelect(enchant, level)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public class Point {

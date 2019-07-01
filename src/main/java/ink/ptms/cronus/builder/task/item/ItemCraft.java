@@ -1,8 +1,8 @@
 package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.ItemMatrix;
-import ink.ptms.cronus.builder.task.data.ItemResult;
+import ink.ptms.cronus.builder.task.data.item.ItemMatrix;
+import ink.ptms.cronus.builder.task.data.item.ItemResult;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemCraft;
 import ink.ptms.cronus.internal.version.MaterialControl;

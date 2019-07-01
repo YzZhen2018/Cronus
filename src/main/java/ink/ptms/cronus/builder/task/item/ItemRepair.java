@@ -1,9 +1,9 @@
 package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.Block;
-import ink.ptms.cronus.builder.task.data.ItemResult;
 import ink.ptms.cronus.builder.task.data.Location;
+import ink.ptms.cronus.builder.task.data.block.BlockAnvil;
+import ink.ptms.cronus.builder.task.data.item.ItemResult;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemRepair;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -20,8 +20,8 @@ import org.bukkit.inventory.ItemStack;
 public class ItemRepair extends TaskEntry {
 
     public ItemRepair() {
-        objective.add(Block.class);
         objective.add(Location.class);
+        objective.add(BlockAnvil.class);
         objective.add(ItemResult.class);
     }
 

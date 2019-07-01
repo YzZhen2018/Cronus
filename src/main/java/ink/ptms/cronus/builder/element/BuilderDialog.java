@@ -4,13 +4,14 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.element.dialog.Dialog;
+import ink.ptms.cronus.builder.task.data.Entity;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import ink.ptms.cronus.service.hook.EntitySelector;
+import ink.ptms.cronus.service.selector.EntitySelector;
 import me.skymc.taboolib.fileutils.ConfigUtils;
 import me.skymc.taboolib.fileutils.FileUtils;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;
 import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
+import me.skymc.taboolib.message.ChatCatcher;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -97,57 +98,12 @@ public class BuilderDialog extends BuilderQuest {
                                 editString(e.getClicker(), "对话标题", title, r -> title = r);
                                 break;
                             case 11:
-                                editString(e.getClicker(), "对话目标", target, r -> target = r);
-                                normal(e.getClicker(), "可用：");
-                                TellrawJson.create()
-                                        .append("§7§l[§f§lCronus§7§l] §7- ")
-                                        .append(formatTime("[name]"))
-                                        .hoverText(String.join("\n", Lists.newArrayList(
-                                                "§7生物名称",
-                                                "§7根据生物名称判断对话目标",
-                                                "",
-                                                "§7示范:",
-                                                "§f僵尸 §8(所有名字中含有 \"僵尸\" 的实体均可作为对话目标)"
-                                                ))).clickSuggest("[name]").send(e.getClicker());
-                                TellrawJson.create()
-                                    .append("§7§l[§f§lCronus§7§l] §7- ")
-                                    .append(formatTime("citizens=[id]"))
-                                    .hoverText(String.join("\n", Lists.newArrayList(
-                                            "§7Citizens 扩展支持",
-                                            "§7根据 Citizens 序号判断对话目标",
-                                            "",
-                                            "§7别名:",
-                                            "§fnpc=[id]",
-                                            "",
-                                            "§7示范:",
-                                            "§fnpc=0 §8(序号为 \"0\" 的 Citizens 实体作为对话目标)"
-                                    ))).clickSuggest("citizens=[id]").send(e.getClicker());
-                                TellrawJson.create()
-                                        .append("§7§l[§f§lCronus§7§l] §7- ")
-                                        .append(formatTime("mythicmob=[id]"))
-                                        .hoverText(String.join("\n", Lists.newArrayList(
-                                                "§7Mythicmobs 扩展支持",
-                                                "§7根据 Mythicmobs 序号判断对话目标",
-                                                "",
-                                                "§7别名:",
-                                                "§fmm=[id]",
-                                                "",
-                                                "§7示范:",
-                                                "§fmm=mob_0 §8(序号为 \"mob_0\" 的 Mythicmobs 实体作为对话目标)"
-                                        ))).clickSuggest("mythicmob=[id]").send(e.getClicker());
-                                TellrawJson.create()
-                                        .append("§7§l[§f§lCronus§7§l] §7- ")
-                                        .append(formatTime("shopkeeper=[uuid]"))
-                                        .hoverText(String.join("\n", Lists.newArrayList(
-                                                "§7Shopkeepers 扩展支持",
-                                                "§7根据 Shopkeepers 序号判断对话目标",
-                                                "",
-                                                "§7别名:",
-                                                "§fshop=[uuid]",
-                                                "",
-                                                "§7示范:",
-                                                "§fshop=ea23 ... §8(序号为 \"ea23 ...\" 的 Shopkeepers 实体作为对话目标)"
-                                        ))).clickSuggest("shopkeeper=[uuid]").send(e.getClicker());
+                                if (e.castClick().isLeftClick()) {
+                                    ChatCatcher.call(e.getClicker(), new Entity.EntitySelect(player, target, r -> target = r, () -> open(player)));
+                                } else {
+                                    target = null;
+                                    open(player);
+                                }
                                 break;
                             case 12:
                                 new BuilderListEffect("对话开始动作", actionOpen).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
@@ -181,7 +137,7 @@ public class BuilderDialog extends BuilderQuest {
                 .build());
         inventory.setItem(11, new ItemBuilder(Material.NAME_TAG)
                 .name("§b对话目标")
-                .lore("", "§f" + (target == null ? "无" : getTargetDisplay()))
+                .lore("", "§f" + (target == null ? "无" : getTargetDisplay()),  "§8§m                  ", "§7选择: §8左键", "§7删除: §8左键")
                 .build());
         inventory.setItem(12, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b对话开始动作")

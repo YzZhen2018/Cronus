@@ -521,7 +521,7 @@ public class BuilderQuest extends CronusCommand {
         return stageList;
     }
 
-    interface EditTask {
+    public interface EditTask {
 
         void run(String in);
     }

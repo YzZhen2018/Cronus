@@ -1,6 +1,7 @@
-package ink.ptms.cronus.builder.task.data;
+package ink.ptms.cronus.builder.task.data.enums;
 
 import ink.ptms.cronus.builder.element.BuilderTaskData;
+import ink.ptms.cronus.builder.task.TaskEnum;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import org.bukkit.Material;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
  * @Author 坏黑
  * @Since 2019-06-23 16:29
  */
-public class BlockFace extends EnumSet {
+public class BlockFace extends TaskEnum {
 
     public BlockFace(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);

@@ -92,7 +92,7 @@ public class Cache {
             DAMAGEABLE.put(Material.WOOD_STEP, 5);
             DAMAGEABLE.put(Material.QUARTZ_BLOCK, 2);
             DAMAGEABLE.put(Material.STAINED_CLAY, 15);
-            DAMAGEABLE.put(Material.LOG_2, 2);
+            DAMAGEABLE.put(Material.LOG_2, 1);
             DAMAGEABLE.put(Material.PRISMARINE, 2);
             DAMAGEABLE.put(Material.RED_SANDSTONE, 2);
             DAMAGEABLE.put(Material.SAPLING, 5);

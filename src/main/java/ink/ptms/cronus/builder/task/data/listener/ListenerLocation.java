@@ -24,7 +24,7 @@ public class ListenerLocation implements Listener {
 
     @EventHandler
     public void e(PlayerInteractEvent e) {
-        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().getItemInHand().getType() == Material.ARROW) {
+        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
             LinkedList<ChatCatcher.Catcher> catchers = ChatCatcher.getPlayerdata().get(e.getPlayer().getName());
             for (ChatCatcher.Catcher catcher : catchers) {
                 // 单项
@@ -51,7 +51,7 @@ public class ListenerLocation implements Listener {
 
     @EventHandler
     public void e(BlockBreakEvent e) {
-        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getPlayer().getItemInHand().getType() == Material.ARROW) {
+        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
             LinkedList<ChatCatcher.Catcher> catchers = ChatCatcher.getPlayerdata().get(e.getPlayer().getName());
             for (ChatCatcher.Catcher catcher : catchers) {
                 // 单项

@@ -139,7 +139,15 @@ public class DataQuest implements TSerializable {
     @Nullable
     public QuestStage getStage() {
         Quest quest = getQuest();
-        return quest == null ? null : quest.getStage().stream().filter(s -> s.getId().equals(currentStage)).findFirst().orElse(null);
+        if (quest == null) {
+            return null;
+        }
+        for (QuestStage questStage : quest.getStage()) {
+            if (questStage.getId().equals(currentStage)) {
+                return questStage;
+            }
+        }
+        return null;
     }
 
     @Override

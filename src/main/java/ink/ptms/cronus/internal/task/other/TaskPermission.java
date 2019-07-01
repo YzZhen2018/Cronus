@@ -39,6 +39,7 @@ public class TaskPermission extends UnEvent {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
                 ", action=" + action +
                 '}';

@@ -27,7 +27,12 @@ public class PotionEffect {
     }
 
     public boolean isSelect(org.bukkit.potion.PotionEffectType potionType, int level) {
-        return points.stream().anyMatch(b -> b.isSelect(potionType, level));
+        for (Point b : points) {
+            if (b.isSelect(potionType, level)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public class Point {

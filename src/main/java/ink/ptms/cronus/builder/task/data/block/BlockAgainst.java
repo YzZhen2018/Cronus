@@ -1,7 +1,8 @@
-package ink.ptms.cronus.builder.task.data;
+package ink.ptms.cronus.builder.task.data.block;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
+import ink.ptms.cronus.builder.task.data.Block;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import me.skymc.taboolib.inventory.ItemUtils;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;

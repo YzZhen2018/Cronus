@@ -56,6 +56,7 @@ public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
                 ", action=" + action +
                 '}';

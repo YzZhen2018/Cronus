@@ -3,6 +3,7 @@ package ink.ptms.cronus.internal.task.player;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Block;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
+import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class TaskPlayerBucketEmpty extends Countable<PlayerBucketEmptyEvent> {
 
     private Block block;
+    private Location location;
     private ItemStack bucket;
 
     public TaskPlayerBucketEmpty(ConfigurationSection config) {
@@ -30,24 +32,28 @@ public class TaskPlayerBucketEmpty extends Countable<PlayerBucketEmptyEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         block = data.containsKey("block") ? BukkitParser.toBlock(data.get("block")) : null;
+        location = data.containsKey("location") ? BukkitParser.toLocation(data.get("location")) : null;
         bucket = data.containsKey("bucket") ? BukkitParser.toItemStack(data.get("bucket")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PlayerBucketEmptyEvent e) {
-        return (block == null || block.isSelect(e.getBlockClicked())) && (bucket == null || bucket.isItem(e.getItemStack()));
+        return (block == null || block.isSelect(e.getBlockClicked())) && (location == null || location.inSelect(e.getBlockClicked().getLocation())) && (bucket == null || bucket.isItem(e.getItemStack()));
     }
 
     @Override
     public String toString() {
         return "TaskPlayerBucketEmpty{" +
-                "count=" + count +
-                ", block=" + block +
+                "block=" + block +
+                ", location=" + location +
                 ", bucket=" + bucket +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", action=" + action +
                 '}';
     }
 }

@@ -1,11 +1,11 @@
-package ink.ptms.cronus.builder.task.item;
+package ink.ptms.cronus.builder.task.player;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.Enchant;
-import ink.ptms.cronus.builder.task.data.location.LocationEnchant;
 import ink.ptms.cronus.builder.task.data.Item;
+import ink.ptms.cronus.builder.task.data.Location;
+import ink.ptms.cronus.builder.task.data.block.BlockBucket;
 import ink.ptms.cronus.internal.QuestTask;
-import ink.ptms.cronus.internal.task.item.TaskItemEnchant;
+import ink.ptms.cronus.internal.task.player.TaskPlayerBucketFill;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import me.skymc.taboolib.inventory.builder.ItemBuilder;
@@ -17,21 +17,21 @@ import org.bukkit.inventory.ItemStack;
  * @Since 2019-06-22 22:19
  */
 @Auto
-public class ItemEnchant extends TaskEntry {
+public class PlayerBucketFill extends TaskEntry {
 
-    public ItemEnchant() {
+    public PlayerBucketFill() {
+        objective.add(BlockBucket.class);
+        objective.add(Location.class);
         objective.add(Item.class);
-        objective.add(Enchant.class);
-        objective.add(LocationEnchant.class);
     }
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(MaterialControl.ENCHANTING_TABLE.parseMaterial()).name("§f物品附魔").lore("", "§7点击选择").flags(ItemFlag.values()).build();
+        return new ItemBuilder(MaterialControl.BUCKET.parseMaterial()).name("§f水桶填充").lore("", "§7点击选择").flags(ItemFlag.values()).build();
     }
 
     @Override
     public Class<? extends QuestTask> getTask() {
-        return TaskItemEnchant.class;
+        return TaskPlayerBucketFill.class;
     }
 }

@@ -2,6 +2,8 @@ package ink.ptms.cronus.builder.task.block;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
 import ink.ptms.cronus.builder.task.data.*;
+import ink.ptms.cronus.builder.task.data.Action;
+import ink.ptms.cronus.builder.task.data.enums.BlockFace;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.block.TaskBlockInteract;
 import ink.ptms.cronus.internal.version.MaterialControl;

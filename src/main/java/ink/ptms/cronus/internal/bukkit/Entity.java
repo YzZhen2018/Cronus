@@ -19,7 +19,12 @@ public class Entity {
     }
 
     public boolean isSelect(org.bukkit.entity.Entity entity) {
-        return points.stream().anyMatch(b -> b.isSelect(entity));
+        for (Point b : points) {
+            if (b.isSelect(entity)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public class Point {

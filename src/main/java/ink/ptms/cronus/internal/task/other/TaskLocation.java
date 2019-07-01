@@ -8,7 +8,6 @@ import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.UnEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.util.NumberConversions;
 
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import java.util.Map;
 @Task(name = "location")
 public class TaskLocation extends UnEvent {
 
-    private int radius;
     private Location location;
 
     public TaskLocation(ConfigurationSection config) {
@@ -28,23 +26,22 @@ public class TaskLocation extends UnEvent {
 
     @Override
     public void init(Map<String, Object> data) {
-        radius = NumberConversions.toInt(data.getOrDefault("radius", 1));
         location = data.containsKey("location") ? BukkitParser.toLocation(data.get("location")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, EventPeriod event) {
-        return location != null && location.isSelectWorld(player.getLocation()) && (location.getMode() == Location.Mode.AREA ? location.inSelect(player.getLocation()) : location.toBukkit().distance(player.getLocation()) <= radius);
+        return location == null || location.inSelect(player.getLocation());
     }
 
     @Override
     public String toString() {
         return "TaskLocation{" +
-                "radius=" + radius +
-                ", location=" + location +
+                "location=" + location +
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
                 ", action=" + action +
                 '}';

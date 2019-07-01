@@ -112,11 +112,13 @@ public class Location extends TaskData {
         public ChatCatcher.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请用")
-                    .append("§f箭").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " arrow")
+                    .append("§f下界之星").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " nether_star")
                     .append("§7点击目标方块或输入坐标. ")
                     .append("§a(完成)").hoverText("§7点击").clickCommand("quit()")
                     .send(player);
-            TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7可用：");
+            TellrawJson.create()
+                    .append("§7§l[§f§lCronus§7§l] §7可用：")
+                    .send(player);
             TellrawJson.create()
                     .append("§7§l[§f§lCronus§7§l] §7- ")
                     .append(format("[world],[x],[y],[z]"))
@@ -172,11 +174,13 @@ public class Location extends TaskData {
         public ChatCatcher.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请用")
-                    .append("§f箭").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " arrow")
+                    .append("§f下界之星").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " nether_star")
                     .append("§7点击区域两点或输入坐标. ")
                     .append("§a(完成)").hoverText("§7点击").clickCommand("quit()")
                     .send(player);
-            TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7可用：");
+            TellrawJson.create()
+                    .append("§7§l[§f§lCronus§7§l] §7可用：")
+                    .send(player);
             TellrawJson.create()
                     .append("§7§l[§f§lCronus§7§l] §7- ")
                     .append(format("[world]:[x1],[y1],[z1]~[x2],[y2],[z2]"))

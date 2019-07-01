@@ -6,7 +6,7 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusDialogEvent;
 import ink.ptms.cronus.event.CronusReloadEvent;
 import ink.ptms.cronus.service.Service;
-import ink.ptms.cronus.service.hook.EntitySelector;
+import ink.ptms.cronus.service.selector.EntitySelector;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
