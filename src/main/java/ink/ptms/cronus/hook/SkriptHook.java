@@ -1,4 +1,4 @@
-package ink.ptms.cronus.service.hook;
+package ink.ptms.cronus.hook;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.registrations.Classes;

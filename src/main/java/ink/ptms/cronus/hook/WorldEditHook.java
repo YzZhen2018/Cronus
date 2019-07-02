@@ -1,4 +1,4 @@
-package ink.ptms.cronus.service.hook;
+package ink.ptms.cronus.hook;
 
 import com.ilummc.tlib.logger.TLogger;
 import com.sk89q.worldedit.EditSession;
