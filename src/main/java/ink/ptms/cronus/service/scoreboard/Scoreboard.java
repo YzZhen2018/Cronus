@@ -12,9 +12,9 @@ import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
-import me.skymc.taboolib.other.NumberUtils;
-import me.skymc.taboolib.scoreboard.ScoreboardUtil;
-import me.skymc.taboolib.string.VariableFormatter;
+import io.izzel.taboolib.util.Variables;
+import io.izzel.taboolib.util.lite.Numbers;
+import io.izzel.taboolib.util.lite.Scoreboards;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -53,11 +53,11 @@ public class Scoreboard implements Service {
                     // 空行检查
                     for (int i = 0; i < build.size(); i++) {
                         if (build.get(i).isEmpty()) {
-                            build.set(i, Arrays.stream(String.valueOf(NumberUtils.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
+                            build.set(i, Arrays.stream(String.valueOf(Numbers.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
                         }
                     }
                     // 返回主线程发送计分板
-                    Bukkit.getScheduler().runTask(Cronus.getInst(), () -> ScoreboardUtil.unrankedSidebarDisplay(player, build.toArray(new String[0])));
+                    Bukkit.getScheduler().runTask(Cronus.getInst(), () -> Scoreboards.display(player, build.toArray(new String[0])));
                 }
             }
         }, 0, 40);
@@ -108,7 +108,7 @@ public class Scoreboard implements Service {
                 QuestStage questStage = quest.getStage();
                 for (String content : questStage.getContentGlobal()) {
                     StringBuilder builder = new StringBuilder();
-                    for (VariableFormatter.Variable variable : new VariableFormatter(FunctionParser.parseAll(new QuestProgram(player, quest), content)).find().getVariableList()) {
+                    for (Variables.Variable variable : new Variables(FunctionParser.parseAll(new QuestProgram(player, quest), content)).find().getVariableList()) {
                         if (variable.isVariable()) {
                             // 移除方法变量（hoverText、runCommand）
                             String text = variable.getText().split("\\|")[0];

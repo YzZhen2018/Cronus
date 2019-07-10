@@ -1,6 +1,6 @@
 package ink.ptms.cronus.internal.bukkit;
 
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.util.item.Items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -35,11 +35,11 @@ public class ItemStack {
     }
 
     public boolean isName(org.bukkit.inventory.ItemStack itemStack) {
-        return name == null || ItemUtils.getCustomName(itemStack).contains(name);
+        return name == null || Items.getName(itemStack).contains(name);
     }
 
     public boolean isLore(org.bukkit.inventory.ItemStack itemStack) {
-        return lore == null || ItemUtils.hasLore(itemStack, lore);
+        return lore == null || Items.hasLore(itemStack, lore);
     }
 
     public boolean isDamage(org.bukkit.inventory.ItemStack itemStack) {

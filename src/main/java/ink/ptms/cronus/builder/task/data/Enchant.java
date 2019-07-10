@@ -6,9 +6,9 @@ import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -43,9 +43,9 @@ public class Enchant extends TaskData {
 
     @Override
     public void onClick(InventoryClickEvent e) {
-        ChatCatcher.call(player, new ChatCatcher.Catcher() {
+        Catchers.call(player, new Catchers.Catcher() {
             @Override
-            public ChatCatcher.Catcher before() {
+            public Catchers.Catcher before() {
                 player.closeInventory();
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入附魔判断规则. ")
                         .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")
@@ -67,7 +67,7 @@ public class Enchant extends TaskData {
                                 "§fdurability > 1,damage_all > 2 §8(耐久大于 1 级或锋利大于 2 级)",
                                 "",
                                 "§7附魔:",
-                                "§f使用指令 §8/tlib enchants §8获取所有附魔名称"
+                                "§f使用指令 §8/ct enchants §8获取所有附魔名称"
                         ))).clickSuggest("[enchant][expression]+").send(player);
                 return this;
             }

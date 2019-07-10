@@ -1,9 +1,9 @@
 package ink.ptms.cronus.internal.bukkit;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.util.StringExpression;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.item.Items;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +46,7 @@ public class PotionEffect {
                 logger.error("PotionEffect \"" + in + "\" parsing failed.");
                 return;
             }
-            potionType = ItemUtils.asPotionEffectType(matcher.group("potion").toUpperCase());
+            potionType = Items.asPotionEffectType(matcher.group("potion").toUpperCase());
             if (potionType == null) {
                 logger.error("PotionEffect \"" + in + "\" parsing failed.");
                 return;

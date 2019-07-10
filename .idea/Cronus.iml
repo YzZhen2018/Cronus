@@ -103,15 +103,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: 9:1:1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/TabooLib.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: 10:1:1">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/WorldEdit.jar!/" />
@@ -121,18 +112,18 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: 11:1:1">
+      <library name="Maven: 12:1:1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/TabooLibDeprecated.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/MythicMobs.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: 12:1:1">
+      <library name="Maven: 13:1:1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/MythicMobs.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/TabooLib5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

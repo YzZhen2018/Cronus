@@ -2,16 +2,16 @@ package ink.ptms.cronus.builder.task;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.util.Strings;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.util.Strings;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -128,11 +128,11 @@ public abstract class TaskEnum<T extends Enum> extends TaskData {
             try {
                 T e = iterator.get(i);
                 if (selected.contains(e)) {
-                    inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER).name("§f" + e.name()).lore("", "§8取消").shiny().build());
+                    inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.PAPER).name("§f" + e.name()).lore("", "§8取消").shiny().build());
                 } else {
-                    inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER).name("§f" + e.name()).lore("", "§8选择").build());
+                    inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.PAPER).name("§f" + e.name()).lore("", "§8选择").build());
                 }
-                map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), e);
+                map.put(Items.INVENTORY_CENTER[i], e);
             } catch (Throwable t) {
                 t.printStackTrace();
             }

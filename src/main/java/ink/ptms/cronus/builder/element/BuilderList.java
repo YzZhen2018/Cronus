@@ -2,19 +2,19 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.CloseTask;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.ArrayUtil;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.CloseTask;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -87,7 +87,7 @@ public class BuilderList extends BuilderQuest {
         // 创建界面
         Inventory inventory = Builders.normal("结构编辑 : " + display,
                 e -> {
-                    if (e.getClickType() == ClickType.CLICK && !ItemUtils.isNull(e.castClick().getCurrentItem())) {
+                    if (e.getClickType() == ClickType.CLICK && !Items.isNull(e.castClick().getCurrentItem())) {
                         e.castClick().setCancelled(true);
                         // 上一页
                         if (e.castClick().getRawSlot() == 46 && MaterialControl.GREEN_STAINED_GLASS_PANE.isSimilar(e.castClick().getCurrentItem())) {
@@ -103,7 +103,7 @@ public class BuilderList extends BuilderQuest {
                             close(close, null);
                         }
                         // 内容
-                        else if (InventoryUtil.SLOT_OF_CENTENTS.contains(e.castClick().getRawSlot())) {
+                        else if (ArrayUtil.contains(Items.INVENTORY_CENTER, e.castClick().getRawSlot())) {
                             try {
                                 int index = map.get(e.castClick().getRawSlot());
                                 // 左键
@@ -151,19 +151,19 @@ public class BuilderList extends BuilderQuest {
         for (int i = 0; i < iterator.size(); i++) {
             // 追加
             if (iterator.get(i).equals("$append")) {
-                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP)
+                inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.MAP)
                         .name("§f增加新的" + display)
                         .lore("", "§7点击")
                         .build());
             }
             // 修改 & 删除
             else {
-                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER)
+                inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.PAPER)
                         .name("§f" + iterator.get(i))
                         .lore("", "§8§m                  ", "§7修改: §8左键", "§7删除: §8右键", "§7左移: §8SHIFT+左键", "§7右移: §8SHIFT+右键")
                         .build());
             }
-            map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), page * 28 + i);
+            map.put(Items.INVENTORY_CENTER[i], page * 28 + i);
         }
         if (page > 0) {
             inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
@@ -186,9 +186,9 @@ public class BuilderList extends BuilderQuest {
     }
 
     protected void editString(Player player, String display, String origin, EditTask edit, Candidate candidate) {
-        ChatCatcher.call(player, new ChatCatcher.Catcher() {
+        Catchers.call(player, new Catchers.Catcher() {
             @Override
-            public ChatCatcher.Catcher before() {
+            public Catchers.Catcher before() {
                 toggle = true;
                 player.closeInventory();
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入新的" + display + ". ")

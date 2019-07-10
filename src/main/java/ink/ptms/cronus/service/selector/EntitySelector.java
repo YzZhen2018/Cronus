@@ -7,8 +7,8 @@ import ink.ptms.cronus.service.selector.impl.SelectorCitizens;
 import ink.ptms.cronus.service.selector.impl.SelectorMythicMobs;
 import ink.ptms.cronus.service.selector.impl.SelectorShopkeepers;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.common.util.SimpleI18n;
-import me.skymc.taboolib.string.ArrayUtils;
+import io.izzel.taboolib.module.lite.SimpleI18n;
+import io.izzel.taboolib.util.ArrayUtil;
 import org.bukkit.entity.Entity;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class EntitySelector implements Service {
         if (v.length > 1) {
             for (Selector selector : selectors) {
                 if (selector.match(v[0])) {
-                    return selector.isHooked() && selector.isSelect(entity, ArrayUtils.arrayJoin(v, 1));
+                    return selector.isHooked() && selector.isSelect(entity, ArrayUtil.arrayJoin(v, 1));
                 }
             }
         }
@@ -54,7 +54,7 @@ public class EntitySelector implements Service {
         if (v.length > 1) {
             for (Selector selector : selectors) {
                 if (selector.match(v[0])) {
-                    return selector.isHooked() ? selector.getDisplay(ArrayUtils.arrayJoin(v, 1)) : "No Hooked";
+                    return selector.isHooked() ? selector.getDisplay(ArrayUtil.arrayJoin(v, 1)) : "No Hooked";
                 }
             }
         }

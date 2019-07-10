@@ -1,9 +1,9 @@
 package ink.ptms.cronus.internal.bukkit.parser;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.internal.bukkit.*;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.common.serialize.TSerializerElementGeneral;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.serialize.TSerializerElementGeneral;
 import org.bukkit.Bukkit;
 import org.bukkit.util.NumberConversions;
 

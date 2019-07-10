@@ -2,7 +2,7 @@ package ink.ptms.cronus.service.guide;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
-import me.skymc.taboolib.TabooLib;
+import io.izzel.taboolib.Version;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
@@ -81,7 +81,7 @@ public class GuideWayData {
     }
 
     public void display() {
-        owner.spawnParticle(TabooLib.getVersionNumber() >= 10900 ? Particle.END_ROD : Particle.CLOUD, target, 500, 0, 100, 0, 0);
+        owner.spawnParticle(Version.isAfter(Version.v1_9) ? Particle.END_ROD : Particle.CLOUD, target, 500, 0, 100, 0, 0);
     }
 
     public static Location getMidPoint(Location start, Location end, double distance) {

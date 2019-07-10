@@ -5,9 +5,9 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -80,8 +80,8 @@ public class BuilderTaskData {
         for (int i = 0; i < dataInstance.size(); i++) {
             TaskData taskData = dataInstance.get(i);
             taskData.setData(builderTask.getData().getOrDefault(taskData.getKey(), taskData.defaultValue()));
-            inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), taskData.getItem());
-            map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), taskData);
+            inventory.setItem(Items.INVENTORY_CENTER[i], taskData.getItem());
+            map.put(Items.INVENTORY_CENTER[i], taskData);
         }
         inventory.setItem(49, new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem()).name("§c上级目录").lore("", "§7点击").build());
         player.openInventory(inventory);

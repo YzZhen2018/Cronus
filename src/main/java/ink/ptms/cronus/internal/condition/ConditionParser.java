@@ -1,8 +1,8 @@
 package ink.ptms.cronus.internal.condition;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.Cronus;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.Map;
 import java.util.regex.Matcher;

@@ -1,7 +1,7 @@
 package ink.ptms.cronus.asm;
 
 import com.google.common.collect.Lists;
-import me.skymc.taboolib.TabooLib;
+import io.izzel.taboolib.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
@@ -21,7 +21,7 @@ public class AsmHandlerImpl extends AsmHandler {
 
     @Override
     public Entity getEntityByEntityId(int id) {
-        if (TabooLib.getVersionNumber() >= 11400) {
+        if (Version.isAfter(Version.v1_14)) {
             for (World world : Bukkit.getWorlds()) {
                 Object entity = ((org.bukkit.craftbukkit.v1_14_R1.CraftWorld) world).getHandle().getEntity(id);
                 return entity != null ? ((net.minecraft.server.v1_14_R1.Entity) entity).getBukkitEntity() : null;

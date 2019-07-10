@@ -1,6 +1,5 @@
 package ink.ptms.cronus.command.impl;
 
-import com.ilummc.tlib.bungee.chat.ComponentSerializer;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataQuest;
@@ -14,28 +13,26 @@ import ink.ptms.cronus.internal.program.effect.EffectParser;
 import ink.ptms.cronus.uranus.program.ProgramLoader;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.bookformatter.BookFormatter;
-import me.skymc.taboolib.bookformatter.builder.BookBuilder;
-import me.skymc.taboolib.bookformatter.builder.PageBuilder;
-import me.skymc.taboolib.commands.internal.BaseSubCommand;
-import me.skymc.taboolib.commands.internal.TCommand;
-import me.skymc.taboolib.commands.internal.type.CommandArgument;
-import me.skymc.taboolib.commands.internal.type.CommandRegister;
-import me.skymc.taboolib.commands.internal.type.CommandType;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.string.ArrayUtils;
+import io.izzel.taboolib.module.command.base.*;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.ArrayUtil;
+import io.izzel.taboolib.util.book.BookFormatter;
+import io.izzel.taboolib.util.book.builder.BookBuilder;
+import io.izzel.taboolib.util.book.builder.PageBuilder;
+import io.izzel.taboolib.util.chat.ComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 
 /**
  * @Author 坏黑
  * @Since 2019-05-31 22:10
  */
-@TCommand(name = "CronusTest", aliases = {"ct"}, permission = "*")
+@BaseCommand(name = "CronusTest", aliases = {"ct"}, permission = "*")
 public class CommandTest extends CronusCommand {
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand condition = new BaseSubCommand() {
 
         @Override
@@ -44,15 +41,15 @@ public class CommandTest extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("表达式")
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("表达式")
             };
         }
 
         @Override
         public void onCommand(CommandSender sender, Command command, String s, String[] args) {
-            Condition parse = ConditionParser.parse(ArrayUtils.arrayJoin(args, 0));
+            Condition parse = ConditionParser.parse(ArrayUtil.arrayJoin(args, 0));
             if (parse instanceof CondNull) {
                 error(sender, "条件格式错误.");
             } else {
@@ -70,7 +67,7 @@ public class CommandTest extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand effect = new BaseSubCommand() {
 
         @Override
@@ -79,15 +76,15 @@ public class CommandTest extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("表达式")
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("表达式")
             };
         }
 
         @Override
         public void onCommand(CommandSender sender, Command command, String s, String[] args) {
-            Effect parse = EffectParser.parse(ArrayUtils.arrayJoin(args, 0));
+            Effect parse = EffectParser.parse(ArrayUtil.arrayJoin(args, 0));
             if (parse instanceof EffectNull) {
                 error(sender, "动作格式错误.");
             } else {
@@ -105,7 +102,7 @@ public class CommandTest extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand conditions = new BaseSubCommand() {
 
         @Override
@@ -114,9 +111,9 @@ public class CommandTest extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("关键字", false)
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("关键字", false)
             };
         }
 
@@ -141,7 +138,7 @@ public class CommandTest extends CronusCommand {
                         .toRawMessage((Player) sender)));
             });
             normal(sender, "创建完成!");
-            BookFormatter.openPlayer(((Player) sender), bookBuilder.build());
+            BookFormatter.forceOpen(((Player) sender), bookBuilder.build());
         }
 
         @Override
@@ -150,7 +147,7 @@ public class CommandTest extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand effects = new BaseSubCommand() {
 
         @Override
@@ -159,9 +156,9 @@ public class CommandTest extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("关键字", false)
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("关键字", false)
             };
         }
 
@@ -185,7 +182,35 @@ public class CommandTest extends CronusCommand {
                         .toRawMessage((Player) sender)));
             });
             normal(sender, "创建完成!");
-            BookFormatter.openPlayer(((Player) sender), bookBuilder.build());
+            BookFormatter.forceOpen(((Player) sender), bookBuilder.build());
+        }
+
+        @Override
+        public CommandType getType() {
+            return CommandType.PLAYER;
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand enchants = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "列出所有附魔类型";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            Enchantment[] enchantments = Enchantment.values();
+            TellrawJson json = TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7附魔: §f");
+            int i = 1;
+            for (Enchantment enchantment : enchantments) {
+                json.append("§f" + enchantment.getName()).hoverText("§7点击复制").clickSuggest(enchantment.getName());
+                if (i++ < enchantments.length) {
+                    json.append("§8, ");
+                }
+            }
+            json.send(sender);
         }
 
         @Override

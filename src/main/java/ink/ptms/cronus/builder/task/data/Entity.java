@@ -7,9 +7,9 @@ import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.service.selector.EntitySelector;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -42,7 +42,7 @@ public class Entity extends TaskData {
 
     @Override
     public void onClick(InventoryClickEvent e) {
-        ChatCatcher.call(player, new Entity.EntitySelect(player, data, this::saveData, this::open));
+        Catchers.call(player, new Entity.EntitySelect(player, data, this::saveData, this::open));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Entity extends TaskData {
         return null;
     }
 
-    public static class EntitySelect implements ChatCatcher.Catcher {
+    public static class EntitySelect implements Catchers.Catcher {
 
         private Player player;
         private Object origin;
@@ -65,7 +65,7 @@ public class Entity extends TaskData {
         }
 
         @Override
-        public ChatCatcher.Catcher before() {
+        public Catchers.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请用")
                     .append("§f下界之星").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " nether_star")

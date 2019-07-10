@@ -1,9 +1,9 @@
 package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
-import me.skymc.taboolib.inventory.builder.v2.CloseTask;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.inventory.CloseTask;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -50,9 +50,9 @@ public class BuilderStageList extends BuilderList {
             // 新增
             if (list.get(index).equals("$append")) {
                 // 事件
-                ChatCatcher.call(player, new ChatCatcher.Catcher() {
+                Catchers.call(player, new Catchers.Catcher() {
                     @Override
-                    public ChatCatcher.Catcher before() {
+                    public Catchers.Catcher before() {
                         toggle = true;
                         player.closeInventory();
                         TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入新的任务阶段名称. ")

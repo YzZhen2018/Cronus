@@ -1,10 +1,10 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
-import me.skymc.taboolib.support.SupportWorldGuard;
+import io.izzel.taboolib.TabooLibAPI;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -28,7 +28,7 @@ public class CondWorldGuard extends Condition {
 
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
-        return symbol.startsWith("=") == SupportWorldGuard.INSTANCE.getRegionsAtLocation(player.getWorld(), player.getLocation()).stream().anyMatch(name::equalsIgnoreCase);
+        return symbol.startsWith("=") == TabooLibAPI.getPluginBridge().worldguardGetRegion(player.getWorld(), player.getLocation()).stream().anyMatch(name::equalsIgnoreCase);
     }
 
     @Override

@@ -1,16 +1,16 @@
 package ink.ptms.cronus.service.dialog;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusDialogEvent;
 import ink.ptms.cronus.event.CronusReloadEvent;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.service.selector.EntitySelector;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
-import me.skymc.taboolib.fileutils.ConfigUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.Files;
+import io.izzel.taboolib.util.lite.cooldown.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,7 +32,7 @@ public class Dialog implements Service, Listener {
     @TInject
     private static TLogger logger;
     @TInject
-    private static CooldownPack2 cooldown = new CooldownPack2("cronus|dialog", 200);
+    private static Cooldown cooldown = new Cooldown("cronus|dialog", 200);
 
     private File folder;
     private List<DialogGroup> dialogs = Lists.newArrayList();
@@ -84,7 +84,7 @@ public class Dialog implements Service, Listener {
         if (file.isDirectory()) {
             Arrays.stream(file.listFiles()).forEach(this::loadDialog);
         } else {
-            YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+            YamlConfiguration yaml = Files.loadYaml(file);
             for (String id : yaml.getKeys(false)) {
                 ConfigurationSection config = yaml.getConfigurationSection(id);
                 try {

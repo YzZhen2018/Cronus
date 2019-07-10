@@ -1,11 +1,11 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.util.StringExpression;
-import me.skymc.taboolib.other.NumberUtils;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.NumberConversions;
@@ -39,7 +39,7 @@ public class CondPlaceholder extends Condition {
     public boolean check(Player player, DataQuest quest, Event event) {
         String v = TLocale.Translate.setPlaceholders(player, placeholder);
         if (booleanMode) {
-            return negative == NumberUtils.getBooleanAbbreviation(v);
+            return negative == Numbers.getBoolean(v);
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
         }

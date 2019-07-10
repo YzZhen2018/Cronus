@@ -1,12 +1,12 @@
 package ink.ptms.cronus.internal.condition.impl;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
-import me.skymc.taboolib.inventory.TEquipment;
+import io.izzel.taboolib.module.lite.SimpleEquip;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.NumberConversions;
@@ -25,7 +25,7 @@ public class CondItem extends Condition {
 
     private int slot;
     private String symbol;
-    private TEquipment equipment;
+    private SimpleEquip equipment;
     private ItemStack itemStack;
     private boolean inventory;
 
@@ -37,7 +37,7 @@ public class CondItem extends Condition {
         } else {
             // 指定位置
             try {
-                equipment = TEquipment.valueOf(matcher.group("slot").toUpperCase());
+                equipment = SimpleEquip.valueOf(matcher.group("slot").toUpperCase());
             } catch (Throwable ignored) {
                 slot = NumberConversions.toInt(matcher.group("slot"));
             }

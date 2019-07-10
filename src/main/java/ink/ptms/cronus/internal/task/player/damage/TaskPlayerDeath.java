@@ -5,9 +5,9 @@ import ink.ptms.cronus.internal.bukkit.DamageCause;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
-import me.skymc.taboolib.damage.DamageUtils;
+import ink.ptms.cronus.internal.task.special.Countable;
+import io.izzel.taboolib.util.lite.Servers;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -42,7 +42,7 @@ public class TaskPlayerDeath extends Countable<PlayerDeathEvent> {
     @Override
     public boolean check(Player player, DataQuest dataQuest, PlayerDeathEvent e) {
         if (player.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-            LivingEntity a = DamageUtils.getLivingAttackerInDamageEvent((EntityDamageByEntityEvent) player.getLastDamageCause());
+            LivingEntity a = Servers.getLivingAttackerInDamageEvent((EntityDamageByEntityEvent) player.getLastDamageCause());
             return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || attacker.isSelect(a)) && (cause == null || cause.isSelect(player.getLastDamageCause().getCause()));
         } else {
             return weapon == null && attacker == null && (cause == null || cause.isSelect(player.getLastDamageCause().getCause()));

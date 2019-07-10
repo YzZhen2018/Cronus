@@ -6,7 +6,7 @@ import ink.ptms.cronus.builder.task.data.item.ItemSource;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemFurnace;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

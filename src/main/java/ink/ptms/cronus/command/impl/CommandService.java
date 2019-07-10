@@ -3,10 +3,10 @@ package ink.ptms.cronus.command.impl;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.service.Service;
-import me.skymc.taboolib.commands.internal.BaseSubCommand;
-import me.skymc.taboolib.commands.internal.TCommand;
-import me.skymc.taboolib.commands.internal.type.CommandArgument;
-import me.skymc.taboolib.commands.internal.type.CommandRegister;
+import io.izzel.taboolib.module.command.base.Argument;
+import io.izzel.taboolib.module.command.base.BaseCommand;
+import io.izzel.taboolib.module.command.base.BaseSubCommand;
+import io.izzel.taboolib.module.command.base.SubCommand;
 import org.bukkit.command.CommandSender;
 
 import java.util.Map;
@@ -15,10 +15,10 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-06-10 20:26
  */
-@TCommand(name = "CronusService", aliases = "cs", permission = "*")
+@BaseCommand(name = "CronusService", aliases = "cs", permission = "*")
 public class CommandService extends Command {
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand all = new BaseSubCommand() {
 
         @Override
@@ -35,13 +35,13 @@ public class CommandService extends Command {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand reload = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("服务", () -> Lists.newArrayList(Cronus.getCronusService().getServices().keySet()))
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("服务", () -> Lists.newArrayList(Cronus.getCronusService().getServices().keySet()))
             };
         }
 

@@ -2,7 +2,7 @@ package ink.ptms.cronus.internal.task.listener.version;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.player.TaskPlayerBreed;
-import me.skymc.taboolib.listener.TListener;
+import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

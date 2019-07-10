@@ -1,6 +1,5 @@
 package ink.ptms.cronus.hook;
 
-import com.ilummc.tlib.logger.TLogger;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalConfiguration;
 import com.sk89q.worldedit.Vector;
@@ -16,7 +15,8 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.util.io.Closer;
 import com.sk89q.worldedit.world.registry.WorldData;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

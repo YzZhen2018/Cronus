@@ -1,12 +1,12 @@
 package ink.ptms.cronus.internal.condition.impl.argument;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
-import me.skymc.taboolib.javascript.ScriptHandler;
-import me.skymc.taboolib.other.NumberUtils;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.lite.Numbers;
+import io.izzel.taboolib.util.lite.Scripts;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -29,7 +29,7 @@ public class CondScript extends Condition {
     @Override
     public void init(Matcher matcher, String text) {
         origin = matcher.group("script");
-        script = ScriptHandler.compile(matcher.group("script"));
+        script = Scripts.compile(matcher.group("script"));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CondScript extends Condition {
         bindings.put("event", event);
         bindings.put("quest", quest);
         try {
-            return NumberUtils.getBooleanAbbreviation(String.valueOf(this.script.eval(bindings)));
+            return Numbers.getBoolean(String.valueOf(this.script.eval(bindings)));
         } catch (ScriptException e) {
             e.printStackTrace();
         }

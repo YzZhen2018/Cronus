@@ -4,7 +4,7 @@ import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.event.EventPeriod;
 import ink.ptms.cronus.internal.task.other.TaskLocation;
 import ink.ptms.cronus.internal.task.other.TaskPermission;
-import me.skymc.taboolib.common.schedule.TSchedule;
+import io.izzel.taboolib.module.inject.TSchedule;
 import org.bukkit.Bukkit;
 
 /**

@@ -1,7 +1,7 @@
 package ink.ptms.cronus.uranus.program;
 
-import com.ilummc.tlib.logger.TLogger;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 

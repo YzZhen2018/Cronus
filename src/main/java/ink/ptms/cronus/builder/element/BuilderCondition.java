@@ -2,7 +2,6 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.element.condition.MatchAppend;
@@ -14,14 +13,15 @@ import ink.ptms.cronus.internal.condition.CondNull;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickTask;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.CloseTask;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickTask;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.CloseTask;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -196,16 +196,16 @@ public class BuilderCondition extends CronusCommand {
                 MatchEntry entry = iterator.get(i);
                 if (entry instanceof MatchAppend) {
                     if (entryCollect.size() == 1) {
-                        inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7左键增加 §8| §7右键删除").build());
+                        inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7左键增加 §8| §7右键删除").build());
                     } else {
-                        inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7点击").build());
+                        inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7点击").build());
                     }
                 } else if (entry.getType() == MatchType.SINGLE) {
-                    inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(entry.getType().getMaterial()).name("§f" + entry.getSingleTranslate()).lore("", "§7左键编辑 §8| §7右键删除").build());
+                    inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(entry.getType().getMaterial()).name("§f" + entry.getSingleTranslate()).lore("", "§7左键编辑 §8| §7右键删除").build());
                 } else {
-                    inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(entry.getType().getMaterial()).name("§f...").lore("", "§7左键编辑 §8| §7右键删除").build());
+                    inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(entry.getType().getMaterial()).name("§f...").lore("", "§7左键编辑 §8| §7右键删除").build());
                 }
-                entryMap.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), entry);
+                entryMap.put(Items.INVENTORY_CENTER[i], entry);
             }
             if (page > 0) {
                 inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
@@ -222,9 +222,9 @@ public class BuilderCondition extends CronusCommand {
     }
 
     protected void editString(Player player, String origin, BuilderQuest.EditTask edit) {
-        ChatCatcher.call(player, new ChatCatcher.Catcher() {
+        Catchers.call(player, new Catchers.Catcher() {
             @Override
-            public ChatCatcher.Catcher before() {
+            public Catchers.Catcher before() {
                 toggle = true;
                 player.closeInventory();
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入新的" + display + ". ")

@@ -2,7 +2,7 @@ package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.item.*;
-import me.skymc.taboolib.listener.TListener;
+import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Furnace;
 import org.bukkit.entity.HumanEntity;

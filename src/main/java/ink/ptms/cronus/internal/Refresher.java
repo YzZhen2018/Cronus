@@ -5,7 +5,7 @@ import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import me.skymc.taboolib.common.schedule.TSchedule;
+import io.izzel.taboolib.module.inject.TSchedule;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

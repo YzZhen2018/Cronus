@@ -1,16 +1,12 @@
 package ink.ptms.cronus.command.impl;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.commands.internal.BaseSubCommand;
-import me.skymc.taboolib.commands.internal.TCommand;
-import me.skymc.taboolib.commands.internal.type.CommandArgument;
-import me.skymc.taboolib.commands.internal.type.CommandRegister;
-import me.skymc.taboolib.commands.internal.type.CommandType;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
+import io.izzel.taboolib.module.command.base.*;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.MenuBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -25,10 +21,10 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-05-31 22:10
  */
-@TCommand(name = "CronusItem", aliases = {"ci"}, permission = "*")
+@BaseCommand(name = "CronusItem", aliases = {"ci"}, permission = "*")
 public class CommandItem extends CronusCommand {
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand list = new BaseSubCommand() {
 
         @Override
@@ -50,13 +46,13 @@ public class CommandItem extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand give = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("名称", () -> Cronus.getCronusService().getItemStorage().getItems()), new CommandArgument("玩家", false), new CommandArgument("数量", false)
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("名称", () -> Cronus.getCronusService().getItemStorage().getItems()), new Argument("玩家", false), new Argument("数量", false)
             };
         }
 
@@ -71,7 +67,7 @@ public class CommandItem extends CronusCommand {
                 normal(sender, "该功能已被其他插件代替.");
             } else {
                 ItemStack item = Cronus.getCronusService().getItemStorage().getItem(args[0]);
-                if (ItemUtils.isNull(item)) {
+                if (Items.isNull(item)) {
                     error(sender, "物品 &7" + args[0] + " &c无效.");
                     return;
                 }
@@ -96,13 +92,13 @@ public class CommandItem extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand save = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("名称")
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("名称")
             };
         }
 
@@ -131,13 +127,13 @@ public class CommandItem extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand delete = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("名称", () -> Cronus.getCronusService().getItemStorage().getItems())
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("名称", () -> Cronus.getCronusService().getItemStorage().getItems())
             };
         }
 
@@ -157,7 +153,7 @@ public class CommandItem extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand importGui = new BaseSubCommand() {
 
         @Override
@@ -182,10 +178,10 @@ public class CommandItem extends CronusCommand {
                         .items()
                         .close(e -> {
                             for (ItemStack itemStack : e.getInventory()) {
-                                if (ItemUtils.isNull(itemStack)) {
+                                if (Items.isNull(itemStack)) {
                                     continue;
                                 }
-                                String name = TLocale.Translate.setUncolored(ItemUtils.getCustomName(itemStack));
+                                String name = TLocale.Translate.setUncolored(Items.getName(itemStack));
                                 Cronus.getCronusService().getItemStorage().addItem(name, itemStack);
                                 normal(sender, "物品 &f" + name + " &7已储存.");
                                 Utils.addItem((Player) sender, itemStack);

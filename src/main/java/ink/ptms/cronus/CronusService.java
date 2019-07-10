@@ -1,7 +1,6 @@
 package ink.ptms.cronus;
 
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.database.Database;
 import ink.ptms.cronus.database.DatabaseType;
 import ink.ptms.cronus.database.data.DataPlayer;
@@ -19,8 +18,9 @@ import ink.ptms.cronus.internal.condition.collect.Collect;
 import ink.ptms.cronus.internal.task.TaskCache;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

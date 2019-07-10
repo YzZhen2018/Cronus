@@ -1,8 +1,8 @@
 package ink.ptms.cronus.util;
 
-import com.ilummc.tlib.util.Strings;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.Strings;
+import io.izzel.taboolib.util.lite.cooldown.Cooldown;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class Utils {
 
     @TInject
-    static CooldownPack2 actionCooldown = new CooldownPack2("Cronus:Action", 100);
+    static Cooldown actionCooldown = new Cooldown("Cronus:Action", 100);
 
     public static boolean isActionCooldown(CommandSender sender) {
         return actionCooldown.isCooldown(sender.getName(), 0);

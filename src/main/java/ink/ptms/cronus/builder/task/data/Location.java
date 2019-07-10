@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -69,7 +69,7 @@ public class Location extends TaskData {
                 mode = ink.ptms.cronus.internal.bukkit.Location.Mode.POINT;
                 location.clear();
             }
-            ChatCatcher.call(player, new LocationPoint(player, this));
+            Catchers.call(player, new LocationPoint(player, this));
         }
         // 右键
         else if (e.isRightClick()) {
@@ -77,7 +77,7 @@ public class Location extends TaskData {
                 mode = ink.ptms.cronus.internal.bukkit.Location.Mode.AREA;
                 location.clear();
             }
-            ChatCatcher.call(player, new LocationArea(player, this));
+            Catchers.call(player, new LocationArea(player, this));
         }
         // 中键
         else if (e.getClick().isCreativeAction()) {
@@ -85,7 +85,7 @@ public class Location extends TaskData {
                 mode = ink.ptms.cronus.internal.bukkit.Location.Mode.RANGE;
                 location.clear();
             }
-            ChatCatcher.call(player, new LocationRange(player, this));
+            Catchers.call(player, new LocationRange(player, this));
         }
     }
 
@@ -98,7 +98,7 @@ public class Location extends TaskData {
         builderTaskData.getBuilderTask().getData().put(getKey(), in);
     }
 
-    public static class LocationPoint implements ChatCatcher.Catcher {
+    public static class LocationPoint implements Catchers.Catcher {
 
         private Player player;
         private Location location;
@@ -109,7 +109,7 @@ public class Location extends TaskData {
         }
 
         @Override
-        public ChatCatcher.Catcher before() {
+        public Catchers.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请用")
                     .append("§f下界之星").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " nether_star")
@@ -160,7 +160,7 @@ public class Location extends TaskData {
         }
     }
 
-    public static class LocationArea implements ChatCatcher.Catcher {
+    public static class LocationArea implements Catchers.Catcher {
 
         private Player player;
         private Location location;
@@ -171,7 +171,7 @@ public class Location extends TaskData {
         }
 
         @Override
-        public ChatCatcher.Catcher before() {
+        public Catchers.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请用")
                     .append("§f下界之星").hoverText("§7点击获取").clickCommand("/give " + player.getName() + " nether_star")
@@ -221,7 +221,7 @@ public class Location extends TaskData {
         }
     }
 
-    public static class LocationRange implements ChatCatcher.Catcher {
+    public static class LocationRange implements Catchers.Catcher {
 
         private Player player;
         private Location location;
@@ -232,7 +232,7 @@ public class Location extends TaskData {
         }
 
         @Override
-        public ChatCatcher.Catcher before() {
+        public Catchers.Catcher before() {
             player.closeInventory();
             TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7请在对话框中输入以§f你§7为中心的范围数字. ")
                     .append("§a(完成)").hoverText("§7点击").clickCommand("quit()")

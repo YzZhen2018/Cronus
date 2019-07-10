@@ -8,10 +8,10 @@ import ink.ptms.cronus.event.CronusDialogNextEvent;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.service.dialog.DialogDisplay;
 import ink.ptms.cronus.service.dialog.DialogPack;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
-import me.skymc.taboolib.javascript.ScriptHandler;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.MenuBuilder;
+import io.izzel.taboolib.util.lite.Scripts;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class DisplayMenu extends DialogDisplay {
     public DisplayMenu() {
         slotMessage = Cronus.getConf().getInt("Settings.dialog-chest.slot-message");
         slotReply = Cronus.getConf().getIntegerList("Settings.dialog-chest.slot-reply").toArray(new Integer[0]);
-        rowsScript = ScriptHandler.compile(Cronus.getConf().getString("Settings.dialog-chest.rows-script"));
+        rowsScript = Scripts.compile(Cronus.getConf().getString("Settings.dialog-chest.rows-script"));
     }
 
     public int toRows(Player player, DialogPack dialogPack) {
@@ -114,7 +114,7 @@ public class DisplayMenu extends DialogDisplay {
 
     public ItemStack toItem(MaterialControl material, List<String> list) {
         ItemStack itemStack = material.parseItem();
-        if (ItemUtils.isNull(itemStack)) {
+        if (Items.isNull(itemStack)) {
             itemStack.setType(Material.STONE);
         }
         if (list.size() > 0) {

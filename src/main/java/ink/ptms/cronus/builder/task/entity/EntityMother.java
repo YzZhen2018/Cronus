@@ -4,7 +4,7 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.data.Entity;
 import ink.ptms.cronus.service.selector.EntitySelector;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

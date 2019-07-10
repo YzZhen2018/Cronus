@@ -1,11 +1,11 @@
 package ink.ptms.cronus.service.dialog;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.event.CronusInitDialogEvent;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.service.dialog.impl.DisplayMenu;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

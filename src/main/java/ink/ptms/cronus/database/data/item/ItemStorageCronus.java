@@ -1,8 +1,7 @@
 package ink.ptms.cronus.database.data.item;
 
 import com.google.common.collect.Lists;
-import ink.ptms.cronus.Cronus;
-import me.skymc.taboolib.playerdata.DataUtils;
+import io.izzel.taboolib.module.db.local.Local;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public class ItemStorageCronus extends ItemStorage {
 
-    private FileConfiguration items = DataUtils.addPluginData("data/items.yml", Cronus.getInst());
+    private FileConfiguration items = Local.get().addFile("data/items.yml");
 
     @Override
     public ItemStack getItem(String name) {

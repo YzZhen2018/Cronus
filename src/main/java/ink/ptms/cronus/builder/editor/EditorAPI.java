@@ -1,12 +1,13 @@
 package ink.ptms.cronus.builder.editor;
 
 import com.google.common.collect.Lists;
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.editor.data.PlayerData;
 import ink.ptms.cronus.builder.editor.data.PlayerDataHandler;
 import ink.ptms.cronus.builder.editor.module.IModule;
 import ink.ptms.cronus.builder.editor.module.IModuleHandler;
-import me.skymc.taboolib.entity.EntityTag;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.io.File;
 import java.util.List;
@@ -25,12 +26,16 @@ public class EditorAPI {
         return canonicalPath.contains(File.separator + "plugins") ? canonicalPath.substring(canonicalPath.indexOf(File.separator + "plugins")) : canonicalPath;
     }
 
-    public static void setEditMode(Player player, boolean mode) {
-        EntityTag.getInst().set("Cronus:Editor:EditMode", mode, player);
+    public static boolean isEditMode(Player player) {
+        return player.hasMetadata("Cronus:Editor:EditMode");
     }
 
-    public static boolean isEditMode(Player player) {
-        return EntityTag.getInst().getBoolean("Cronus:Editor:EditMode", player);
+    public static void setEditMode(Player player, boolean mode) {
+        if (mode) {
+            player.setMetadata("Cronus:Editor:EditMode", new FixedMetadataValue(Cronus.getInst(), true));
+        } else {
+            player.removeMetadata("Cronus:Editor:EditMode", Cronus.getInst());
+        }
     }
 
     public static List<String> getContent(Player player) {

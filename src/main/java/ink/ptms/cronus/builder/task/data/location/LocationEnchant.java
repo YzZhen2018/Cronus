@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.data.Location;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

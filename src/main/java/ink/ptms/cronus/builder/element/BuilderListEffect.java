@@ -1,11 +1,11 @@
 package ink.ptms.cronus.builder.element;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.internal.program.effect.EffectNull;
 import ink.ptms.cronus.internal.program.effect.EffectParser;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -23,9 +23,9 @@ public class BuilderListEffect extends BuilderList {
 
     @Override
     protected void editString(Player player, String display, String origin, EditTask edit, Candidate candidate) {
-        ChatCatcher.call(player, new ChatCatcher.Catcher() {
+        Catchers.call(player, new Catchers.Catcher() {
             @Override
-            public ChatCatcher.Catcher before() {
+            public Catchers.Catcher before() {
                 toggle = true;
                 player.closeInventory();
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入新的" + display + ". ")

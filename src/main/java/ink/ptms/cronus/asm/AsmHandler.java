@@ -1,8 +1,8 @@
 package ink.ptms.cronus.asm;
 
 import ink.ptms.cronus.Cronus;
-import me.skymc.taboolib.common.function.TFunction;
-import me.skymc.taboolib.common.versioncontrol.SimpleVersionControl;
+import io.izzel.taboolib.module.inject.TFunction;
+import io.izzel.taboolib.module.lite.SimpleVersionControl;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -7,11 +7,10 @@ import ink.ptms.cronus.builder.element.dialog.Dialog;
 import ink.ptms.cronus.builder.task.data.Entity;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.service.selector.EntitySelector;
-import me.skymc.taboolib.fileutils.ConfigUtils;
-import me.skymc.taboolib.fileutils.FileUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.util.Files;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -40,7 +39,7 @@ public class BuilderDialog extends BuilderQuest {
 
     public BuilderDialog(File file) {
         super("");
-        YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+        YamlConfiguration yaml = Files.loadYaml(file);
         for (String id : yaml.getKeys(false)) {
             import0(yaml.getConfigurationSection(id));
             return;
@@ -65,9 +64,8 @@ public class BuilderDialog extends BuilderQuest {
 
     @Override
     public void export() {
-        File file = new File(Cronus.getCronusService().getService(ink.ptms.cronus.service.dialog.Dialog.class).getFolder(), "builder/" + id + ".yml");
-        FileUtils.createNewFileAndPath(file);
-        YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+        File file = Files.file(new File(Cronus.getCronusService().getService(ink.ptms.cronus.service.dialog.Dialog.class).getFolder(), "builder/" + id + ".yml"));
+        YamlConfiguration yaml = Files.loadYaml(file);
         yaml.set(id + ".title", title);
         yaml.set(id + ".target", target);
         yaml.set(id + ".dialog", dialog.export0());
@@ -99,7 +97,7 @@ public class BuilderDialog extends BuilderQuest {
                                 break;
                             case 11:
                                 if (e.castClick().isLeftClick()) {
-                                    ChatCatcher.call(e.getClicker(), new Entity.EntitySelect(player, target, r -> target = r, () -> open(player)));
+                                    Catchers.call(e.getClicker(), new Entity.EntitySelect(player, target, r -> target = r, () -> open(player)));
                                 } else {
                                     target = null;
                                     open(player);
@@ -137,7 +135,7 @@ public class BuilderDialog extends BuilderQuest {
                 .build());
         inventory.setItem(11, new ItemBuilder(Material.NAME_TAG)
                 .name("§b对话目标")
-                .lore("", "§f" + (target == null ? "无" : getTargetDisplay()),  "§8§m                  ", "§7选择: §8左键", "§7删除: §8左键")
+                .lore("", "§f" + (target == null ? "无" : getTargetDisplay()), "§8§m                  ", "§7选择: §8左键", "§7删除: §8左键")
                 .build());
         inventory.setItem(12, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b对话开始动作")

@@ -1,11 +1,11 @@
 package ink.ptms.cronus.uranus.program.effect;
 
-import com.ilummc.tlib.logger.TLogger;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.regex.Matcher;
 

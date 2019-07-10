@@ -1,9 +1,9 @@
 package ink.ptms.cronus.command;
 
-import com.ilummc.tlib.resources.TLocale;
-import me.skymc.taboolib.commands.internal.BaseMainCommand;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.cooldown.seconds.CooldownPack2;
+import io.izzel.taboolib.module.command.base.BaseMainCommand;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.lite.cooldown.Cooldown;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 public abstract class CronusCommand extends BaseMainCommand {
 
     @TInject
-    private static CooldownPack2 cooldown = new CooldownPack2("Cronus:CommandSound", 100);
+    private static Cooldown cooldown = new Cooldown("Cronus:CommandSound", 100);
     private static String normal = "§7§l[§f§lCronus§7§l] §7";
     private static String error = "§c§l[§4§lCronus§c§l] §c";
 

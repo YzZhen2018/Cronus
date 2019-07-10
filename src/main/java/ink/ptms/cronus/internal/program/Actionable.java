@@ -1,8 +1,8 @@
 package ink.ptms.cronus.internal.program;
 
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.logger.TLogger;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.List;
 import java.util.Map;

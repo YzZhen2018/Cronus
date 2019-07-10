@@ -1,7 +1,7 @@
 package ink.ptms.cronus.builder.element.condition;
 
 import ink.ptms.cronus.internal.version.MaterialControl;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

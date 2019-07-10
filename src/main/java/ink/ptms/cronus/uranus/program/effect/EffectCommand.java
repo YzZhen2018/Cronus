@@ -1,13 +1,12 @@
 package ink.ptms.cronus.uranus.program.effect;
 
-import com.ilummc.tlib.logger.TLogger;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.commands.TabooLibExecuteCommand;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.string.ArrayUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.Commands;
 import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
@@ -46,18 +45,18 @@ public class EffectCommand extends Effect {
         switch (type.toLowerCase()) {
             case "server":
             case "console":
-                TabooLibExecuteCommand.dispatchCommand(Bukkit.getConsoleSender(), parsed);
+                Commands.dispatchCommand(Bukkit.getConsoleSender(), parsed);
                 break;
             case "player":
             case "sender":
-                TabooLibExecuteCommand.dispatchCommand(program.getSender(), parsed);
+                Commands.dispatchCommand(program.getSender(), parsed);
                 break;
             case "player.op":
             case "sender.op":
                 boolean isOp = program.getSender().isOp();
                 program.getSender().setOp(true);
                 try {
-                    TabooLibExecuteCommand.dispatchCommand(program.getSender(), parsed);
+                    Commands.dispatchCommand(program.getSender(), parsed);
                 } catch (Exception t) {
                     t.printStackTrace();
                 }

@@ -1,14 +1,14 @@
 package ink.ptms.cronus.uranus.program;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.uranus.Uranus;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.exception.ProgramLoadException;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.function.TFunction;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TFunction;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 

@@ -1,7 +1,6 @@
 package ink.ptms.cronus;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.event.CronusReloadEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestBook;
@@ -13,9 +12,10 @@ import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.Actionable;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.TaskCache;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.fileutils.ConfigUtils;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.Files;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -84,7 +84,7 @@ public class CronusLoader {
         if (file.isDirectory()) {
             Arrays.stream(file.listFiles()).forEach(this::loadQuest);
         } else {
-            YamlConfiguration yaml = ConfigUtils.loadYaml(Cronus.getInst(), file);
+            YamlConfiguration yaml = Files.loadYaml(file);
             for (String id : yaml.getKeys(false)) {
                 ConfigurationSection questConfig = yaml.getConfigurationSection(id);
                 try {

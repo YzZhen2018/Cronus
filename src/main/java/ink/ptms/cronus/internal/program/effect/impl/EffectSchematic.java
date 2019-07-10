@@ -1,15 +1,13 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
-import com.ilummc.tlib.logger.TLogger;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import ink.ptms.cronus.hook.WorldEditHook;
 import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import ink.ptms.cronus.hook.WorldEditHook;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import me.skymc.taboolib.common.inject.TInject;
 import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
@@ -21,8 +19,6 @@ import java.util.regex.Matcher;
 @Auto
 public class EffectSchematic extends Effect {
 
-    @TInject
-    private static TLogger logger;
     private String name;
     private String symbol;
     private Location location;

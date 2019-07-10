@@ -7,8 +7,8 @@ import ink.ptms.cronus.builder.editor.module.IModule;
 import ink.ptms.cronus.builder.editor.module.action.*;
 import ink.ptms.cronus.builder.editor.module.tag.TagParser;
 import ink.ptms.cronus.builder.editor.module.tag.TagResult;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
 

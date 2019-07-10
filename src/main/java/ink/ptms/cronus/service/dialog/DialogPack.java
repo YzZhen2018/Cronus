@@ -1,13 +1,13 @@
 package ink.ptms.cronus.service.dialog;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.entity.Player;
 
 import java.util.List;

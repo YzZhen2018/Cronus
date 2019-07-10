@@ -3,7 +3,7 @@ package ink.ptms.cronus.uranus.function.impl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.other.NumberUtils;
+import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.util.NumberConversions;
 
 /**
@@ -20,6 +20,6 @@ public class FunctionRandomInt extends Function {
 
     @Override
     public Object eval(Program program, String... args) {
-        return NumberUtils.getRandomInteger(NumberConversions.toDouble(args[0]), NumberConversions.toDouble(args[args.length > 1 ? 1 : 0]));
+        return Numbers.getRandomInteger(NumberConversions.toDouble(args[0]), NumberConversions.toDouble(args[args.length > 1 ? 1 : 0]));
     }
 }

@@ -2,9 +2,8 @@ package ink.ptms.cronus.service.guide;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.asm.AsmHandler;
-import me.skymc.taboolib.common.packet.TPacketListener;
-import me.skymc.taboolib.common.util.SimpleReflection;
-import me.skymc.taboolib.nms.NMSUtils;
+import io.izzel.taboolib.module.lite.SimpleReflection;
+import io.izzel.taboolib.module.packet.TPacketListener;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -16,13 +15,10 @@ public class GuideWayPacket extends TPacketListener {
 
     private GuideWay service = Cronus.getCronusService().getService(GuideWay.class);
 
-    public GuideWayPacket() {
-        SimpleReflection.saveField(NMSUtils.getNMSClass("PacketPlayOutSpawnEntity"));
-    }
-
     @Override
     public boolean onSend(Player player, Object packet) {
         if (packet.getClass().getSimpleName().equals("PacketPlayOutSpawnEntity")) {
+            SimpleReflection.checkAndSave(packet.getClass());
             try {
                 Entity entity = AsmHandler.getImpl().getEntityByEntityId((int) SimpleReflection.getFieldValue(packet.getClass(), packet, "a"));
                 if (entity != null && entity.hasMetadata("cronus_guide_owner")) {

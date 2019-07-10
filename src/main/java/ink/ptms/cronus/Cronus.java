@@ -1,12 +1,11 @@
 package ink.ptms.cronus;
 
-import com.ilummc.tlib.logger.TLogger;
-import com.ilummc.tlib.util.Strings;
-import me.skymc.taboolib.common.configuration.TConfiguration;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.config.TConfig;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.Strings;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,23 +15,19 @@ import java.nio.charset.StandardCharsets;
  * @Author 坏黑
  * @Since 2019-05-23 18:06
  */
-public class Cronus extends JavaPlugin {
+public class Cronus extends CronusPlugin {
 
+    @TInject
     private static Cronus inst;
     private static CronusLoader cronusLoader = new CronusLoader();
     private static CronusService cronusService = new CronusService();
+    @TInject("config.yml")
+    private static TConfig conf;
     @TInject
     private static TLogger logger;
-    private static TConfiguration conf;
 
     @Override
-    public void onLoad() {
-        inst = this;
-        conf = TConfiguration.createInResource(this, "config.yml");
-    }
-
-    @Override
-    public void onEnable() {
+    public void onStarting() {
         try (InputStreamReader inputStreamReader = new InputStreamReader(inst.getResource("motd.txt"), StandardCharsets.UTF_8); BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
             bufferedReader.lines().forEach(l -> Bukkit.getConsoleSender().sendMessage(Strings.replaceWithOrder(l, inst.getDescription().getVersion())));
         } catch (Throwable ignored) {
@@ -43,9 +38,9 @@ public class Cronus extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
+    public void onStopping() {
         cronusService.cancel();
-        ChatCatcher.getPlayerdata().clear();
+        Catchers.getPlayerdata().clear();
     }
 
     public void reloadQuest() {
@@ -70,7 +65,7 @@ public class Cronus extends JavaPlugin {
         return cronusService;
     }
 
-    public static TConfiguration getConf() {
+    public static TConfig getConf() {
         return conf;
     }
 }

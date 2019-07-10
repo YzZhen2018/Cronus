@@ -1,10 +1,10 @@
 package ink.ptms.cronus.internal.condition.impl;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondNumber;
-import me.skymc.taboolib.other.NumberUtils;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -19,7 +19,7 @@ public class CondRandom extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
-        return NumberUtils.getRandom().nextDouble();
+        return Numbers.getRandom().nextDouble();
     }
 
     @Override

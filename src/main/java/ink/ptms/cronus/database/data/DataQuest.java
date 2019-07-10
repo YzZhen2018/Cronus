@@ -1,6 +1,5 @@
 package ink.ptms.cronus.database.data;
 
-import com.ilummc.tlib.bungee.chat.ComponentSerializer;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.event.CronusQuestSuccessEvent;
@@ -11,10 +10,11 @@ import ink.ptms.cronus.internal.QuestBook;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import me.skymc.taboolib.bookformatter.BookFormatter;
-import me.skymc.taboolib.bookformatter.builder.BookBuilder;
-import me.skymc.taboolib.common.serialize.TSerializable;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.book.BookFormatter;
+import io.izzel.taboolib.util.book.builder.BookBuilder;
+import io.izzel.taboolib.util.chat.ComponentSerializer;
+import io.izzel.taboolib.util.serialize.TSerializable;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -113,7 +113,7 @@ public class DataQuest implements TSerializable {
     }
 
     public boolean open(Player player) {
-        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> BookFormatter.openPlayer(player, toBuilder(player).build()));
+        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> BookFormatter.forceOpen(player, toBuilder(player).build()));
         return true;
     }
 

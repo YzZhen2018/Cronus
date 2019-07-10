@@ -2,10 +2,10 @@ package ink.ptms.cronus.builder.element.dialog;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.MenuBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +24,7 @@ public class DialogItem {
                 .title("结构编辑 : 显示材质")
                 .rows(3)
                 .items("#########", "$$$$%$$$$", "####@####")
-                .put('%', ItemUtils.isNull(dialog.getItem()) ? null : MaterialControl.fromItem(dialog.getItem()).parseItem())
+                .put('%', Items.isNull(dialog.getItem()) ? null : MaterialControl.fromItem(dialog.getItem()).parseItem())
                 .put('#', new ItemBuilder(MaterialControl.BLACK_STAINED_GLASS_PANE.parseItem()).build())
                 .put('$', new ItemBuilder(MaterialControl.BLUE_STAINED_GLASS_PANE.parseItem()).build())
                 .put('@', new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem()).name("§c上级目录").lore("", "§7点击").build())
@@ -37,7 +37,7 @@ public class DialogItem {
                         if (slot == 22) {
                             toggle = true;
                             ItemStack item = e.castClick().getInventory().getItem(13);
-                            dialog.setItem(ItemUtils.isNull(item) ? null : MaterialControl.fromItem(item).parseItem());
+                            dialog.setItem(Items.isNull(item) ? null : MaterialControl.fromItem(item).parseItem());
                             dialog.open(player);
                         }
                     }
@@ -45,7 +45,7 @@ public class DialogItem {
                     if (!toggle) {
                         Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {
                             ItemStack item = e.getInventory().getItem(13);
-                            dialog.setItem(ItemUtils.isNull(item) ? null : MaterialControl.fromItem(item).parseItem());
+                            dialog.setItem(Items.isNull(item) ? null : MaterialControl.fromItem(item).parseItem());
                             dialog.open(player);
                         }, 1);
                     }

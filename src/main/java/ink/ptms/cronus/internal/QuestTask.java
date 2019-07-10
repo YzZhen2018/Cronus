@@ -1,6 +1,5 @@
 package ink.ptms.cronus.internal;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.event.CronusInitQuestTaskEvent;
 import ink.ptms.cronus.internal.bukkit.Location;
@@ -9,6 +8,7 @@ import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.Actionable;
 import ink.ptms.cronus.service.guide.GuideWayCache;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

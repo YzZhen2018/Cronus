@@ -1,10 +1,10 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.special.CondNumber;
-import me.skymc.taboolib.economy.EcoUtils;
+import io.izzel.taboolib.module.compat.EconomyHook;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -17,7 +17,7 @@ public class CondMoney extends CondNumber {
 
     @Override
     public Number getNumber(Player player, DataQuest quest, Event event) {
-        return EcoUtils.exists() ? EcoUtils.get(player) : 0;
+        return EconomyHook.exists() ? EconomyHook.get(player) : 0;
     }
 
     @Override

@@ -3,8 +3,8 @@ package ink.ptms.cronus.uranus.function;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.uranus.Uranus;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.function.TFunction;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TFunction;
 
 import java.util.List;
 

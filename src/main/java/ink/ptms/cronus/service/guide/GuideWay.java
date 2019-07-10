@@ -7,7 +7,7 @@ import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.event.*;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.common.packet.TPacketHandler;
+import io.izzel.taboolib.module.packet.TPacketHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

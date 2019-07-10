@@ -1,8 +1,6 @@
 package ink.ptms.cronus.internal;
 
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.bungee.chat.ComponentSerializer;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
@@ -10,10 +8,12 @@ import ink.ptms.cronus.event.CronusInitQuestBookEvent;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.bookformatter.BookFormatter;
-import me.skymc.taboolib.bookformatter.builder.BookBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.string.VariableFormatter;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.Variables;
+import io.izzel.taboolib.util.book.BookFormatter;
+import io.izzel.taboolib.util.book.builder.BookBuilder;
+import io.izzel.taboolib.util.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public class QuestBook {
     }
 
     public void open(Player player) {
-        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> BookFormatter.openPlayer(player, toBuilder(player).build()));
+        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> BookFormatter.forceOpen(player, toBuilder(player).build()));
     }
 
     public BookBuilder toBuilder(Player player) {
@@ -94,7 +94,7 @@ public class QuestBook {
     }
 
     public static void appendLine(TellrawJson json, QuestProgram program, String line) {
-        for (VariableFormatter.Variable variable : new VariableFormatter(FunctionParser.parseAll(program, line)).find().getVariableList()) {
+        for (Variables.Variable variable : new Variables(FunctionParser.parseAll(program, line)).find().getVariableList()) {
             if (variable.isVariable()) {
                 if (variable.getText().startsWith("hover:")) {
                     String[] text = variable.getText().substring("hover:".length()).split("\\|");

@@ -1,13 +1,13 @@
 package ink.ptms.cronus.uranus.program.effect;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.util.StringNumber;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.util.NumberConversions;

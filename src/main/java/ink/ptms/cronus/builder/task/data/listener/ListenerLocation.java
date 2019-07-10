@@ -2,8 +2,8 @@ package ink.ptms.cronus.builder.task.data.listener;
 
 import ink.ptms.cronus.builder.task.data.Location;
 import ink.ptms.cronus.command.CronusCommand;
-import me.skymc.taboolib.listener.TListener;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.inject.TListener;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,9 +24,9 @@ public class ListenerLocation implements Listener {
 
     @EventHandler
     public void e(PlayerInteractEvent e) {
-        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
-            LinkedList<ChatCatcher.Catcher> catchers = ChatCatcher.getPlayerdata().get(e.getPlayer().getName());
-            for (ChatCatcher.Catcher catcher : catchers) {
+        if (Catchers.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
+            LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());
+            for (Catchers.Catcher catcher : catchers) {
                 // 单项
                 if (catcher instanceof Location.LocationPoint) {
                     e.setCancelled(true);
@@ -51,9 +51,9 @@ public class ListenerLocation implements Listener {
 
     @EventHandler
     public void e(BlockBreakEvent e) {
-        if (ChatCatcher.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
-            LinkedList<ChatCatcher.Catcher> catchers = ChatCatcher.getPlayerdata().get(e.getPlayer().getName());
-            for (ChatCatcher.Catcher catcher : catchers) {
+        if (Catchers.getPlayerdata().containsKey(e.getPlayer().getName()) && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
+            LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());
+            for (Catchers.Catcher catcher : catchers) {
                 // 单项
                 if (catcher instanceof Location.LocationPoint) {
                     e.setCancelled(true);

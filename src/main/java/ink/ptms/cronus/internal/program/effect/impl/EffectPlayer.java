@@ -1,14 +1,14 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.cronus.CronusUtils;
-import me.skymc.taboolib.economy.EcoUtils;
+import io.izzel.taboolib.cronus.CronusUtils;
+import io.izzel.taboolib.module.compat.EconomyHook;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
 
@@ -136,13 +136,13 @@ public class EffectPlayer extends Effect {
                     int v = NumberConversions.toInt(value);
                     switch (symbol) {
                         case "+":
-                            EcoUtils.add(player, v);
+                            EconomyHook.add(player, v);
                             break;
                         case "-":
-                            EcoUtils.remove(player, v);
+                            EconomyHook.remove(player, v);
                             break;
                         case "=":
-                            EcoUtils.add(player, v - EcoUtils.get(player));
+                            EconomyHook.set(player, v);
                             break;
                         default:
                             logger.warn("Invalid Symbol: " + symbol + " " + value);

@@ -1,12 +1,10 @@
 package ink.ptms.cronus.builder.editor.module;
 
 import ink.ptms.cronus.builder.editor.EditorAPI;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.common.packet.TPacketListener;
-import me.skymc.taboolib.common.schedule.TSchedule;
-import me.skymc.taboolib.common.util.SimpleReflection;
-import me.skymc.taboolib.listener.TListener;
-import me.skymc.taboolib.nms.NMSUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.inject.TListener;
+import io.izzel.taboolib.module.lite.SimpleReflection;
+import io.izzel.taboolib.module.packet.TPacketListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,16 +20,15 @@ import java.util.stream.Collectors;
 @TListener
 public class IModuleListener implements Listener {
 
-    @TSchedule
-    static void load() {
-        SimpleReflection.saveField(NMSUtils.getNMSClass("PacketPlayInChat"));
-    }
 
     @TInject
     static TPacketListener listener = new TPacketListener() {
         @Override
         public boolean onReceive(Player player, Object packet) {
             if (packet.getClass().getSimpleName().equals("PacketPlayInChat")) {
+                // 检查缓存
+                SimpleReflection.checkAndSave(packet.getClass());
+                // 编辑模式
                 if (EditorAPI.isEditMode(player)) {
                     String message = String.valueOf(SimpleReflection.getFieldValue(packet.getClass(), packet, "a"));
                     EditorAPI.eval(player, message);

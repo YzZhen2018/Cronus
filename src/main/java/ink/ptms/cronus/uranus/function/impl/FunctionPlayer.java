@@ -3,7 +3,7 @@ package ink.ptms.cronus.uranus.function.impl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.cronus.CronusUtils;
+import io.izzel.taboolib.cronus.CronusUtils;
 import org.bukkit.entity.Player;
 
 /**

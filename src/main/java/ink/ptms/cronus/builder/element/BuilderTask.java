@@ -2,7 +2,6 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.element.condition.MatchEntry;
@@ -11,9 +10,10 @@ import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -221,7 +221,7 @@ public class BuilderTask extends BuilderQuest {
         );
         inventory.setItem(10, new ItemBuilder(Material.BOOK)
                 .name("§b条目类型")
-                .lore("", typeEntry == null ? "§f无" : "§f" + TLocale.Translate.setUncolored(ItemUtils.getCustomName(typeEntry.getItem())))
+                .lore("", typeEntry == null ? "§f无" : "§f" + TLocale.Translate.setUncolored(Items.getName(typeEntry.getItem())))
                 .build());
         inventory.setItem(11, new ItemBuilder(typeEntry == null ? Material.BARRIER : Material.PAPER)
                 .name("§b条目要求")

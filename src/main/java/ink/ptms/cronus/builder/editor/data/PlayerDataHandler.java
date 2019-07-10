@@ -1,7 +1,7 @@
 package ink.ptms.cronus.builder.editor.data;
 
 import com.google.common.collect.Maps;
-import me.skymc.taboolib.common.playercontainer.PlayerContainer;
+import io.izzel.taboolib.module.inject.PlayerContainer;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

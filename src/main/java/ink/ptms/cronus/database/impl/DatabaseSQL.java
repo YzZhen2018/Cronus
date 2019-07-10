@@ -3,11 +3,11 @@ package ink.ptms.cronus.database.impl;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.Database;
 import ink.ptms.cronus.database.data.DataPlayer;
-import me.skymc.taboolib.mysql.builder.SQLColumn;
-import me.skymc.taboolib.mysql.builder.SQLColumnType;
-import me.skymc.taboolib.mysql.builder.SQLHost;
-import me.skymc.taboolib.mysql.builder.SQLTable;
-import me.skymc.taboolib.mysql.hikari.HikariHandler;
+import io.izzel.taboolib.module.db.source.DBSource;
+import io.izzel.taboolib.module.db.sql.SQLColumn;
+import io.izzel.taboolib.module.db.sql.SQLColumnType;
+import io.izzel.taboolib.module.db.sql.SQLHost;
+import io.izzel.taboolib.module.db.sql.SQLTable;
 import org.bukkit.entity.Player;
 
 import javax.sql.DataSource;
@@ -28,7 +28,7 @@ public class DatabaseSQL extends Database {
         host = new SQLHost(Cronus.getConf().getConfigurationSection("Database"), Cronus.getInst());
         table = new SQLTable(Cronus.getConf().getStringColored("Database.table"), SQLColumn.PRIMARY_KEY_ID, new SQLColumn(SQLColumnType.TEXT, "player"), new SQLColumn(SQLColumnType.LONGTEXT, "data"));
         try {
-            dataSource = HikariHandler.createDataSource(host);
+            dataSource = DBSource.create(host);
             table.executeUpdate(table.createQuery()).dataSource(dataSource).run();
         } catch (Throwable t) {
             t.printStackTrace();
@@ -38,7 +38,7 @@ public class DatabaseSQL extends Database {
 
     @Override
     public void cancel() {
-        HikariHandler.closeDataSource(host);
+        DBSource.closeDataSource(host);
     }
 
     @Override

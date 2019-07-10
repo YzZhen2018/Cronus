@@ -1,7 +1,6 @@
 package ink.ptms.cronus.command.impl;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.bungee.chat.ComponentSerializer;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.CronusMirror;
@@ -16,15 +15,12 @@ import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.service.dialog.Dialog;
 import ink.ptms.cronus.service.dialog.DialogGroup;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.bookformatter.BookFormatter;
-import me.skymc.taboolib.bookformatter.builder.BookBuilder;
-import me.skymc.taboolib.bookformatter.builder.PageBuilder;
-import me.skymc.taboolib.commands.internal.BaseSubCommand;
-import me.skymc.taboolib.commands.internal.TCommand;
-import me.skymc.taboolib.commands.internal.type.CommandArgument;
-import me.skymc.taboolib.commands.internal.type.CommandRegister;
-import me.skymc.taboolib.commands.internal.type.CommandType;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
+import io.izzel.taboolib.module.command.base.*;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.book.BookFormatter;
+import io.izzel.taboolib.util.book.builder.BookBuilder;
+import io.izzel.taboolib.util.book.builder.PageBuilder;
+import io.izzel.taboolib.util.chat.ComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,7 +36,7 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-05-29 17:25
  */
-@TCommand(name = "Cronus", aliases = {"CronusQuest", "cq"}, permission = "*")
+@BaseCommand(name = "Cronus", aliases = {"CronusQuest", "cq"}, permission = "*")
 public class Command extends CronusCommand {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -54,13 +50,13 @@ public class Command extends CronusCommand {
         return label.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand info = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家")
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家")
             };
         }
 
@@ -114,13 +110,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand accept = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
             };
         }
 
@@ -151,13 +147,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand quit = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务/标签", () -> getQuests())
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务/标签", () -> getQuests())
             };
         }
 
@@ -184,13 +180,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand stop = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务/标签", () -> getQuests())
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务/标签", () -> getQuests())
             };
         }
 
@@ -218,13 +214,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand complete = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务/标签", () -> getQuests())
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务/标签", () -> getQuests())
             };
         }
 
@@ -255,13 +251,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand reset = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
             };
         }
 
@@ -283,13 +279,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand open = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("任务/标签", () -> getQuests())
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务/标签", () -> getQuests())
             };
         }
 
@@ -314,13 +310,13 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand book = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"), new CommandArgument("纵览", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuestBook().keySet()))
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("纵览", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuestBook().keySet()))
             };
         }
 
@@ -345,15 +341,15 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand action = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"),
-                    new CommandArgument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet())),
-                    new CommandArgument("状态", () -> Arrays.stream(Action.values()).map(Action::name).collect(Collectors.toList()))
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"),
+                    new Argument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet())),
+                    new Argument("状态", () -> Arrays.stream(Action.values()).map(Action::name).collect(Collectors.toList()))
             };
         }
 
@@ -384,14 +380,14 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand dialog = new BaseSubCommand() {
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("玩家"),
-                    new CommandArgument("对话", () -> Lists.newArrayList(Cronus.getCronusService().getService(Dialog.class).getDialogs().stream().map(DialogGroup::getId).collect(Collectors.toList()))),
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"),
+                    new Argument("对话", () -> Lists.newArrayList(Cronus.getCronusService().getService(Dialog.class).getDialogs().stream().map(DialogGroup::getId).collect(Collectors.toList()))),
             };
         }
 
@@ -416,7 +412,7 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand mirror = new BaseSubCommand() {
 
         @Override
@@ -446,7 +442,7 @@ public class Command extends CronusCommand {
                         .toRawMessage((Player) sender)));
             });
             normal(sender, "创建完成!");
-            BookFormatter.openPlayer(((Player) sender), bookBuilder.build());
+            BookFormatter.forceOpen(((Player) sender), bookBuilder.build());
         }
 
         @Override
@@ -455,7 +451,7 @@ public class Command extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand reload = new BaseSubCommand() {
 
         @Override

@@ -3,7 +3,7 @@ package ink.ptms.cronus.uranus.function.impl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.object.WeightCollection;
+import io.izzel.taboolib.util.lite.Weights;
 import org.bukkit.util.NumberConversions;
 
 /**
@@ -20,7 +20,7 @@ public class FunctionRandom extends Function {
 
     @Override
     public Object eval(Program program, String... args) {
-        WeightCollection collection = new WeightCollection();
+        Weights collection = new Weights();
         for (String arg : args) {
             String[] split = arg.split("\\^");
             collection.add(split.length > 1 ? NumberConversions.toInt(split[1]) : 1, split[0]);

@@ -6,10 +6,10 @@ import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.task.TaskEntry;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -80,8 +80,8 @@ public class BuilderTaskType {
         );
         List<TaskEntry> iterator = new SimpleIterator(Builders.getTaskEntries()).listIterator(page * 28, (page + 1) * 28);
         for (int i = 0; i < iterator.size(); i++) {
-            inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), iterator.get(i).getItem());
-            map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), iterator.get(i));
+            inventory.setItem(Items.INVENTORY_CENTER[i], iterator.get(i).getItem());
+            map.put(Items.INVENTORY_CENTER[i], iterator.get(i));
         }
         if (page > 0) {
             inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());

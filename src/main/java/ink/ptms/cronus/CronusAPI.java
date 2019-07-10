@@ -10,7 +10,7 @@ import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.service.guide.GuideWay;
 import ink.ptms.cronus.service.guide.GuideWayData;
-import me.skymc.taboolib.TabooLib;
+import io.izzel.taboolib.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -55,7 +55,7 @@ public class CronusAPI {
         if (tasks.length > 0 && event != null) {
             // 主线程判断
             // 因 1.14 新增的事件线程安全监测
-            if (TabooLib.getVersionNumber() < 11400 || Bukkit.isPrimaryThread()) {
+            if (Version.isBefore(Version.v1_14) || Bukkit.isPrimaryThread()) {
                 stageHandle(player, event, Lists.newArrayList(tasks));
             } else {
                 Bukkit.getScheduler().runTask(Cronus.getInst(), () -> stageHandle(player, event, Lists.newArrayList(tasks)));

@@ -2,13 +2,13 @@ package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
 import ink.ptms.cronus.builder.task.data.Enchant;
-import ink.ptms.cronus.builder.task.data.location.LocationEnchant;
 import ink.ptms.cronus.builder.task.data.Item;
+import ink.ptms.cronus.builder.task.data.location.LocationEnchant;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemEnchant;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 

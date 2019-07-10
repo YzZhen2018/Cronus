@@ -2,8 +2,8 @@ package ink.ptms.cronus.builder.editor.module;
 
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.builder.editor.Editor;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.schedule.TSchedule;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TSchedule;
 
 import java.util.Arrays;
 import java.util.Map;

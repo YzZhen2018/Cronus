@@ -3,12 +3,8 @@ package ink.ptms.cronus.command.impl;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.BuilderQuest;
 import ink.ptms.cronus.command.CronusCommand;
-import me.skymc.taboolib.commands.internal.BaseSubCommand;
-import me.skymc.taboolib.commands.internal.TCommand;
-import me.skymc.taboolib.commands.internal.type.CommandArgument;
-import me.skymc.taboolib.commands.internal.type.CommandRegister;
-import me.skymc.taboolib.commands.internal.type.CommandType;
-import me.skymc.taboolib.fileutils.FileUtils;
+import io.izzel.taboolib.module.command.base.*;
+import io.izzel.taboolib.util.Files;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,10 +19,10 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-06-18 19:43
  */
-@TCommand(name = "CronusBuilder", aliases = {"cb"}, permission = "*")
+@BaseCommand(name = "CronusBuilder", aliases = {"cb"}, permission = "*")
 public class CommandBuilder extends CronusCommand {
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand create = new BaseSubCommand() {
 
         @Override
@@ -35,9 +31,9 @@ public class CommandBuilder extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("名称")
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("名称")
             };
         }
 
@@ -64,7 +60,7 @@ public class CommandBuilder extends CronusCommand {
         }
     };
 
-    @CommandRegister
+    @SubCommand
     BaseSubCommand open = new BaseSubCommand() {
 
         @Override
@@ -73,10 +69,10 @@ public class CommandBuilder extends CronusCommand {
         }
 
         @Override
-        public CommandArgument[] getArguments() {
-            return new CommandArgument[] {
-                    new CommandArgument("名称", () -> {
-                        File file = FileUtils.folder(new File(Cronus.getCronusLoader().getFolder(), "builder"));
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("名称", () -> {
+                        File file = Files.folder(new File(Cronus.getCronusLoader().getFolder(), "builder"));
                         return Arrays.stream(file.listFiles()).map(s -> {
                             try {
                                 return s.getName().substring(0, s.getName().indexOf("."));

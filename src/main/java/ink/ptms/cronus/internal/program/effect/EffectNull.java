@@ -1,9 +1,9 @@
 package ink.ptms.cronus.internal.program.effect;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.regex.Matcher;
 

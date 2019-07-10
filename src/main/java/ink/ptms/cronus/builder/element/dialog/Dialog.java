@@ -10,10 +10,10 @@ import ink.ptms.cronus.builder.element.BuilderList;
 import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.CloseTask;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.CloseTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -82,7 +82,7 @@ public class Dialog extends BuilderDialog {
     public Map<String, Object> export0() {
         Map<String, Object> map = Maps.newHashMap();
         map.put("text", text);
-        map.put("item", ItemUtils.isNull(item) ? "air" : item.getType().name() + ":" + item.getDurability());
+        map.put("item", Items.isNull(item) ? "air" : item.getType().name() + ":" + item.getDurability());
         if (!reply.isEmpty()) {
             map.put("reply", reply.stream().map(Dialog::export0).collect(Collectors.toList()));
         }
@@ -259,9 +259,9 @@ public class Dialog extends BuilderDialog {
                     .lore("", "§4该设定无法使用.")
                     .build());
         }
-        inventory.setItem(16, new ItemBuilder(ItemUtils.isNull(item) ? new ItemStack(Material.BARRIER) : item)
+        inventory.setItem(16, new ItemBuilder(Items.isNull(item) ? new ItemStack(Material.BARRIER) : item)
                 .name("§b显示材质")
-                .lore("", "§f" + (ItemUtils.isNull(item) ? "隐藏" : ItemUtils.getCustomName(item)), "§8§m                  ", "§7修改: §8左键", "§7隐藏: §8右键")
+                .lore("", "§f" + (Items.isNull(item) ? "隐藏" : Items.getName(item)), "§8§m                  ", "§7修改: §8左键", "§7隐藏: §8右键")
                 .build());
         inventory.setItem(49, new ItemBuilder(MaterialControl.RED_STAINED_GLASS_PANE.parseItem())
                 .name("§c上级目录")

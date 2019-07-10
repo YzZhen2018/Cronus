@@ -1,6 +1,6 @@
 package ink.ptms.cronus.internal.bukkit;
 
-import me.skymc.taboolib.common.util.SimpleI18n;
+import io.izzel.taboolib.module.lite.SimpleI18n;
 
 import java.util.Arrays;
 import java.util.List;

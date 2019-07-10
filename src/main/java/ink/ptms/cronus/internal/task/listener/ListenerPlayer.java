@@ -7,10 +7,10 @@ import ink.ptms.cronus.internal.task.player.damage.TaskPlayerDamaged;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerDeath;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerKill;
 import ink.ptms.cronus.internal.task.player.total.TaskPlayerExp;
-import me.skymc.taboolib.damage.DamageUtils;
-import me.skymc.taboolib.events.PlayerJumpEvent;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.listener.TListener;
+import io.izzel.taboolib.common.event.PlayerJumpEvent;
+import io.izzel.taboolib.module.inject.TListener;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.lite.Servers;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -170,7 +170,7 @@ public class ListenerPlayer implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(InventoryClickEvent e) {
-        if (e.getInventory().getType() == InventoryType.MERCHANT && e.getRawSlot() == 2 && !ItemUtils.isNull(e.getCurrentItem())) {
+        if (e.getInventory().getType() == InventoryType.MERCHANT && e.getRawSlot() == 2 && !Items.isNull(e.getCurrentItem())) {
             CronusAPI.stageHandle((Player) e.getWhoClicked(), e, TaskPlayerTrade.class);
         }
     }
@@ -207,7 +207,7 @@ public class ListenerPlayer implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(EntityDamageByEntityEvent e) {
-        LivingEntity attacker = DamageUtils.getLivingAttackerInDamageEvent(e);
+        LivingEntity attacker = Servers.getLivingAttackerInDamageEvent(e);
         if (attacker instanceof Player) {
             CronusAPI.stageHandle((Player) attacker, e, TaskPlayerAttack.class);
         }

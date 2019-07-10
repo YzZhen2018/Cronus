@@ -5,11 +5,11 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.task.TaskEntry;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.annotations.Auto;
-import me.skymc.taboolib.TabooLibLoader;
-import me.skymc.taboolib.common.function.TFunction;
-import me.skymc.taboolib.inventory.builder.v2.ClickTask;
-import me.skymc.taboolib.inventory.builder.v2.CloseTask;
-import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
+import io.izzel.taboolib.TabooLibLoader;
+import io.izzel.taboolib.module.inject.TFunction;
+import io.izzel.taboolib.util.item.inventory.ClickTask;
+import io.izzel.taboolib.util.item.inventory.CloseTask;
+import io.izzel.taboolib.util.item.inventory.MenuBuilder;
 import org.bukkit.inventory.Inventory;
 
 import java.util.List;

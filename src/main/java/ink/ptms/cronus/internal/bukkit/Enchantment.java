@@ -1,9 +1,9 @@
 package ink.ptms.cronus.internal.bukkit;
 
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.util.StringExpression;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.item.Items;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +46,7 @@ public class Enchantment {
                 logger.error("Enchantment \"" + in + "\" parsing failed.");
                 return;
             }
-            enchant = ItemUtils.asEnchantment(matcher.group("enchant").toUpperCase());
+            enchant = Items.asEnchantment(matcher.group("enchant").toUpperCase());
             if (enchant == null) {
                 logger.error("Enchantment \"" + in + "\" parsing failed.");
                 return;

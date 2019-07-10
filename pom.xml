@@ -104,13 +104,6 @@
             <systemPath>${basedir}/libs/Skript.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>9</groupId>
-            <artifactId>1</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/TabooLib.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>10</groupId>
             <artifactId>1</artifactId>
             <version>1</version>
@@ -118,18 +111,18 @@
             <systemPath>${basedir}/libs/WorldEdit.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>11</groupId>
-            <artifactId>1</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/TabooLibDeprecated.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>12</groupId>
             <artifactId>1</artifactId>
             <version>1</version>
             <scope>system</scope>
             <systemPath>${basedir}/libs/MythicMobs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>13</groupId>
+            <artifactId>1</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/TabooLib5.jar</systemPath>
         </dependency>
     </dependencies>
 

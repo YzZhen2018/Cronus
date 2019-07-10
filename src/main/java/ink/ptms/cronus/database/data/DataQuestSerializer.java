@@ -1,6 +1,6 @@
 package ink.ptms.cronus.database.data;
 
-import me.skymc.taboolib.common.serialize.TSerializerElement;
+import io.izzel.taboolib.util.serialize.TSerializerElement;
 
 /**
  * @Author 坏黑

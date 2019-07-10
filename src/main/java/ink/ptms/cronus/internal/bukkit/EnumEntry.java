@@ -2,8 +2,8 @@ package ink.ptms.cronus.internal.bukkit;
 
 import com.google.common.base.Enums;
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.logger.TLogger;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.List;
 

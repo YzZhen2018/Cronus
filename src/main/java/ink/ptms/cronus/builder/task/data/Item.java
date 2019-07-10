@@ -7,12 +7,12 @@ import ink.ptms.cronus.builder.task.TaskData;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
-import me.skymc.taboolib.inventory.builder.v2.MenuBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
+import io.izzel.taboolib.util.item.inventory.MenuBuilder;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -42,7 +42,7 @@ public class Item extends TaskData {
                 .name("§7目标物品")
                 .lore(
                         "",
-                        "§f" + (data == null ? "无" : (cronusItem.getBukkitItem() == null ? cronusItem.asString() : "bukkit:" + ItemUtils.getCustomName(cronusItem.getBukkitItem()))),
+                        "§f" + (data == null ? "无" : (cronusItem.getBukkitItem() == null ? cronusItem.asString() : "bukkit:" + Items.getName(cronusItem.getBukkitItem()))),
                         "§8§m                  ",
                         "§7物品导入: §8左键",
                         "§7模糊判断: §8右键"
@@ -72,7 +72,7 @@ public class Item extends TaskData {
                             if (slot == 22) {
                                 toggle = true;
                                 ItemStack item = c.castClick().getInventory().getItem(13);
-                                saveData(ItemUtils.isNull(item) ? null : BukkitParser.fromItemStack(item));
+                                saveData(Items.isNull(item) ? null : BukkitParser.fromItemStack(item));
                                 open();
                             }
                         }
@@ -80,7 +80,7 @@ public class Item extends TaskData {
                         if (!toggle) {
                             Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {
                                 ItemStack item = c.getInventory().getItem(13);
-                                saveData(ItemUtils.isNull(item) ? null : BukkitParser.fromItemStack(item));
+                                saveData(Items.isNull(item) ? null : BukkitParser.fromItemStack(item));
                                 open();
                             }, 1);
                         }
@@ -88,9 +88,9 @@ public class Item extends TaskData {
         }
         // 模糊
         else if (e.isRightClick()) {
-            ChatCatcher.call(player, new ChatCatcher.Catcher() {
+            Catchers.call(player, new Catchers.Catcher() {
                 @Override
-                public ChatCatcher.Catcher before() {
+                public Catchers.Catcher before() {
                     player.closeInventory();
                     TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入物品判断规则. ")
                             .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")

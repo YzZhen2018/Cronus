@@ -1,7 +1,6 @@
 package ink.ptms.cronus.internal;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.event.CronusQuestInitEvent;
 import ink.ptms.cronus.internal.condition.Condition;
@@ -10,6 +9,7 @@ import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.Actionable;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.util.StringDate;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;

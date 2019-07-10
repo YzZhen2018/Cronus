@@ -1,8 +1,8 @@
 package ink.ptms.cronus.util;
 
-import com.ilummc.tlib.logger.TLogger;
-import com.ilummc.tlib.resources.TLocale;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

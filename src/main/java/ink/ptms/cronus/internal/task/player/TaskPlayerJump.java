@@ -1,9 +1,9 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
-import me.skymc.taboolib.events.PlayerJumpEvent;
+import ink.ptms.cronus.internal.task.special.Countable;
+import io.izzel.taboolib.common.event.PlayerJumpEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

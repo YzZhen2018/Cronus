@@ -2,9 +2,9 @@ package ink.ptms.cronus.builder.task;
 
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.json.tellraw.TellrawJson;
-import me.skymc.taboolib.message.ChatCatcher;
+import io.izzel.taboolib.module.tellraw.TellrawJson;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -31,9 +31,9 @@ public abstract class TaskText extends TaskData {
 
     @Override
     public void onClick(InventoryClickEvent e) {
-        ChatCatcher.call(player, new ChatCatcher.Catcher() {
+        Catchers.call(player, new Catchers.Catcher() {
             @Override
-            public ChatCatcher.Catcher before() {
+            public Catchers.Catcher before() {
                 player.closeInventory();
                 TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7在对话框中输入" + getDisplay() + ". ")
                         .append("§8(取消)").hoverText("§7点击").clickCommand("quit()")

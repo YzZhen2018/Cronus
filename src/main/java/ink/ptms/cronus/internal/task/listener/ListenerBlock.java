@@ -4,7 +4,7 @@ import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.block.TaskBlockBreak;
 import ink.ptms.cronus.internal.task.block.TaskBlockInteract;
 import ink.ptms.cronus.internal.task.block.TaskBlockPlace;
-import me.skymc.taboolib.listener.TListener;
+import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

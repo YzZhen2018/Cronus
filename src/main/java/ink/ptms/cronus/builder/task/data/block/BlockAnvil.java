@@ -4,8 +4,8 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.data.Block;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,7 +33,7 @@ public class BlockAnvil extends Block {
             lore.add("§f无");
         }
         for (int i = 0; i < selected.size() && i < 8; i++) {
-            lore.add("§f" + ItemUtils.getCustomName(selected.get(i)));
+            lore.add("§f" + Items.getName(selected.get(i)));
         }
         if (selected.size() > 8) {
             lore.add("§f...");

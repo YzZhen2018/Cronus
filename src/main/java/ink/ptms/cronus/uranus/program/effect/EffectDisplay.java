@@ -1,15 +1,13 @@
 package ink.ptms.cronus.uranus.program.effect;
 
-import com.ilummc.tlib.logger.TLogger;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.uranus.Uranus;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.particle.pack.ParticlePack;
-import me.skymc.taboolib.sound.SoundPack;
-import me.skymc.taboolib.string.ArrayUtils;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.lite.SoundPack;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.util.NumberConversions;
@@ -71,12 +69,6 @@ public class EffectDisplay extends Effect {
                 break;
             case "title.all":
                 Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> Bukkit.getOnlinePlayers().forEach(p -> sendTitle(p, parsed)));
-                break;
-            case "particle":
-            case "particles":
-                if (program.getSender() instanceof Player) {
-                    Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new ParticlePack(parsed).play(((Player) program.getSender()).getLocation().add(0, 1, 0)));
-                }
                 break;
             case "sound":
             case "sounds":

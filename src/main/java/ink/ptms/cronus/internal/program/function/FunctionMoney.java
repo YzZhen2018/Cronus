@@ -4,7 +4,7 @@ import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.economy.EcoUtils;
+import io.izzel.taboolib.module.compat.EconomyHook;
 
 /**
  * @Author 坏黑
@@ -21,7 +21,7 @@ public class FunctionMoney extends Function {
     @Override
     public Object eval(Program program, String... args) {
         if (program instanceof QuestProgram) {
-            return EcoUtils.get(((QuestProgram) program).getPlayer());
+            return EconomyHook.get(((QuestProgram) program).getPlayer());
         }
         return "<Non-Quest>";
     }

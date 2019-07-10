@@ -1,14 +1,14 @@
 package ink.ptms.cronus.uranus.function.impl;
 
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.logger.TLogger;
 import ink.ptms.cronus.uranus.Uranus;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.event.UranusScriptEvalEvent;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.javascript.ScriptHandler;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
+import io.izzel.taboolib.util.lite.Scripts;
 
 import javax.script.CompiledScript;
 import javax.script.ScriptException;
@@ -45,7 +45,7 @@ public class FunctionScript extends Function {
             bindings.put("server", Uranus.getInst().getServer());
             bindings.put("bukkit", Uranus.getInst().getServer());
             bindings.put("plugin", Uranus.getInst());
-            UranusScriptEvalEvent event = new UranusScriptEvalEvent(program, bindings, args[0], scripts.computeIfAbsent(args[0], s -> ScriptHandler.compile(args[0]))).call();
+            UranusScriptEvalEvent event = new UranusScriptEvalEvent(program, bindings, args[0], scripts.computeIfAbsent(args[0], s -> Scripts.compile(args[0]))).call();
             return event.getCompiledScript().eval(event.getBindings());
         } catch (ScriptException e) {
             logger.error("脚本执行出错: " + e.getMessage());

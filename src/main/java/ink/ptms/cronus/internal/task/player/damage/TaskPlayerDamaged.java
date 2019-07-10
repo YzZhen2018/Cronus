@@ -7,7 +7,7 @@ import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
-import me.skymc.taboolib.damage.DamageUtils;
+import io.izzel.taboolib.util.lite.Servers;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
     public boolean check(Player player, DataQuest dataQuest, Event event) {
         if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
-            LivingEntity a = DamageUtils.getLivingAttackerInDamageEvent(e);
+            LivingEntity a = Servers.getLivingAttackerInDamageEvent(e);
             return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || attacker.isSelect(a)) && (cause == null || cause.isSelect(e.getCause()));
         } else {
             EntityDamageEvent e = (EntityDamageEvent) event;

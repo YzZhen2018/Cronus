@@ -4,8 +4,8 @@ import ink.ptms.cronus.builder.element.BuilderTaskData;
 import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import me.skymc.taboolib.inventory.ItemUtils;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
 import org.bukkit.entity.Player;
 
 /**
@@ -25,7 +25,7 @@ public class ItemMatrix extends Item {
                 .name("§7目标物品 (合成)")
                 .lore(
                         "",
-                        "§f" + (data == null ? "无" : (cronusItem.getBukkitItem() == null ? cronusItem.asString() : "bukkit:" + ItemUtils.getCustomName(cronusItem.getBukkitItem()))),
+                        "§f" + (data == null ? "无" : (cronusItem.getBukkitItem() == null ? cronusItem.asString() : "bukkit:" + Items.getName(cronusItem.getBukkitItem()))),
                         "§8§m                  ",
                         "§7物品导入: §8左键",
                         "§7模糊判断: §8右键"

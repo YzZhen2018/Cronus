@@ -1,7 +1,7 @@
 package ink.ptms.cronus.builder.editor.module;
 
 import com.google.common.collect.Lists;
-import me.skymc.taboolib.string.ArrayUtils;
+import io.izzel.taboolib.util.ArrayUtil;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public abstract class IModule {
     };
 
     public String[] array(String... var) {
-        return ArrayUtils.asArray(var);
+        return ArrayUtil.asArray(var);
     }
 
     abstract public String[] getCommand();

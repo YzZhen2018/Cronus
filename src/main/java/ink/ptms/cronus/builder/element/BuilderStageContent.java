@@ -2,7 +2,6 @@ package ink.ptms.cronus.builder.element;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ilummc.tlib.resources.TLocale;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
 import ink.ptms.cronus.builder.editor.EditorAPI;
@@ -11,10 +10,11 @@ import ink.ptms.cronus.builder.editor.data.PlayerDataHandler;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
-import me.skymc.taboolib.common.util.SimpleIterator;
-import me.skymc.taboolib.inventory.InventoryUtil;
-import me.skymc.taboolib.inventory.builder.ItemBuilder;
-import me.skymc.taboolib.inventory.builder.v2.ClickType;
+import io.izzel.taboolib.module.lite.SimpleIterator;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.item.ItemBuilder;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.item.inventory.ClickType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -143,7 +143,7 @@ public class BuilderStageContent extends CronusCommand {
             List<String> content = iterator.get(i);
             // 添加笔记
             if (isAppend(content)) {
-                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7点击").build());
+                inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.MAP).name("§f增加新的" + display).lore("", "§7点击").build());
             }
             // 修改笔记
             else {
@@ -154,10 +154,10 @@ public class BuilderStageContent extends CronusCommand {
                     list.addAll(content.stream().map(s -> "§f" + TLocale.Translate.setColored(s)).collect(Collectors.toList()));
                 }
                 list.addAll(Lists.newArrayList("§8§m                  ", "§7修改: §8左键", "§7删除: §8右键", "§7左移: §8SHIFT+左键", "§7右移: §8SHIFT+右键"));
-                inventory.setItem(InventoryUtil.SLOT_OF_CENTENTS.get(i), new ItemBuilder(Material.PAPER).name("§f第 " + (((page + 1) * i) + 1) + " 页").lore(list).build());
+                inventory.setItem(Items.INVENTORY_CENTER[i], new ItemBuilder(Material.PAPER).name("§f第 " + (((page + 1) * i) + 1) + " 页").lore(list).build());
             }
-            map.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), content);
-            mapIndex.put(InventoryUtil.SLOT_OF_CENTENTS.get(i), page * 28 + i);
+            map.put(Items.INVENTORY_CENTER[i], content);
+            mapIndex.put(Items.INVENTORY_CENTER[i], page * 28 + i);
         }
         if (page > 0) {
             inventory.setItem(46, new ItemBuilder(MaterialControl.GREEN_STAINED_GLASS_PANE.parseItem()).name("§a上一页").lore("", "§7点击").build());
