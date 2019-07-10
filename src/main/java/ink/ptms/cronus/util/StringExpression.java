@@ -81,6 +81,8 @@ public class StringExpression {
             case "=":
             case "==":
                 return TLocale.asString("translate-expression-4") + " " + number.getSource();
+            case "!=":
+                return TLocale.asString("translate-expression-5") + " " + number.getSource();
         }
         return symbol + " " + number.getSource();
     }

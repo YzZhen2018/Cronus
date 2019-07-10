@@ -78,6 +78,8 @@ public class FunctionPlayer extends Function {
                     return player.getLocation().getBlockZ();
                 case "fire.tick":
                     return player.getFireTicks();
+                case "ip":
+                    return player.getAddress().getHostName();
                 default:
                     return "<invalid>";
             }

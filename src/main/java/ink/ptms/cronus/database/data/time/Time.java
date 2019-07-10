@@ -17,6 +17,7 @@ public class Time {
     private int hour;
     private int minute;
     private long time;
+    private String origin;
 
     public Time(String libTime) {
         this(StringDate.parse(libTime));
@@ -40,7 +41,22 @@ public class Time {
         this.minute = minute;
     }
 
+    public Time origin(String origin) {
+        this.origin = origin;
+        return this;
+    }
+
     public boolean isTimeout(DataQuest dataQuest) {
+        Calendar calendar = Calendar.getInstance();
+        switch (type) {
+            case TIME:
+                return dataQuest.getTimeStart() + time < System.currentTimeMillis();
+            default:
+                return isTimeout();
+        }
+    }
+
+    public boolean isTimeout() {
         Calendar calendar = Calendar.getInstance();
         switch (type) {
             case DAY: {
@@ -59,7 +75,30 @@ public class Time {
                 return current > timeout;
             }
             default:
-                return dataQuest.getTimeStart() + time < System.currentTimeMillis();
+                return false;
+        }
+    }
+
+    public boolean isEquals() {
+        Calendar calendar = Calendar.getInstance();
+        switch (type) {
+            case DAY: {
+                long timeout = (hour * 60L) + (minute);
+                long current = (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
+                return current == timeout;
+            }
+            case WEEK: {
+                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
+                long current = (calendar.get(Calendar.DAY_OF_WEEK) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
+                return current == timeout;
+            }
+            case MONTH: {
+                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
+                long current = (calendar.get(Calendar.DAY_OF_MONTH) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
+                return current == timeout;
+            }
+            default:
+                return false;
         }
     }
 
@@ -72,15 +111,32 @@ public class Time {
             return null;
         } else if (in.startsWith("day:")) {
             String[] v = in.substring("day:".length()).split(":");
-            return new Time(NumberConversions.toInt(v[0]), NumberConversions.toInt(v[1]));
+            return new Time(NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0)).origin(in);
         } else if (in.startsWith("week:")) {
             String[] v = in.substring("week:".length()).split(":");
-            return new Time(TimeType.WEEK, NumberConversions.toInt(v[0]), NumberConversions.toInt(v[1]), NumberConversions.toInt(v[2]));
+            return new Time(TimeType.WEEK, NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0), NumberConversions.toInt(v.length > 2 ? v[2] : 0)).origin(in);
         } else if (in.startsWith("month:")) {
             String[] v = in.substring("month:".length()).split(":");
-            return new Time(TimeType.MONTH, NumberConversions.toInt(v[0]), NumberConversions.toInt(v[1]), NumberConversions.toInt(v[2]));
+            return new Time(TimeType.MONTH, NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0), NumberConversions.toInt(v.length > 1 ? v[2] : 0)).origin(in);
         } else {
-            return new Time(in);
+            return new Time(in).origin(in);
+        }
+    }
+
+    public static Time parseNoTime(String in) {
+        if (in == null) {
+            return null;
+        }
+        in = in.toLowerCase();
+        if (in.startsWith("week:")) {
+            String[] v = in.substring("week:".length()).split(":");
+            return new Time(TimeType.WEEK, NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0), NumberConversions.toInt(v.length > 2 ? v[2] : 0)).origin(in);
+        } else if (in.startsWith("month:")) {
+            String[] v = in.substring("month:".length()).split(":");
+            return new Time(TimeType.MONTH, NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0), NumberConversions.toInt(v.length > 1 ? v[2] : 0)).origin(in);
+        } else {
+            String[] v = in.split(":");
+            return new Time(NumberConversions.toInt(v[0]), NumberConversions.toInt(v.length > 1 ? v[1] : 0)).origin(in);
         }
     }
 
@@ -102,5 +158,9 @@ public class Time {
 
     public long getTime() {
         return time;
+    }
+
+    public String getOrigin() {
+        return origin;
     }
 }
