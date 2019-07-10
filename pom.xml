@@ -122,7 +122,7 @@
             <artifactId>1</artifactId>
             <version>1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/TabooLib5.jar</systemPath>
+            <systemPath>${basedir}/libs/TabooLib.jar</systemPath>
         </dependency>
     </dependencies>
 

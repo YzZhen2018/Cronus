@@ -123,7 +123,7 @@
     <orderEntry type="module-library">
       <library name="Maven: 13:1:1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/TabooLib5.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/TabooLib.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
