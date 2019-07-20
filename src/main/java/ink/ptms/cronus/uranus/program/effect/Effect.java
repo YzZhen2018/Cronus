@@ -13,17 +13,18 @@ public abstract class Effect {
 
     abstract public String pattern();
 
-    abstract public void match(Matcher matcher);
+    abstract public String getExample();
 
     abstract public void eval(Program program);
-
-    abstract public String getExample();
 
     private Pattern pattern;
     private String source;
 
     public void init() {
         pattern = Pattern.compile(pattern(), Pattern.CASE_INSENSITIVE);
+    }
+
+    public void match(Matcher matcher) {
     }
 
     public boolean parse(String in) {

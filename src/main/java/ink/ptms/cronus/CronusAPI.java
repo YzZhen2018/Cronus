@@ -112,14 +112,14 @@ public class CronusAPI {
 
                     // 条目单次目标完成，执行动作并记录数据
                     questTask.next(player, dataQuest, event);
-                    questTask.eval(new QuestProgram(player, dataQuest), Action.NEXT);
+                    questTask.eval(new QuestProgram(player, dataQuest, event), Action.NEXT);
 
                     // 检查条目是否已经完成
                     if (questTask.isCompleted(dataQuest)) {
 
                         // 唤起完成事件并处理任务完成动作
                         CronusTaskSuccessEvent.call(player, dataQuest.getQuest(), questStage, questTask);
-                        questTask.eval(new QuestProgram(player, dataQuest), Action.SUCCESS);
+                        questTask.eval(new QuestProgram(player, dataQuest, event), Action.SUCCESS);
                         dataQuest.checkAndComplete(player);
                     }
                     changed = true;

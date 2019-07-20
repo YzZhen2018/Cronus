@@ -8,6 +8,7 @@ import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 
 import java.util.List;
 
@@ -18,11 +19,18 @@ import java.util.List;
 public class QuestProgram extends Program {
 
     private DataQuest dataQuest;
+    private Event event;
     private int delay;
 
     public QuestProgram(Player player, DataQuest dataQuest) {
         this.dataQuest = dataQuest;
         this.sender = player;
+    }
+
+    public QuestProgram(Player player, DataQuest dataQuest, Event event) {
+        this.dataQuest = dataQuest;
+        this.sender = player;
+        this.event = event;
     }
 
     public void eval(List<Effect> effects) {
@@ -62,5 +70,9 @@ public class QuestProgram extends Program {
 
     public void setDelay(int delay) {
         this.delay = delay;
+    }
+
+    public Event getEvent() {
+        return event;
     }
 }
