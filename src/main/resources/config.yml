@@ -50,7 +50,8 @@ Database:
   table: cronus_database
 
 # 任务状态
-# 当玩家接受任务时，在特殊位置显示醒目的任务状态
+# 当玩家进行任务时，在特殊位置显示任务当前进度
+# 与计分板显示不同，这个是短暂的
 Status:
   # 显示类型：BOSSBAR=血条、ACTIONBAR=动作栏、TITLE=标题栏、NONE=禁用
   type: BOSSBAR
@@ -78,7 +79,7 @@ Scoreboard:
   - '&6&l当前任务'
   - ''
   - '{format}'
-  - '&e cronus.ptms.ink'
+  - '&e examplehost.com'
   # 任务格式
   format:
   - '{display}'
