@@ -105,6 +105,6 @@ QuestBook:
     - ''
     # 纵览格式
     format:
-    - '<hover:{display}|查看详细信息|CronusQuestOpen {id}>'
+    - '<hover:{display}|查看详细信息|CronusQuestOpen {id}> <hover:{quest:visible}|隐藏或显示|CronusQuestVisible {id} -open:def_0>'
     - '{content}'
     - ''

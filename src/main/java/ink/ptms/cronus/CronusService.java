@@ -91,7 +91,7 @@ public class CronusService {
         // 加载
         services.values().forEach(Service::init);
         // 下载数据
-        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> Bukkit.getOnlinePlayers().forEach(this::refreshData));
+        Bukkit.getOnlinePlayers().forEach(this::refreshData);
     }
 
     public void cancel() {
@@ -108,7 +108,9 @@ public class CronusService {
     }
 
     public void refreshData(Player player) {
-        CronusDataPullEvent.call(player, Cronus.getCronusService().getPlayerData().computeIfAbsent(player.getName(), p -> Cronus.getCronusService().getDatabase().download(player)));
+        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
+            CronusDataPullEvent.call(player, Cronus.getCronusService().getPlayerData().computeIfAbsent(player.getName(), p -> Cronus.getCronusService().getDatabase().download(player)));
+        });
     }
 
     public <T> T getService(Class<? extends T> clazz) {

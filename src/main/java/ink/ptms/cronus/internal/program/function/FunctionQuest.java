@@ -6,6 +6,7 @@ import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
+import io.izzel.taboolib.module.locale.TLocale;
 
 /**
  * @Author 坏黑
@@ -39,6 +40,8 @@ public class FunctionQuest extends Function {
                     return dataQuest.getTimeStart();
                 case "time.complete":
                     return ((QuestProgram) program).getDataPlayer().getQuestCompleted().getOrDefault(dataQuest.getCurrentQuest(), 0L);
+                case "visible":
+                    return  ((QuestProgram) program).getDataPlayer().getQuestHide().contains(quest.getId()) ? TLocale.asString("quest-placeholder-visible0") : TLocale.asString("quest-placeholder-visible1");
                 default:
                     return dataQuest.getCurrentQuest();
             }

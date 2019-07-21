@@ -104,6 +104,10 @@ public class Command extends CronusCommand {
             for (Map.Entry<String, Long> entry : playerData.getQuestCompleted().entrySet()) {
                 normal(sender, "  " + entry.getKey() + ": §f" + (entry.getValue() == 0 ? "-" : dateFormat.format(entry.getValue())));
             }
+            normal(sender, "任务隐藏:");
+            for (String hide : playerData.getQuestHide()) {
+                normal(sender, "    §f" + hide);
+            }
             if (playerData.getQuestCompleted().isEmpty()) {
                 normal(sender, "§f-");
             }
@@ -338,6 +342,47 @@ public class Command extends CronusCommand {
                 return;
             }
             questBook.open(player);
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand visible = new BaseSubCommand() {
+
+        @Override
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("任务", () -> Lists.newArrayList(Cronus.getCronusService().getRegisteredQuest().keySet()))
+            };
+        }
+
+        @Override
+        public String getDescription() {
+            return "使玩家切换任务可见状态.";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                error(sender, "玩家 &7" + args[0] + " &c离线.");
+                return;
+            }
+            Quest quest = Cronus.getCronusService().getRegisteredQuest().get(args[1]);
+            if (quest == null) {
+                error(sender, "任务 &7" + args[1] + " &c无效.");
+                return;
+            }
+            DataPlayer playerData = CronusAPI.getData(player);
+            if (!playerData.getQuest().containsKey(args[1])) {
+                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
+                return;
+            }
+            if (playerData.getQuestHide().contains(quest.getId())) {
+                playerData.getQuestHide().remove(quest.getId());
+            } else {
+                playerData.getQuestHide().add(quest.getId());
+            }
+            playerData.push();
         }
     };
 

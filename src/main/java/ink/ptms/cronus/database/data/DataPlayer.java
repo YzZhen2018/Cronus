@@ -1,5 +1,6 @@
 package ink.ptms.cronus.database.data;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusQuestAcceptEvent;
@@ -18,6 +19,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,6 +38,8 @@ public class DataPlayer implements TSerializable {
     private Map<String, DataQuest> quest = Maps.newConcurrentMap();
     // 任务完成记录
     private Map<String, Long> questCompleted = Maps.newConcurrentMap();
+    // 任务计分板隐藏
+    private List<String> questHide = Lists.newArrayList();
 
     public DataPlayer(Player player) {
         this.player = player;
@@ -186,6 +190,10 @@ public class DataPlayer implements TSerializable {
 
     public Map<String, Long> getQuestCompleted() {
         return questCompleted;
+    }
+
+    public List<String> getQuestHide() {
+        return questHide;
     }
 
     public YamlConfiguration getDataGlobal() {

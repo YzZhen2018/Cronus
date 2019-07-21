@@ -43,7 +43,9 @@ public class CronusAPI {
                         // 有引导
                         && questTask.getGuide() != null
                         // 同世界
-                        && questTask.getGuide().getTarget().isSelectWorld(player.getLocation())) {
+                        && questTask.getGuide().getTarget().isSelectWorld(player.getLocation())
+                        // 未隐藏
+                        && !playerData.getQuestHide().contains(dataQuest.getCurrentQuest())) {
                     // 创建引导
                     service.add(player, GuideWayData.create(player, questTask.getGuide().getTarget().toBukkit(), questTask.getGuide().getText(), questTask.getGuide().getDistance()));
                 }

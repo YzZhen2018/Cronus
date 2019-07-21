@@ -3,10 +3,10 @@ package ink.ptms.cronus.internal.listener;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.event.CronusDataPushEvent;
-import io.izzel.taboolib.common.event.PlayerLoadedEvent;
 import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class ListenerDatabase implements Listener {
 
     @EventHandler
-    public void e(PlayerLoadedEvent e) {
+    public void e(PlayerJoinEvent e) {
         Cronus.getCronusService().refreshData(e.getPlayer());
     }
 
