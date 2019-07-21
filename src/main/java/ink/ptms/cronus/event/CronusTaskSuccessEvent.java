@@ -1,5 +1,7 @@
 package ink.ptms.cronus.event;
 
+import ink.ptms.cronus.CronusAPI;
+import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.QuestTask;
@@ -26,6 +28,10 @@ public class CronusTaskSuccessEvent extends PlayerEvent {
         CronusTaskSuccessEvent event = new CronusTaskSuccessEvent(who, quest, questStage, questTask);
         Bukkit.getPluginManager().callEvent(event);
         return event;
+    }
+
+    public DataQuest getDataQuest() {
+        return CronusAPI.getData(player).getQuest(quest.getId());
     }
 
     public Quest getQuest() {

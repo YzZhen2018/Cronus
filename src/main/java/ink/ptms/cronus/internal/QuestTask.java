@@ -26,12 +26,14 @@ public abstract class QuestTask<E extends Event> extends Actionable {
     protected Condition condition;
     protected Condition conditionRestart;
     protected GuideWayCache guide;
+    protected String status;
 
     public QuestTask(ConfigurationSection config) {
         this.id = config.getName();
         this.config = config;
-        this.condition = ConditionParser.fromObject(condition);
+        this.condition = ConditionParser.fromObject(config.get("condition"));
         this.conditionRestart = ConditionParser.fromObject(config.get("restart"));
+        this.status = config.getString("status", "<no-status>");
         if (config.contains("data")) {
             init(config.getConfigurationSection("data").getValues(false));
         }
@@ -78,5 +80,9 @@ public abstract class QuestTask<E extends Event> extends Actionable {
 
     public GuideWayCache getGuide() {
         return guide;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

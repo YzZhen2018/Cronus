@@ -106,6 +106,7 @@ public class BuilderStage extends BuilderQuest {
         if (listTask == null) {
             listTask = new BuilderTaskList();
         }
+        this.toggle = false;
         this.player = player;
         this.list = list;
         Inventory inventory = Builders.normal("阶段编辑 : " + id,

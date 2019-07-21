@@ -4,7 +4,7 @@ quest_0:
   display: '主线任务'
 
   # 任务索引
-  # 用于在任务纵览中选择显示的任务
+  # 用于在任务纵览或计分板中选择显示的任务
   booktag:
   - '主线任务'
 
@@ -74,6 +74,7 @@ quest_0:
           # 任务条目数据
           # 用来规定任务条目的详细要求
           data:
+            count: 10
             block: stone
             location: world,0,100,0
 
@@ -92,7 +93,7 @@ quest_0:
             # 显示距离
             distance: 2
             # 目标地点
-            target: 'world,0,100,0'
+            target: 'world,0.5,100.5,0.5'
             # 引导内容
             text:
             - '&8[&f开采目标&8]'
@@ -111,6 +112,10 @@ quest_0:
           # 当条件满足时任务条目自动重置
           restart: 'player.level > 100'
 
+          # 任务状态显示
+          # 当启用 bossbar 或 actionbar 时则显示下方内容
+          status: '主线任务 - 开采石头 : {quest.var:t0.count|0}/10'
+
       # 任务阶段动作
       # ===========================================================
       # accept      = 阶段开始（任务的首阶段不会执行该动作）
@@ -123,6 +128,7 @@ quest_0:
         - 'send.all 玩家 {player:name} 完成 {quest:stage} 阶段!'
         restart:
         - 'send.all 玩家 {player:name} 重置 {quest:stage} 阶段!'
+        - 'player.level = 100'
 
       # 任务阶段重置所需条件
       # 当条件满足时任务阶段自动重置
@@ -139,7 +145,7 @@ quest_0:
         - ''
         - '尝试完成以下目标:'
         - ''
-        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/1'
+        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
 
       # 任务完成描述
       # 用于在佣兵日志中显示任务的最终信息
@@ -152,11 +158,11 @@ quest_0:
         - ''
         - '尝试完成以下目标:'
         - ''
-        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/1'
+        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
         - ''
         - '完成于 {date.format:{quest:time.complete}|yyy年MM月dd日}'
 
       # 任务纵览描述
       # 用于在任务纵览中显示任务信息
       content-global:
-      - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/1'
+      - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'

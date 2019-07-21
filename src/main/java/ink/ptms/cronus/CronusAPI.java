@@ -3,6 +3,7 @@ package ink.ptms.cronus;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusTaskNextEvent;
 import ink.ptms.cronus.event.CronusTaskSuccessEvent;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.QuestTask;
@@ -82,6 +83,7 @@ public class CronusAPI {
         // 性能损耗：从 Map 中读取玩家数据
         DataPlayer playerData = CronusAPI.getData(player);
 
+        // 检查所有阶段
         for (DataQuest dataQuest : playerData.getQuest().values()) {
 
             // 判断任务阶段是否合理存在
@@ -92,7 +94,7 @@ public class CronusAPI {
             if (questStage == null) {
                 continue;
             }
-
+            // 检查所有条目
             for (QuestTask questTask : questStage.getTask()) {
 
                 // 检查玩家正在进行的条目中是否含有本次计算条目
@@ -110,6 +112,10 @@ public class CronusAPI {
                         // 性能损耗：脚本、变量等动态编译的高耗能计算
                         && (questTask.getCondition() == null || questTask.getCondition().check(player, dataQuest, event))) {
 
+                    // 唤起单次完成时间并检查是否被取消
+                    if (CronusTaskNextEvent.call(player, dataQuest.getQuest(), questStage, questTask).isCancelled()) {
+                        continue;
+                    }
                     // 条目单次目标完成，执行动作并记录数据
                     questTask.next(player, dataQuest, event);
                     questTask.eval(new QuestProgram(player, dataQuest, event), Action.NEXT);

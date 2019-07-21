@@ -50,7 +50,7 @@ public class EffectPlayer extends Effect {
             Player player = ((QuestProgram) program).getPlayer();
             String parsed = FunctionParser.parseAll(program, value);
             switch (action) {
-                case "tag":
+                case "tag": {
                     switch (symbol) {
                         case "+":
                             player.addScoreboardTag(parsed);
@@ -63,6 +63,7 @@ public class EffectPlayer extends Effect {
                             break;
                     }
                     break;
+                }
                 case "health": {
                     double v = NumberConversions.toDouble(value);
                     switch (symbol) {
@@ -79,6 +80,7 @@ public class EffectPlayer extends Effect {
                             logger.warn("Invalid Symbol: " + symbol + " " + value);
                             break;
                     }
+                    break;
                 }
                 case "food": {
                     int v = NumberConversions.toInt(value);
@@ -96,6 +98,7 @@ public class EffectPlayer extends Effect {
                             logger.warn("Invalid Symbol: " + symbol + " " + value);
                             break;
                     }
+                    break;
                 }
                 case "exp":
                 case "experience": {
@@ -114,6 +117,7 @@ public class EffectPlayer extends Effect {
                             logger.warn("Invalid Symbol: " + symbol + " " + value);
                             break;
                     }
+                    break;
                 }
                 case "level": {
                     int v = NumberConversions.toInt(value);
@@ -131,6 +135,7 @@ public class EffectPlayer extends Effect {
                             logger.warn("Invalid Symbol: " + symbol + " " + value);
                             break;
                     }
+                    break;
                 }
                 case "money": {
                     int v = NumberConversions.toInt(value);
@@ -148,6 +153,7 @@ public class EffectPlayer extends Effect {
                             logger.warn("Invalid Symbol: " + symbol + " " + value);
                             break;
                     }
+                    break;
                 }
                 default:
                     logger.warn("Invalid Action: " + action + " " + symbol + " " + value);

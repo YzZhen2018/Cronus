@@ -45,4 +45,12 @@ public abstract class Countable<C extends Event> extends QuestTask<C> {
     public void reset(DataQuest dataQuest) {
         dataQuest.getDataStage().set(getId() + ".count", 0);
     }
+
+    public int getCount(DataQuest dataQuest) {
+        return dataQuest.getDataStage().getInt(getId() + ".count");
+    }
+
+    public int getCountMax() {
+        return count;
+    }
 }

@@ -49,6 +49,42 @@ Database:
   database: test
   table: cronus_database
 
+# 任务状态
+# 当玩家接受任务时，在特殊位置显示醒目的任务状态
+Status:
+  # 显示类型：BOSSBAR=血条、ACTIONBAR=动作栏、TITLE=标题栏、NONE=禁用
+  type: BOSSBAR
+  # 血条配置
+  bossbar:
+    # 颜色：PINK=粉色、BLUE=蓝色、RED=红色、GREEN=绿色、YELLOW=黄色、PURPLE=紫色、WHITE=白色
+    color: BLUE
+    # 风格：SOLID、SEGMENTED_6、SEGMENTED_10、SEGMENTED_12、SEGMENTED_20
+    style: SEGMENTED_20
+  # 提示音效
+  sound: 'ENTITY_PLAYER_LEVELUP-1-2'
+
+# 计分板显示
+Scoreboard:
+  # 是否启用
+  enable: true
+  # 录入任务
+  # 通过任务配置中的标签判断是否写入计分板
+  # 右侧参数为列表优先级，数值越高排名越靠前
+  list:
+    主线任务: 1
+    支线任务: 0
+  # 显示内容
+  content:
+  - '&6&l当前任务'
+  - ''
+  - '{format}'
+  - '&e cronus.ptms.ink'
+  # 任务格式
+  format:
+  - '{display}'
+  - '{content}'
+  - ''
+
 # 任务纵览
 QuestBook:
   # 任务纵览序号
@@ -60,7 +96,6 @@ QuestBook:
     list:
       主线任务: 1
       支线任务: 0
-
     # 纵览开头
     head:
     - '任务纵览'

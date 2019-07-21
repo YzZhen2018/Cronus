@@ -13,7 +13,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
@@ -72,7 +75,6 @@ public abstract class CronusPlugin extends JavaPlugin {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        PluginLoader.postLoad(this);
     }
 
     @Override
@@ -86,7 +88,6 @@ public abstract class CronusPlugin extends JavaPlugin {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        PluginLoader.postStart(this);
         Bukkit.getScheduler().runTask(this, () -> {
             PluginLoader.active(this);
             onActivated();
@@ -104,7 +105,6 @@ public abstract class CronusPlugin extends JavaPlugin {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        PluginLoader.postStop(this);
     }
 
     /**
@@ -139,11 +139,7 @@ public abstract class CronusPlugin extends JavaPlugin {
      * 跳过 TabooLib 主类的初始化过程
      */
     public static boolean isLoaded() {
-        try {
-            return Class.forName("io.izzel.taboolib.TabooLib", false, Bukkit.class.getClassLoader()) != null;
-        } catch (Throwable ignored) {
-        }
-        return false;
+        return Loader.forName("io.izzel.taboolib.TabooLib", false, Bukkit.class.getClassLoader()) != null;
     }
 
     /**
@@ -181,21 +177,15 @@ public abstract class CronusPlugin extends JavaPlugin {
         return null;
     }
 
-    /**
-     * 将文件读取至内存中
-     * 读取后不会随着插件的卸载而卸载
-     * 请在执行前判断是否已经被读取
-     * 防止出现未知错误
-     */
-    private static void addToPath(File file) {
-        try {
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-            method.setAccessible(true);
-            method.invoke(Bukkit.class.getClassLoader(), file.toURI().toURL());
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
+//    private static void addToPath(File file) {
+//        try {
+//            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+//            method.setAccessible(true);
+//            method.invoke(Bukkit.class.getClassLoader(), file.toURI().toURL());
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private static boolean downloadFile(String in, File file) {
         try (InputStream inputStream = new URL(in).openStream(); BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)) {
@@ -267,14 +257,6 @@ public abstract class CronusPlugin extends JavaPlugin {
             }
         } catch (Throwable t) {
             t.printStackTrace();
-        }
-        return null;
-    }
-
-    private static Class getCaller(Class<?> obj) {
-        try {
-            return Class.forName(Thread.currentThread().getStackTrace()[3].getClassName(), false, obj.getClassLoader());
-        } catch (ClassNotFoundException ignored) {
         }
         return null;
     }
@@ -374,12 +356,11 @@ public abstract class CronusPlugin extends JavaPlugin {
         if (!isLoaded()) {
             // 将 TabooLib 通过 Bukkit.class 类加载器加载至内存中供其他插件使用
             // 并保证在热重载过程中不会被 Bukkit 卸载
-            addToPath(libFile);
+            Loader.addPath(libFile);
             // 初始化 TabooLib 主类
-            try {
-                Class.forName("io.izzel.taboolib.TabooLib", true, Bukkit.class.getClassLoader());
-            } catch (Throwable t) {
-                t.printStackTrace();
+            if (Loader.forName("io.izzel.taboolib.TabooLib", true, Bukkit.class.getClassLoader()) == null) {
+                Bukkit.getConsoleSender().sendMessage("§4[TabooLib] §c主运行库未完成初始化, 插件停止加载.");
+                initFailed = true;
             }
         }
         // 清理临时文件
@@ -456,5 +437,48 @@ public abstract class CronusPlugin extends JavaPlugin {
 
         double value();
 
+    }
+
+    static class Loader extends URLClassLoader {
+
+        static MethodHandles.Lookup lookup;
+
+        static {
+            try {
+                Field lookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+                lookupField.setAccessible(true);
+                lookup = (MethodHandles.Lookup) lookupField.get(null);
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+        public Loader(java.net.URL[] urls) {
+            super(urls);
+        }
+
+        /**
+         * 将文件读取至内存中
+         * 读取后不会随着插件的卸载而卸载
+         * 请在执行前判断是否已经被读取
+         * 防止出现未知错误
+         */
+        public static void addPath(File file) {
+            try {
+                MethodHandle methodHandle = lookup.findSpecial(URLClassLoader.class, "addURL", MethodType.methodType(void.class, java.net.URL.class), URLClassLoader.class);
+                methodHandle.invoke(Bukkit.class.getClassLoader(), file.toURI().toURL());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+        public static Class forName(String name, boolean initialize, ClassLoader loader) {
+            try {
+                MethodHandle methodHandle = lookup.findStatic(Class.class, "forName", MethodType.methodType(Class.class, String.class, boolean.class, ClassLoader.class));
+                return (Class) methodHandle.invoke(name, initialize, loader);
+            } catch (Throwable ignored) {
+            }
+            return null;
+        }
     }
 }

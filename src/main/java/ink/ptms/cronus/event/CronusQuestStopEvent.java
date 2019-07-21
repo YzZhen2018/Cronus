@@ -1,5 +1,7 @@
 package ink.ptms.cronus.event;
 
+import ink.ptms.cronus.CronusAPI;
+import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.Quest;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,6 +22,10 @@ public class CronusQuestStopEvent extends PlayerEvent {
         CronusQuestStopEvent event = new CronusQuestStopEvent(who, quest);
         Bukkit.getPluginManager().callEvent(event);
         return event;
+    }
+
+    public DataQuest getDataQuest() {
+        return CronusAPI.getData(player).getQuest(quest.getId());
     }
 
     public Quest getQuest() {

@@ -17,7 +17,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-05-28 17:21
  */
-@Task(name = "block_break")
+@Task(name = "block_interact")
 public class TaskBlockInteract extends Countable<PlayerInteractEvent> {
 
     private Block block;

@@ -45,6 +45,7 @@ public class BuilderTask extends BuilderQuest {
     private double guideDistance = 2;
     private Location guideTarget;
     private List<String> guideText = Lists.newArrayList(id, "距离 {distance}m");
+    private String status;
     private boolean toggle;
 
     public BuilderTask(String id) {
@@ -83,6 +84,9 @@ public class BuilderTask extends BuilderQuest {
         if (section.contains("guide.text")) {
             guideText = section.getStringList("guide.text");
         }
+        if (section.contains("status")) {
+            status = section.getString("status");
+        }
     }
 
     public void export(ConfigurationSection section) {
@@ -109,6 +113,9 @@ public class BuilderTask extends BuilderQuest {
             section.set("guide.distance", guideDistance);
             section.set("guide.target", Utils.fromLocation(guideTarget.toBukkit()));
             section.set("guide.text", guideText);
+        }
+        if (status != null) {
+            section.set("status", status);
         }
     }
 
@@ -156,6 +163,10 @@ public class BuilderTask extends BuilderQuest {
                                 condition.open(player, 0);
                                 break;
                             }
+                            case 14:
+                                toggle = true;
+                                editString(e.getClicker(), "任务状态显示", status, r -> status = r);
+                                break;
                             case 19:
                                 toggle = true;
                                 new BuilderListEffect("条目进行动作", actionNext).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
@@ -234,6 +245,10 @@ public class BuilderTask extends BuilderQuest {
         inventory.setItem(13, new ItemBuilder(Material.TRIPWIRE_HOOK)
                 .name("§b条目重置条件")
                 .lore(toLore(conditionRestart == null ? Lists.newArrayList() : conditionRestart.asList(0)))
+                .build());
+        inventory.setItem(14, new ItemBuilder(Material.NAME_TAG)
+                .name("§b任务状态显示")
+                .lore("", "§f" + (guideTarget == null ? "无" : status))
                 .build());
         inventory.setItem(19, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b条目进行动作")
