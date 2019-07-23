@@ -1,29 +1,28 @@
 package ink.ptms.cronus.event;
 
+import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class CronusDataPushEvent extends PlayerEvent {
+public class CronusVisibleToggleEvent extends PlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
-    private DataPlayer dataPlayer;
 
-    public CronusDataPushEvent(Player who, DataPlayer dataPlayer) {
+    public CronusVisibleToggleEvent(Player who) {
         super(who);
-        this.dataPlayer = dataPlayer;
     }
 
-    public static CronusDataPushEvent call(Player who, DataPlayer dataPlayer) {
-        CronusDataPushEvent event = new CronusDataPushEvent(who, dataPlayer);
+    public static CronusVisibleToggleEvent call(Player who) {
+        CronusVisibleToggleEvent event = new CronusVisibleToggleEvent(who);
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }
 
     public DataPlayer getDataPlayer() {
-        return dataPlayer;
+        return CronusAPI.getData(player);
     }
 
     public static HandlerList getHandlerList() {

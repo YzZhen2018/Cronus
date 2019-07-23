@@ -34,13 +34,17 @@ public class Cronus extends CronusPlugin {
         }
         cronusService.init();
         cronusLoader.init();
-        cronusLoader.start();
     }
 
     @Override
     public void onStopping() {
         cronusService.cancel();
         Catchers.getPlayerdata().clear();
+    }
+
+    @Override
+    public void onActivated() {
+        cronusLoader.start();
     }
 
     public void reloadQuest() {

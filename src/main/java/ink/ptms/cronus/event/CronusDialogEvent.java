@@ -5,27 +5,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
-public class CronusDialogEvent extends Event implements Cancellable {
+public class CronusDialogEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-
     private DialogPack pack;
     private Entity target;
-    private Player player;
-
     private boolean cancelled;
 
-    public CronusDialogEvent(DialogPack pack, Entity target, Player player) {
+    public CronusDialogEvent(Player who, DialogPack pack, Entity target) {
+        super(who);
         this.pack = pack;
         this.target = target;
-        this.player = player;
     }
 
     public static CronusDialogEvent call(DialogPack pack, Entity target, Player player) {
-        CronusDialogEvent event = new CronusDialogEvent(pack, target, player);
+        CronusDialogEvent event = new CronusDialogEvent(player, pack, target);
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }
@@ -36,10 +33,6 @@ public class CronusDialogEvent extends Event implements Cancellable {
 
     public Entity getTarget() {
         return target;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public void setPack(DialogPack pack) {

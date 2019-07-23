@@ -4,6 +4,7 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusVisibleToggleEvent;
 import ink.ptms.cronus.internal.QuestBook;
 import io.izzel.taboolib.module.inject.TInject;
 import org.bukkit.entity.Player;
@@ -66,6 +67,7 @@ public class CommandPlayer {
                         }
                     }
                     dataPlayer.push();
+                    CronusVisibleToggleEvent.call((Player) sender);
                 }
             });
 

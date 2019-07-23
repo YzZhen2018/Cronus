@@ -4,3 +4,4 @@ version: ${project.version}
 api-version: 1.13
 
 author: 坏黑
+soft-depend: [Skript, PurtmarsItem, SacredItem]

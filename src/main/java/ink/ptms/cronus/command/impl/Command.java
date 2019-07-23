@@ -8,6 +8,7 @@ import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.event.CronusQuestStopEvent;
+import ink.ptms.cronus.event.CronusVisibleToggleEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestBook;
 import ink.ptms.cronus.internal.program.Action;
@@ -100,15 +101,18 @@ public class Command extends CronusCommand {
             if (playerData.getQuest().isEmpty()) {
                 normal(sender, "§f-");
             }
-            normal(sender, "完成时间:");
+            normal(sender, "完成任务:");
             for (Map.Entry<String, Long> entry : playerData.getQuestCompleted().entrySet()) {
                 normal(sender, "  " + entry.getKey() + ": §f" + (entry.getValue() == 0 ? "-" : dateFormat.format(entry.getValue())));
             }
-            normal(sender, "任务隐藏:");
+            if (playerData.getQuestCompleted().isEmpty()) {
+                normal(sender, "§f-");
+            }
+            normal(sender, "隐藏任务:");
             for (String hide : playerData.getQuestHide()) {
                 normal(sender, "    §f" + hide);
             }
-            if (playerData.getQuestCompleted().isEmpty()) {
+            if (playerData.getQuestHide().isEmpty()) {
                 normal(sender, "§f-");
             }
         }
@@ -383,6 +387,7 @@ public class Command extends CronusCommand {
                 playerData.getQuestHide().add(quest.getId());
             }
             playerData.push();
+            CronusVisibleToggleEvent.call((Player) sender);
         }
     };
 

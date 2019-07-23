@@ -20,6 +20,10 @@ public class QuestEffect {
         source.stream().map(EffectParser::parse).forEach(e -> effect.add(e));
     }
 
+    public void eval(Player player) {
+        new NoneProgram(player).eval(effect);
+    }
+
     public void eval(Player player, DataQuest dataQuest) {
         new QuestProgram(player, dataQuest).eval(effect);
     }

@@ -11,10 +11,7 @@ import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import io.izzel.taboolib.util.serialize.DoNotSerialize;
-import io.izzel.taboolib.util.serialize.TSerializable;
-import io.izzel.taboolib.util.serialize.TSerializer;
-import io.izzel.taboolib.util.serialize.TSerializerElementGeneral;
+import io.izzel.taboolib.util.serialize.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -45,6 +42,9 @@ public class DataPlayer implements TSerializable {
         this.player = player;
     }
 
+    /**
+     * 通过任务序号或标签获取玩家正在进行中的任务
+     */
     public DataQuest getQuest(String questId) {
         for (Map.Entry<String, DataQuest> entry : quest.entrySet()) {
             Quest quest = entry.getValue().getQuest();

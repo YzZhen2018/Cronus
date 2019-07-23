@@ -6,6 +6,8 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusTaskNextEvent;
+import ink.ptms.cronus.event.CronusVisibleToggleEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -18,6 +20,8 @@ import io.izzel.taboolib.util.lite.Scoreboards;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
@@ -30,7 +34,7 @@ import java.util.stream.Collectors;
  * @Since 2019-07-01 16:55
  */
 @Auto
-public class Scoreboard implements Service {
+public class Scoreboard implements Service, Listener {
 
     private BukkitTask scoreboardTask;
     private List<String> content;
@@ -47,18 +51,7 @@ public class Scoreboard implements Service {
         }
         scoreboardTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Cronus.getInst(), () -> {
             if (isEnabled()) {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    // 创建内容
-                    List<String> build = build(player);
-                    // 空行检查
-                    for (int i = 0; i < build.size(); i++) {
-                        if (build.get(i).isEmpty()) {
-                            build.set(i, Arrays.stream(String.valueOf(Numbers.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
-                        }
-                    }
-                    // 返回主线程发送计分板
-                    Bukkit.getScheduler().runTask(Cronus.getInst(), () -> Scoreboards.display(player, build.toArray(new String[0])));
-                }
+                Bukkit.getOnlinePlayers().forEach(this::update);
             }
         }, 0, 40);
     }
@@ -68,6 +61,28 @@ public class Scoreboard implements Service {
         if (scoreboardTask != null) {
             scoreboardTask.cancel();
         }
+    }
+
+    @EventHandler
+    public void e(CronusTaskNextEvent e) {
+        update(e.getPlayer());
+    }
+
+    @EventHandler
+    public void e(CronusVisibleToggleEvent e) {
+        update(e.getPlayer());
+    }
+
+    public void update(Player player) {
+        List<String> build = build(player);
+        // 空行检查
+        for (int i = 0; i < build.size(); i++) {
+            if (build.get(i).isEmpty()) {
+                build.set(i, Arrays.stream(String.valueOf(Numbers.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
+            }
+        }
+        // 返回主线程发送计分板
+        Bukkit.getScheduler().runTask(Cronus.getInst(), () -> Scoreboards.display(player, build.toArray(new String[0])));
     }
 
     public List<String> build(Player player) {

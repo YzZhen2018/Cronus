@@ -108,3 +108,22 @@ QuestBook:
     - '<hover:{display}|查看详细信息|CronusQuestOpen {id}> <hover:{quest:visible}|隐藏或显示|CronusQuestVisible {id} -open:def_0>'
     - '{content}'
     - ''
+
+# 快捷物品
+# 该物品会绑定至玩家的快捷栏或背包，点击执行指定操作
+QuestItem:
+  # 物品绑定位置
+  # 如果位于 0-8  快捷栏中，则手持右键触发动作
+  # 如果位于 9-35 背包栏中，则点击物品触发动作
+  8:
+    # 是否启用该物品
+    enable: false
+    # 物品
+    material: book
+    name: '&7任务纵览'
+    lore:
+    - ''
+    - '&8点击查看当前任务进度'
+    # 动作
+    effect:
+    - 'command.player CronusQuestBook def_0'

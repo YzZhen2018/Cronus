@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.bukkit.parser;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.internal.bukkit.*;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
@@ -87,6 +88,10 @@ public class BukkitParser {
         // bukkit item
         if (String.valueOf(in).startsWith("bukkit:")) {
             return new ItemStack((org.bukkit.inventory.ItemStack) TSerializerElementGeneral.ITEM_STACK.getSerializer().read(String.valueOf(in).substring("bukkit:".length())));
+        }
+        // cronus saved item
+        if (Cronus.getCronusService().getItemStorage().getItem(String.valueOf(in)) != null) {
+            return new ItemStack(Cronus.getCronusService().getItemStorage().getItem(String.valueOf(in)));
         }
         // cronus item
         String type = null;

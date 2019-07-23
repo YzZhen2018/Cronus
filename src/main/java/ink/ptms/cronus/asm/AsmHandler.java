@@ -22,7 +22,7 @@ public abstract class AsmHandler {
 
     static void init() {
         try {
-            impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
+            AsmHandler.impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
         } catch (Throwable t) {
             t.printStackTrace();
         }
