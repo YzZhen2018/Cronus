@@ -25,7 +25,7 @@ public class PlayerChat extends TaskEntry {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(MaterialControl.NAME_TAG.parseMaterial()).name("§f聊天").lore("", "§7点击选择").flags(ItemFlag.values()).build();
+        return new ItemBuilder(MaterialControl.PLAYER_HEAD.parseItem()).name("§f聊天").lore("", "§7点击选择").flags(ItemFlag.values()).build();
     }
 
     @Override

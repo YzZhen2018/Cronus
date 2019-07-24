@@ -2,8 +2,7 @@ package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.event.EventPeriod;
-import ink.ptms.cronus.internal.task.other.TaskLocation;
-import ink.ptms.cronus.internal.task.other.TaskPermission;
+import ink.ptms.cronus.internal.task.other.*;
 import io.izzel.taboolib.module.inject.TSchedule;
 import org.bukkit.Bukkit;
 
@@ -17,6 +16,6 @@ public class PeriodTask {
 
     @TSchedule(period = 20, async = true)
     static void check() {
-        Bukkit.getOnlinePlayers().forEach(player -> CronusAPI.stageHandle(player, event, TaskLocation.class, TaskPermission.class));
+        Bukkit.getOnlinePlayers().forEach(player -> CronusAPI.stageHandle(player, event, TaskLocation.class, TaskPermission.class, TaskPlayerVal.class, TaskPlayerVar.class, TaskQuestVal.class, TaskQuestVar.class));
     }
 }

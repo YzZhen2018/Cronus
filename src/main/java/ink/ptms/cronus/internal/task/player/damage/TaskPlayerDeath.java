@@ -52,14 +52,17 @@ public class TaskPlayerDeath extends Countable<PlayerDeathEvent> {
     @Override
     public String toString() {
         return "TaskPlayerDeath{" +
-                "count=" + count +
-                ", attacker=" + attacker +
+                "attacker=" + attacker +
                 ", weapon=" + weapon +
                 ", cause=" + cause +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

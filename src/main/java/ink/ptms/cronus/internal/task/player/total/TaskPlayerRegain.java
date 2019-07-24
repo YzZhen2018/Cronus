@@ -42,4 +42,20 @@ public class TaskPlayerRegain extends Uncountable<EntityRegainHealthEvent> {
     public double getCount(Player player, DataQuest dataQuest, EntityRegainHealthEvent e) {
         return e.getAmount();
     }
+
+    @Override
+    public String toString() {
+        return "TaskPlayerRegain{" +
+                "reason=" + reason +
+                ", health=" + health +
+                ", total=" + total +
+                ", id='" + id + '\'' +
+                ", config=" + config +
+                ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
+                '}';
+    }
 }

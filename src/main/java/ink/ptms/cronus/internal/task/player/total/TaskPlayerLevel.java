@@ -38,4 +38,19 @@ public class TaskPlayerLevel extends Uncountable<PlayerLevelChangeEvent> {
     public double getCount(Player player, DataQuest dataQuest, PlayerLevelChangeEvent e) {
         return e.getNewLevel() - e.getOldLevel();
     }
+
+    @Override
+    public String toString() {
+        return "TaskPlayerLevel{" +
+                "level=" + level +
+                ", total=" + total +
+                ", id='" + id + '\'' +
+                ", config=" + config +
+                ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
+                '}';
+    }
 }

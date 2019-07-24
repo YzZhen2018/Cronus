@@ -82,10 +82,13 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
                 ", attacker=" + attacker +
                 ", weapon=" + weapon +
                 ", cause=" + cause +
-                ", action=" + action +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

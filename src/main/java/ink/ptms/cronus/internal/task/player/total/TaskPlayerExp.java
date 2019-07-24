@@ -38,4 +38,19 @@ public class TaskPlayerExp extends Uncountable<PlayerExpChangeEvent> {
     public double getCount(Player player, DataQuest dataQuest, PlayerExpChangeEvent e) {
         return e.getAmount();
     }
+
+    @Override
+    public String toString() {
+        return "TaskPlayerExp{" +
+                "xp=" + xp +
+                ", total=" + total +
+                ", id='" + id + '\'' +
+                ", config=" + config +
+                ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
+                '}';
+    }
 }

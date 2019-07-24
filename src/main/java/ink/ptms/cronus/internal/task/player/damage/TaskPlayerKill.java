@@ -44,14 +44,17 @@ public class TaskPlayerKill extends Countable<EntityDeathEvent> {
     @Override
     public String toString() {
         return "TaskPlayerKill{" +
-                "count=" + count +
-                ", victim=" + victim +
+                "victim=" + victim +
                 ", weapon=" + weapon +
                 ", cause=" + cause +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

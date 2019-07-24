@@ -9,7 +9,6 @@ import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.NumberConversions;
 
@@ -71,10 +70,13 @@ public class TaskPlayerAttack extends QuestTask<EntityDamageByEntityEvent> {
                 ", victim=" + victim +
                 ", weapon=" + weapon +
                 ", cause=" + cause +
-                ", action=" + action +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }
