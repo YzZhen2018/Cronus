@@ -15,4 +15,6 @@ public @interface Task {
 
     String name();
 
+    String version() default ">0";
+
 }

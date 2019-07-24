@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.task.other;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
+import ink.ptms.cronus.builder.task.data.text.TextPermission;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.other.TaskPermission;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 public class Permission extends TaskEntry {
 
     public Permission() {
-        objective.add(ink.ptms.cronus.builder.task.data.text.Permission.class);
+        objective.add(TextPermission.class);
     }
 
     @Override

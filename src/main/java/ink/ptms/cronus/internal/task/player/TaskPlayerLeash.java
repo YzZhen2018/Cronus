@@ -4,13 +4,14 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
+import ink.ptms.cronus.internal.listener.ListenerInternal;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.PlayerLeashEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import java.util.Map;
  * @Since 2019-05-28 17:21
  */
 @Task(name = "player_leash")
-public class TaskPlayerLeash extends Countable<PlayerLeashEntityEvent> {
+public class TaskPlayerLeash extends Countable<PlayerMoveEvent> {
 
     private Entity entity;
     private ItemStack item;
@@ -36,20 +37,23 @@ public class TaskPlayerLeash extends Countable<PlayerLeashEntityEvent> {
     }
 
     @Override
-    public boolean check(Player player, DataQuest dataQuest, PlayerLeashEntityEvent e) {
-        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), MaterialControl.LEAD.parseMaterial())))) && (entity == null || entity.isSelect(e.getEntity()));
+    public boolean check(Player player, DataQuest dataQuest, PlayerMoveEvent e) {
+        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), MaterialControl.LEAD.parseMaterial())))) && (entity == null || ListenerInternal.getLeashedEntity(player).stream().allMatch(entity::isSelect));
     }
 
     @Override
     public String toString() {
-        return "TaskPlayerShear{" +
-                "count=" + count +
-                ", entity=" + entity +
+        return "TaskPlayerLeash{" +
+                "entity=" + entity +
                 ", item=" + item +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

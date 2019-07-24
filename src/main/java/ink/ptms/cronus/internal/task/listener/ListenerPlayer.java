@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.task.listener;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.player.*;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerAttack;
@@ -11,6 +12,7 @@ import io.izzel.taboolib.common.event.PlayerJumpEvent;
 import io.izzel.taboolib.module.inject.TListener;
 import io.izzel.taboolib.util.item.Items;
 import io.izzel.taboolib.util.lite.Servers;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -33,6 +35,11 @@ import org.bukkit.event.vehicle.VehicleExitEvent;
  */
 @TListener
 public class ListenerPlayer implements Listener {
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerTeleportEvent e) {
+        CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerTeleport.class);
+    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerFishEvent e) {
@@ -62,11 +69,6 @@ public class ListenerPlayer implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerCommandPreprocessEvent e) {
         CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerCommand.class);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void e(PlayerLeashEntityEvent e) {
-        CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerLeash.class);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -176,13 +178,6 @@ public class ListenerPlayer implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void e(PlayerMoveEvent e) {
-        if (!e.getFrom().getBlock().equals(e.getTo().getBlock())) {
-            CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerWalk.class, TaskPlayerSwim.class, TaskPlayerRide.class, TaskPlayerElytra.class);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerInteractEvent e) {
         if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType().name().endsWith("_PLATE")) {
             CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerPressurePlate.class);
@@ -213,6 +208,16 @@ public class ListenerPlayer implements Listener {
         }
         if (e.getEntity() instanceof Player) {
             CronusAPI.stageHandle((Player) e.getEntity(), e, TaskPlayerDamaged.class);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerMoveEvent e) {
+        if (!e.getFrom().getBlock().equals(e.getTo().getBlock())) {
+            // 异步计算
+            Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
+                CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerWalk.class, TaskPlayerSwim.class, TaskPlayerRide.class, TaskPlayerElytra.class, TaskPlayerLeash.class);
+            });
         }
     }
 }

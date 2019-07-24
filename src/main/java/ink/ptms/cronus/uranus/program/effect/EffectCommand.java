@@ -51,8 +51,7 @@ public class EffectCommand extends Effect {
             case "sender":
                 Commands.dispatchCommand(program.getSender(), parsed);
                 break;
-            case "player.op":
-            case "sender.op":
+            case "op":
                 boolean isOp = program.getSender().isOp();
                 program.getSender().setOp(true);
                 try {

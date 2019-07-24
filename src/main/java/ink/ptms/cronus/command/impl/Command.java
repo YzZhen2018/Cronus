@@ -27,17 +27,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
  * @Since 2019-05-29 17:25
  */
-@BaseCommand(name = "Cronus", aliases = {"CronusQuest", "cq"}, permission = "*")
+@BaseCommand(name = "Cronus", aliases = {"CronusQuest", "cQuest", "cq"}, permission = "*")
 public class Command extends CronusCommand {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -481,7 +478,10 @@ public class Command extends CronusCommand {
                     .add("").newLine()
                     .add("         性能监控").newLine()
                     .build());
-            CronusMirror.getMirrors().forEach((k, v) -> {
+            List<String> list = Lists.newArrayList(CronusMirror.getMirrors().keySet());
+            list.sort((b, a) -> Double.compare(CronusMirror.getMirror(a).getTimeTotal(), CronusMirror.getMirror(b).getTimeTotal()));
+            list.forEach(k -> {
+                CronusMirror.Data v = CronusMirror.getMirror(k);
                 String name = k.substring(k.indexOf(":") + 1);
                 bookBuilder.addPages(ComponentSerializer.parse(TellrawJson.create()
                         .append("  §1§l§n" + Utils.toSimple(name)).hoverText(name).newLine()

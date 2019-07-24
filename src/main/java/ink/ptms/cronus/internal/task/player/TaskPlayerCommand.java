@@ -36,12 +36,15 @@ public class TaskPlayerCommand extends Countable<PlayerCommandPreprocessEvent> {
     @Override
     public String toString() {
         return "TaskPlayerCommand{" +
-                "count=" + count +
-                ", command='" + command + '\'' +
-                ", action=" + action +
+                "command='" + command + '\'' +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

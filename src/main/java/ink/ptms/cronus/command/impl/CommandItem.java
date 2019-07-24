@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-05-31 22:10
  */
-@BaseCommand(name = "CronusItem", aliases = {"ci"}, permission = "*")
+@BaseCommand(name = "CronusItem", aliases = {"cItem", "ci"}, permission = "*")
 public class CommandItem extends CronusCommand {
 
     @SubCommand

@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
+import ink.ptms.cronus.builder.task.data.Count;
 import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.item.TaskItemPick;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 public class ItemPickup extends TaskEntry {
 
     public ItemPickup() {
+        objective.add(Count.class);
         objective.add(Item.class);
     }
 

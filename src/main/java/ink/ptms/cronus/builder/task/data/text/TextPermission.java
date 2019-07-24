@@ -1,7 +1,7 @@
 package ink.ptms.cronus.builder.task.data.text;
 
 import ink.ptms.cronus.builder.element.BuilderTaskData;
-import ink.ptms.cronus.builder.task.TaskExpression;
+import ink.ptms.cronus.builder.task.TaskText;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -9,25 +9,25 @@ import org.bukkit.entity.Player;
  * @Author 坏黑
  * @Since 2019-07-01 14:34
  */
-public class BookPage extends TaskExpression {
+public class TextPermission extends TaskText {
 
-    public BookPage(Player player, BuilderTaskData builderTaskData) {
+    public TextPermission(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 
     @Override
     public String getDisplay() {
-        return "书本页数";
+        return "目标权限";
     }
 
     @Override
     public Material getMaterial() {
-        return Material.PAPER;
+        return Material.TRIPWIRE_HOOK;
     }
 
     @Override
     public String getKey() {
-        return "page";
+        return "permission";
     }
 
     @Override

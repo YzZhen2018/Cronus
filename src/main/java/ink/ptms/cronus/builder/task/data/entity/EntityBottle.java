@@ -1,4 +1,4 @@
-package ink.ptms.cronus.builder.task.entity;
+package ink.ptms.cronus.builder.task.data.entity;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
@@ -13,21 +13,21 @@ import org.bukkit.inventory.ItemStack;
  * @Author 坏黑
  * @Since 2019-07-01 14:56
  */
-public class EntityFather extends Entity {
+public class EntityBottle extends Entity {
 
-    public EntityFather(Player player, BuilderTaskData builderTaskData) {
+    public EntityBottle(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 
     @Override
     public String getKey() {
-        return "father";
+        return "bottle";
     }
 
     @Override
     public ItemStack getItem() {
         return new ItemBuilder(Material.EGG)
-                .name("§7目标实体 (父亲)")
+                .name("§7目标实体 (经验瓶)")
                 .lore(
                         "",
                         "§f" + (data == null ? "无" : Cronus.getCronusService().getService(EntitySelector.class).getSelectDisplay(String.valueOf(data)))

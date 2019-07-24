@@ -43,7 +43,9 @@ public class TaskPlayerThrowXpBottle extends Countable<ExpBottleEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

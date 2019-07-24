@@ -70,6 +70,7 @@ public class DisplayMenu extends DialogDisplay {
                                 }
                                 if (event.getPack().getDialog() != null) {
                                     closed[0] = true;
+                                    dialogPack.getParent().openEval(e.getClicker());
                                     display(e.getClicker(), event.getPack().getDialog());
                                 } else if (event.getPack().getEffect() != null) {
                                     closed[0] = true;
@@ -90,7 +91,7 @@ public class DisplayMenu extends DialogDisplay {
         // 异步计算
         Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
             // 对话
-            inventory.setItem(slotMessage, toItem(MaterialControl.fromString(dialogPack.getConfig().getOrDefault("item", "WRITABLE_BOOK")), dialogPack.getText()));
+            inventory.setItem(slotMessage, toItem(MaterialControl.fromString(dialogPack.getConfig().getOrDefault("item", "BOOK")), dialogPack.getText()));
             List<DialogPack> replies = Lists.newArrayList();
             // 条件
             for (int i = 0; i < slotReply.length && i < dialogPack.getReply().size(); i++) {

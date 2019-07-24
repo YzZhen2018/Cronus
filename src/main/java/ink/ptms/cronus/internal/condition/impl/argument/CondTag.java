@@ -27,7 +27,7 @@ public class CondTag extends Condition {
 
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
-        return negative == player.getScoreboardTags().contains(tag);
+        return negative != player.getScoreboardTags().contains(tag);
     }
 
     @Override

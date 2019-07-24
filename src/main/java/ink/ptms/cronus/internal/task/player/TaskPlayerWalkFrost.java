@@ -33,12 +33,14 @@ public class TaskPlayerWalkFrost extends Countable<EntityBlockFormEvent> {
 
     @Override
     public String toString() {
-        return "TaskPlayerFrostWalk{" +
+        return "TaskPlayerWalkFrost{" +
                 "count=" + count +
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

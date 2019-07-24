@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "quest.completed", pattern = "quest\\.complete(d)?\\.(?<quest>.+)", example = "quest.completed.[quest]")
+@Cond(name = "quest.completed", pattern = "quest\\.complete(d)? (?<quest>.+)", example = "quest.completed [quest]")
 public class CondQuestCompleted extends CondBoolean {
 
     private String quest;
@@ -33,9 +33,9 @@ public class CondQuestCompleted extends CondBoolean {
     @Override
     public String translate() {
         if (!negative) {
-            return TLocale.asString("translate-condition-quest-completed0");
+            return TLocale.asString("translate-condition-quest-completed0", quest);
         } else {
-            return TLocale.asString("translate-condition-quest-completed1");
+            return TLocale.asString("translate-condition-quest-completed1", quest);
         }
     }
 

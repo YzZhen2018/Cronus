@@ -9,15 +9,15 @@ import org.bukkit.entity.Player;
  * @Author 坏黑
  * @Since 2019-07-01 14:34
  */
-public class BookContent extends TaskText {
+public class TextTitle extends TaskText {
 
-    public BookContent(Player player, BuilderTaskData builderTaskData) {
+    public TextTitle(Player player, BuilderTaskData builderTaskData) {
         super(player, builderTaskData);
     }
 
     @Override
     public String getDisplay() {
-        return "书本内容";
+        return "书本标题";
     }
 
     @Override

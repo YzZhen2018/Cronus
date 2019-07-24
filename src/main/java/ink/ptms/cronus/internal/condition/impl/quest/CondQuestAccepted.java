@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
  * @Author 坏黑
  * @Since 2019-06-17 20:21
  */
-@Cond(name = "quest.accepted", pattern = "quest\\.accept(ed)?\\.(?<quest>.+)", example = "quest.accepted.[quest]")
+@Cond(name = "quest.accepted", pattern = "quest\\.accept(ed)? (?<quest>.+)", example = "quest.accepted [quest]")
 public class CondQuestAccepted extends CondBoolean {
 
     private String quest;
@@ -33,9 +33,9 @@ public class CondQuestAccepted extends CondBoolean {
     @Override
     public String translate() {
         if (!negative) {
-            return TLocale.asString("translate-condition-quest-accepted0");
+            return TLocale.asString("translate-condition-quest-accepted0", quest);
         } else {
-            return TLocale.asString("translate-condition-quest-accepted1");
+            return TLocale.asString("translate-condition-quest-accepted1", quest);
         }
     }
 

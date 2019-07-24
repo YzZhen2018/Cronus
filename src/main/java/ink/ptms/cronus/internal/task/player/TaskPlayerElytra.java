@@ -32,12 +32,14 @@ public class TaskPlayerElytra extends Countable<PlayerMoveEvent> {
 
     @Override
     public String toString() {
-        return "TaskPlayerWalk{" +
+        return "TaskPlayerElytra{" +
                 "count=" + count +
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

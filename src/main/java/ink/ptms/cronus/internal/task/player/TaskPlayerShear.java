@@ -43,13 +43,16 @@ public class TaskPlayerShear extends Countable<PlayerShearEntityEvent> {
     @Override
     public String toString() {
         return "TaskPlayerShear{" +
-                "count=" + count +
-                ", entity=" + entity +
+                "entity=" + entity +
                 ", item=" + item +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

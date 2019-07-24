@@ -43,7 +43,9 @@ public class TaskPlayerPortalEnter extends Countable<EntityPortalEnterEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

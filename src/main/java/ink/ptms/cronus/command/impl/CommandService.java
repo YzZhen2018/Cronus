@@ -15,7 +15,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-06-10 20:26
  */
-@BaseCommand(name = "CronusService", aliases = "cs", permission = "*")
+@BaseCommand(name = "CronusService", aliases = {"cService", "cs"}, permission = "*")
 public class CommandService extends Command {
 
     @SubCommand

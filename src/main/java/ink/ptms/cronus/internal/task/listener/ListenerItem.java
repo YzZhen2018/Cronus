@@ -2,6 +2,7 @@ package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.item.*;
+import ink.ptms.cronus.internal.task.player.total.TaskItemDamage;
 import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Furnace;
@@ -14,10 +15,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerPickupArrowEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.*;
 
 import java.util.List;
 
@@ -31,6 +29,16 @@ public class ListenerItem implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PlayerItemConsumeEvent e) {
         CronusAPI.stageHandle(e.getPlayer(), e, TaskItemConsume.class);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerItemBreakEvent e) {
+        CronusAPI.stageHandle(e.getPlayer(), e, TaskItemBreak.class);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(PlayerItemDamageEvent e) {
+        CronusAPI.stageHandle(e.getPlayer(), e, TaskItemDamage.class);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -61,7 +69,7 @@ public class ListenerItem implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(PrepareAnvilEvent e) {
         if (!e.getViewers().isEmpty()) {
-            CronusAPI.stageHandle((Player) e.getViewers().get(0), e, TaskItemConsume.class);
+            CronusAPI.stageHandle((Player) e.getViewers().get(0), e, TaskItemRepair.class);
         }
     }
 

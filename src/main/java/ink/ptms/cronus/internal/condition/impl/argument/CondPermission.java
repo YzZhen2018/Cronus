@@ -27,7 +27,7 @@ public class CondPermission extends Condition {
 
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
-        return negative == player.hasPermission(permission);
+        return negative != player.hasPermission(permission);
     }
 
     @Override

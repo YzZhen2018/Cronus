@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityBreedEvent;
  * @Author 坏黑
  * @Since 2019-06-24 15:32
  */
-@TListener(version = ">=11000")
+@TListener(version = ">10900")
 public class v1_10 implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

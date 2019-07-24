@@ -38,7 +38,8 @@ public class CronusLoader {
             for (Class pClass : classes) {
                 // task
                 if (pClass.isAnnotationPresent(Task.class)) {
-                    Cronus.getCronusService().getRegisteredTask().put(((Task) pClass.getAnnotation(Task.class)).name(), new TaskCache(pClass));
+                    Task task = (Task) pClass.getAnnotation(Task.class);
+                    Cronus.getCronusService().getRegisteredTask().put(task.name(), new TaskCache(pClass));
                 }
                 // condition
                 else if (pClass.isAnnotationPresent(Cond.class)) {

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-06-18 19:43
  */
-@BaseCommand(name = "CronusBuilderDialog", aliases = {"cbd"}, permission = "*")
+@BaseCommand(name = "CronusBuilderDialog", aliases = {"cBuilderDialog", "cbDialog", "cbd"}, permission = "*")
 public class CommandBuilderDialog extends CronusCommand {
 
     @SubCommand

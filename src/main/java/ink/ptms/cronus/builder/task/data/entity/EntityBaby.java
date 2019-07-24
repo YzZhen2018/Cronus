@@ -1,4 +1,4 @@
-package ink.ptms.cronus.builder.task.entity;
+package ink.ptms.cronus.builder.task.data.entity;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.BuilderTaskData;

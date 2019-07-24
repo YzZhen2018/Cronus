@@ -47,15 +47,18 @@ public class TaskPlayerTrade extends Countable<InventoryClickEvent> {
     @Override
     public String toString() {
         return "TaskPlayerTrade{" +
-                "count=" + count +
-                ", item=" + item +
+                "item=" + item +
                 ", item1=" + item1 +
                 ", item2=" + item2 +
                 ", result=" + result +
-                ", action=" + action +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

@@ -43,6 +43,10 @@ public class BukkitParser {
         return new PotionEffect(String.valueOf(str));
     }
 
+    public static TeleportCause toTeleportCause(Object str) {
+        return new TeleportCause(String.valueOf(str));
+    }
+
     public static Block toBlock(Object str) {
         return new Block(String.valueOf(str));
     }

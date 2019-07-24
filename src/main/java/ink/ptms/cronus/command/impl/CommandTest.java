@@ -20,16 +20,22 @@ import io.izzel.taboolib.util.book.BookFormatter;
 import io.izzel.taboolib.util.book.builder.BookBuilder;
 import io.izzel.taboolib.util.book.builder.PageBuilder;
 import io.izzel.taboolib.util.chat.ComponentSerializer;
+import io.izzel.taboolib.util.lite.Numbers;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * @Author 坏黑
  * @Since 2019-05-31 22:10
  */
-@BaseCommand(name = "CronusTest", aliases = {"ct"}, permission = "*")
+@BaseCommand(name = "CronusTest", aliases = {"cTest", "ct"}, permission = "*")
 public class CommandTest extends CronusCommand {
 
     @SubCommand
@@ -192,6 +198,36 @@ public class CommandTest extends CronusCommand {
     };
 
     @SubCommand
+    BaseSubCommand firework = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "在玩家位置播放烟花";
+        }
+
+        @Override
+        public Argument[] getArguments() {
+            return new Argument[] {
+                    new Argument("玩家"), new Argument("-a", false)
+            };
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            Player player = Bukkit.getPlayerExact(args[0]);
+            if (player == null) {
+                error(sender, "玩家 §7" + args[0] + " §c不在线.");
+                return;
+            }
+            Firework firework = Utils.spawnFirework(player.getLocation());
+            firework.setMetadata("no_damage", new FixedMetadataValue(Cronus.getPlugin(), 1));
+            if (args.length > 1 && args[1].equalsIgnoreCase("-a")) {
+                Bukkit.getScheduler().runTaskLater(Cronus.getInst(), firework::detonate, 1);
+            }
+        }
+    };
+
+    @SubCommand
     BaseSubCommand enchants = new BaseSubCommand() {
 
         @Override
@@ -205,12 +241,68 @@ public class CommandTest extends CronusCommand {
             TellrawJson json = TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7附魔: §f");
             int i = 1;
             for (Enchantment enchantment : enchantments) {
-                json.append("§f" + enchantment.getName()).hoverText("§7点击复制").clickSuggest(enchantment.getName());
-                if (i++ < enchantments.length) {
-                    json.append("§8, ");
+                if (enchantment != null) {
+                    json.append("§f" + enchantment.getName()).hoverText("§7点击复制").clickSuggest(enchantment.getName());
+                    if (i++ < enchantments.length) {
+                        json.append("§8, ");
+                    }
                 }
             }
             json.send(sender);
+        }
+
+        @Override
+        public CommandType getType() {
+            return CommandType.PLAYER;
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand potions = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "列出所有效果类型";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            PotionEffectType[] potions = PotionEffectType.values();
+            TellrawJson json = TellrawJson.create().append("§7§l[§f§lCronus§7§l] §7效果: §f");
+            int i = 1;
+            for (PotionEffectType potion : potions) {
+                if (potion != null) {
+                    json.append("§f" + potion.getName()).hoverText("§7点击复制").clickSuggest(potion.getName());
+                    if (i++ < potions.length) {
+                        json.append("§8, ");
+                    }
+                }
+            }
+            json.send(sender);
+        }
+
+        @Override
+        public CommandType getType() {
+            return CommandType.PLAYER;
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand location = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "打印当前坐标";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            Location location = ((Player) sender).getLocation();
+            String str = location.getWorld().getName() + "," + Numbers.format(location.getX()) + "," + Numbers.format(location.getY()) + "," + Numbers.format(location.getZ()) + "," + Numbers.format((double) location.getYaw()) + "," + Numbers.format((double) location.getPitch());
+            TellrawJson.create()
+                    .append("§7§l[§f§lCronus§7§l] §7坐标: §f")
+                    .append(str).hoverText("§f点击复制").clickSuggest(str)
+                    .send(sender);
         }
 
         @Override

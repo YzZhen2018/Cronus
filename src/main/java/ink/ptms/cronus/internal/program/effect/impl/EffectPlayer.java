@@ -29,7 +29,7 @@ public class EffectPlayer extends Effect {
 
     @Override
     public String pattern() {
-        return "player\\.(?<action>\\S+) (?<symbol>\\S+)[ ]?(?<value>.+)";
+        return "player\\.(?<action>\\S+) (?<symbol>\\S+) (?<value>.+)";
     }
 
     @Override

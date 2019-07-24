@@ -58,6 +58,10 @@ public class PotionEffect {
             return potionType.equals(this.potionType) && expression.isSelect(level);
         }
 
+        public String asString() {
+            return potionType.getName() + " " + expression.translate();
+        }
+
         @Override
         public String toString() {
             return "Point{" +
@@ -65,6 +69,14 @@ public class PotionEffect {
                     ", expression=" + expression +
                     '}';
         }
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public String asString() {
+        return points.stream().map(Point::asString).collect(Collectors.joining(", "));
     }
 
     @Override

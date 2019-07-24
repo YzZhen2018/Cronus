@@ -39,7 +39,7 @@ public class CondPlaceholder extends Condition {
     public boolean check(Player player, DataQuest quest, Event event) {
         String v = TLocale.Translate.setPlaceholders(player, placeholder);
         if (booleanMode) {
-            return negative == Numbers.getBoolean(v);
+            return negative != Numbers.getBoolean(v);
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
         }

@@ -113,6 +113,9 @@ public class ItemStack {
     }
 
     public String asString() {
+        if (!Items.isNull(bukkitItem)) {
+            return Items.getName(bukkitItem);
+        }
         StringBuilder builder = new StringBuilder();
         if (type != null) {
             builder.append(type);

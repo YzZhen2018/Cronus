@@ -38,12 +38,15 @@ public class TaskPlayerTame extends Countable<EntityTameEvent> {
     @Override
     public String toString() {
         return "TaskPlayerTame{" +
-                "count=" + count +
-                ", entity=" + entity +
-                ", action=" + action +
+                "entity=" + entity +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

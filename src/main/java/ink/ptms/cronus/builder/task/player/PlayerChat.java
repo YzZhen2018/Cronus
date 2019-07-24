@@ -1,9 +1,8 @@
 package ink.ptms.cronus.builder.task.player;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.text.BookContent;
-import ink.ptms.cronus.builder.task.data.text.BookPage;
-import ink.ptms.cronus.builder.task.data.text.BookTitle;
+import ink.ptms.cronus.builder.task.data.Count;
+import ink.ptms.cronus.builder.task.data.text.TextMessage;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.player.TaskPlayerChat;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -20,14 +19,13 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerChat extends TaskEntry {
 
     public PlayerChat() {
-        objective.add(BookTitle.class);
-        objective.add(BookContent.class);
-        objective.add(BookPage.class);
+        objective.add(Count.class);
+        objective.add(TextMessage.class);
     }
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(MaterialControl.NAME_TAG.parseMaterial()).name("§f玩家聊天").lore("", "§7点击选择").flags(ItemFlag.values()).build();
+        return new ItemBuilder(MaterialControl.NAME_TAG.parseMaterial()).name("§f聊天").lore("", "§7点击选择").flags(ItemFlag.values()).build();
     }
 
     @Override

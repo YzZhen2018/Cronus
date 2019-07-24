@@ -67,7 +67,7 @@ public class QuestItem implements Service, Listener {
         items.stream().filter(item -> item.getItem().isSimilar(dropItem)).map(item -> true).forEach(e::setCancelled);
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler
     public void e(PlayerInteractEvent e) {
         items.stream().filter(item -> item.getSlot() == e.getPlayer().getInventory().getHeldItemSlot() && item.getItem().isSimilar(e.getPlayer().getItemInHand())).findFirst().ifPresent(item -> {
             e.setCancelled(true);
@@ -82,11 +82,11 @@ public class QuestItem implements Service, Listener {
     public void e(InventoryClickEvent e) {
         for (QuestItemData item : items) {
             // 键盘移动
-            if (e.getClick() == ClickType.NUMBER_KEY && item.getSlot() == e.getHotbarButton() && item.getItem().isSimilar(e.getWhoClicked().getInventory().getItem(e.getHotbarButton()))) {
+            if (e.getClick() == ClickType.NUMBER_KEY && item.getItem().isSimilar(e.getWhoClicked().getInventory().getItem(e.getHotbarButton()))) {
                 e.setCancelled(true);
             }
             // 鼠标点击
-            else if (item.getSlot() == e.getRawSlot() && item.getItem().isSimilar(e.getCurrentItem())) {
+            else if (item.getItem().isSimilar(e.getCurrentItem())) {
                 e.setCancelled(true);
                 // 如果启用则执行动作
                 if (item.isEnable()) {

@@ -41,7 +41,7 @@ public class CondFunction extends Condition {
     public boolean check(Player player, DataQuest quest, Event event) {
         String v = FunctionParser.parseAll(new QuestProgram(player, quest), function);
         if (booleanMode) {
-            return negative == Numbers.getBoolean(v);
+            return negative != Numbers.getBoolean(v);
         } else {
             return expression.getNumber().isNumber() ? expression.isSelect(NumberConversions.toDouble(v)) : expression.isSelect(v);
         }

@@ -22,7 +22,7 @@ public abstract class CondBoolean extends Condition {
 
     @Override
     public boolean check(Player player, DataQuest quest, Event event) {
-        return negative == getBoolean(player, quest, event);
+        return negative != getBoolean(player, quest, event);
     }
 
     abstract public boolean getBoolean(Player player, DataQuest quest, Event event);

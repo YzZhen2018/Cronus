@@ -46,7 +46,9 @@ public class TaskPlayerPortalExit extends Countable<EntityPortalExitEvent> {
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

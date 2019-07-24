@@ -35,7 +35,7 @@ public class TaskPlayerFish extends Countable<PlayerFishEvent> {
         super.init(data);
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
         entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
-        state = data.containsKey("state") ? BukkitParser.toFishState(data.get("cause")) : null;
+        state = data.containsKey("state") ? BukkitParser.toFishState(data.get("state")) : null;
     }
 
     @Override
@@ -45,12 +45,18 @@ public class TaskPlayerFish extends Countable<PlayerFishEvent> {
 
     @Override
     public String toString() {
-        return "TaskItemConsume{" +
-                "count=" + count +
+        return "TaskPlayerFish{" +
+                "entity=" + entity +
                 ", item=" + item +
-                ", action=" + action +
+                ", state=" + state +
+                ", count=" + count +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
+                ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

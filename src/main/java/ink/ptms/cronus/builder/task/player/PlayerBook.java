@@ -1,9 +1,10 @@
 package ink.ptms.cronus.builder.task.player;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
-import ink.ptms.cronus.builder.task.data.text.BookContent;
-import ink.ptms.cronus.builder.task.data.text.BookPage;
-import ink.ptms.cronus.builder.task.data.text.BookTitle;
+import ink.ptms.cronus.builder.task.data.Count;
+import ink.ptms.cronus.builder.task.data.text.TextContent;
+import ink.ptms.cronus.builder.task.data.expression.ExpressionPage;
+import ink.ptms.cronus.builder.task.data.text.TextTitle;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.task.player.TaskPlayerBook;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -20,9 +21,10 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerBook extends TaskEntry {
 
     public PlayerBook() {
-        objective.add(BookTitle.class);
-        objective.add(BookContent.class);
-        objective.add(BookPage.class);
+        objective.add(Count.class);
+        objective.add(TextTitle.class);
+        objective.add(TextContent.class);
+        objective.add(ExpressionPage.class);
     }
 
     @Override

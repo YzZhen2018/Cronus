@@ -39,11 +39,14 @@ public class TaskPlayerRide extends Countable<PlayerMoveEvent> {
     @Override
     public String toString() {
         return "TaskPlayerRide{" +
-                "count=" + count +
+                "entity=" + entity +
+                ", count=" + count +
                 ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
                 ", action=" + action +
                 '}';
     }

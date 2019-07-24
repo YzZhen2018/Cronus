@@ -2,12 +2,18 @@ package ink.ptms.cronus.util;
 
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.util.Strings;
+import io.izzel.taboolib.util.lite.Numbers;
 import io.izzel.taboolib.util.lite.cooldown.Cooldown;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Optional;
@@ -19,7 +25,25 @@ import java.util.Optional;
 public class Utils {
 
     @TInject
-    static Cooldown actionCooldown = new Cooldown("Cronus:Action", 100);
+    private static Cooldown actionCooldown = new Cooldown("Cronus:Action", 100);
+    private static Color[] colors = new Color[] {
+            Color.WHITE,
+            Color.SILVER,
+            Color.GRAY,
+            Color.BLACK,
+            Color.RED,
+            Color.MAROON,
+            Color.YELLOW,
+            Color.OLIVE,
+            Color.LIME,
+            Color.OLIVE,
+            Color.AQUA,
+            Color.TEAL,
+            Color.NAVY,
+            Color.FUCHSIA,
+            Color.PURPLE,
+            Color.ORANGE
+    };
 
     public static boolean isActionCooldown(CommandSender sender) {
         return actionCooldown.isCooldown(sender.getName(), 0);
@@ -93,5 +117,19 @@ public class Utils {
         } catch (Throwable ignored) {
         }
         return false;
+    }
+
+    public static Firework spawnFirework(Location location) {
+        Firework entity = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
+        FireworkMeta fireworkMeta = entity.getFireworkMeta();
+        fireworkMeta.setPower(1);
+        fireworkMeta.addEffect(FireworkEffect.builder()
+                .flicker(Numbers.getRandom().nextBoolean())
+                .trail(Numbers.getRandom().nextBoolean())
+                .with(FireworkEffect.Type.values()[Numbers.getRandom().nextInt(FireworkEffect.Type.values().length)])
+                .withColor(colors[Numbers.getRandom().nextInt(colors.length)])
+                .build());
+        entity.setFireworkMeta(fireworkMeta);
+        return entity;
     }
 }

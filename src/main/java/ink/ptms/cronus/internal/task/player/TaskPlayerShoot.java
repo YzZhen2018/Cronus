@@ -48,10 +48,13 @@ public class TaskPlayerShoot extends Countable<EntityShootBowEvent> {
                 ", projectile=" + projectile +
                 ", force=" + force +
                 ", count=" + count +
-                ", action=" + action +
+                ", id='" + id + '\'' +
                 ", config=" + config +
                 ", condition=" + condition +
+                ", conditionRestart=" + conditionRestart +
                 ", guide=" + guide +
+                ", status='" + status + '\'' +
+                ", action=" + action +
                 '}';
     }
 }

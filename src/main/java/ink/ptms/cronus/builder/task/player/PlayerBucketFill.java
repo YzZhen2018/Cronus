@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.task.player;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
+import ink.ptms.cronus.builder.task.data.Count;
 import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.builder.task.data.Location;
 import ink.ptms.cronus.builder.task.data.block.BlockBucket;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerBucketFill extends TaskEntry {
 
     public PlayerBucketFill() {
+        objective.add(Count.class);
         objective.add(BlockBucket.class);
         objective.add(Location.class);
         objective.add(Item.class);
@@ -27,7 +29,7 @@ public class PlayerBucketFill extends TaskEntry {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(MaterialControl.BUCKET.parseMaterial()).name("§f水桶填充").lore("", "§7点击选择").flags(ItemFlag.values()).build();
+        return new ItemBuilder(MaterialControl.WATER_BUCKET.parseMaterial()).name("§f水桶填充").lore("", "§7点击选择").flags(ItemFlag.values()).build();
     }
 
     @Override

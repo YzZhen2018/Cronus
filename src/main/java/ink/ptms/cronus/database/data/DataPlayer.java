@@ -32,10 +32,13 @@ public class DataPlayer implements TSerializable {
     // 全局数据
     private YamlConfiguration dataGlobal = new YamlConfiguration();
     // 任务数据
+    @TSerializeMap
     private Map<String, DataQuest> quest = Maps.newConcurrentMap();
     // 任务完成记录
+    @TSerializeMap
     private Map<String, Long> questCompleted = Maps.newConcurrentMap();
     // 任务计分板隐藏
+    @TSerializeCollection
     private List<String> questHide = Lists.newArrayList();
 
     public DataPlayer(Player player) {
@@ -140,12 +143,6 @@ public class DataPlayer implements TSerializable {
     @Override
     public void read(String fieldName, String value) {
         switch (fieldName) {
-            case "quest":
-                TSerializer.readMap(quest, value, TSerializerElementGeneral.STRING.getSerializer(), DataQuestSerializer.INSTANCE);
-                break;
-            case "questCompleted":
-                TSerializer.readMap(questCompleted, value, TSerializerElementGeneral.STRING, TSerializerElementGeneral.LONG);
-                break;
             case "dataGlobal":
                 try {
                     dataGlobal.loadFromString(value);
@@ -159,10 +156,6 @@ public class DataPlayer implements TSerializable {
     @Override
     public String write(String fieldName, Object value) {
         switch (fieldName) {
-            case "quest":
-                return TSerializer.writeMap(quest, TSerializerElementGeneral.STRING.getSerializer(), DataQuestSerializer.INSTANCE);
-            case "questCompleted":
-                return TSerializer.writeMap(questCompleted, TSerializerElementGeneral.STRING, TSerializerElementGeneral.LONG);
             case "dataGlobal":
                 return dataGlobal.saveToString();
         }

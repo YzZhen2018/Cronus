@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @Author 坏黑
  * @Since 2019-06-18 19:43
  */
-@BaseCommand(name = "CronusBuilder", aliases = {"cb"}, permission = "*")
+@BaseCommand(name = "CronusBuilder", aliases = {"cBuilder", "cb"}, permission = "*")
 public class CommandBuilder extends CronusCommand {
 
     @SubCommand

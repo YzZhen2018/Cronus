@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.task.player;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
+import ink.ptms.cronus.builder.task.data.Count;
 import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.builder.task.data.Location;
 import ink.ptms.cronus.builder.task.data.block.BlockBucket;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerBucketEmpty extends TaskEntry {
 
     public PlayerBucketEmpty() {
+        objective.add(Count.class);
         objective.add(BlockBucket.class);
         objective.add(Location.class);
         objective.add(Item.class);

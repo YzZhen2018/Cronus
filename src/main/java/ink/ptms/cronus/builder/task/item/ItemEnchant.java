@@ -1,6 +1,7 @@
 package ink.ptms.cronus.builder.task.item;
 
 import ink.ptms.cronus.builder.task.TaskEntry;
+import ink.ptms.cronus.builder.task.data.Count;
 import ink.ptms.cronus.builder.task.data.Enchant;
 import ink.ptms.cronus.builder.task.data.Item;
 import ink.ptms.cronus.builder.task.data.location.LocationEnchant;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class ItemEnchant extends TaskEntry {
 
     public ItemEnchant() {
+        objective.add(Count.class);
         objective.add(Item.class);
         objective.add(Enchant.class);
         objective.add(LocationEnchant.class);

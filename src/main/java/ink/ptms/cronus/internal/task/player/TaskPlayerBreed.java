@@ -17,7 +17,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-05-28 17:21
  */
-@Task(name = "player_breed")
+@Task(name = "player_breed", version = ">=11000")
 public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
 
     private int count;
