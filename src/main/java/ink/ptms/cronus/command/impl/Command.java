@@ -142,6 +142,10 @@ public class Command extends CronusCommand {
                 error(sender, "任务 &7" + args[1] + " &c无效.");
                 return;
             }
+            if (!CronusAPI.isValid(quest)) {
+                error(sender, "任务 &7" + args[1] + " &c缺少必要配置.");
+                return;
+            }
             DataPlayer playerData = CronusAPI.getData(player);
             if (playerData.getQuest().containsKey(args[1]) && !playerData.isQuestCompleted(quest.getId())) {
                 error(sender, "玩家 &7" + args[0] + " &c已接受该任务.");

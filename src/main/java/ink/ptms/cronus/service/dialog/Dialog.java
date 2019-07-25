@@ -48,9 +48,10 @@ public class Dialog implements Service, Listener {
     @EventHandler
     public void e(CronusReloadEvent e) {
         long time = System.currentTimeMillis();
-        folder = new File(Cronus.getInst().getDataFolder(), "dialog");
+        // 老数据迁移
+        folder = new File(Cronus.getInst().getDataFolder(), "dialogs");
         if (!folder.exists()) {
-            Cronus.getInst().saveResource("dialog/def.yml", true);
+            Cronus.getInst().saveResource("dialogs/def.yml", true);
         }
         dialogs.clear();
         loadDialog(folder);
@@ -88,7 +89,11 @@ public class Dialog implements Service, Listener {
             for (String id : yaml.getKeys(false)) {
                 ConfigurationSection config = yaml.getConfigurationSection(id);
                 try {
-                    dialogs.add(new DialogGroup(config));
+                    if (config.getKeys(false).isEmpty()) {
+                        logger.error("Dialog " + id + " is empty.");
+                    } else {
+                        dialogs.add(new DialogGroup(config));
+                    }
                 } catch (Throwable t) {
                     logger.error("Dialog " + id + " failed to load.");
                     t.printStackTrace();

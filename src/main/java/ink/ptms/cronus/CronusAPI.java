@@ -5,6 +5,7 @@ import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.event.CronusTaskNextEvent;
 import ink.ptms.cronus.event.CronusTaskSuccessEvent;
+import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.program.Action;
@@ -138,5 +139,22 @@ public class CronusAPI {
             playerData.push();
         }
         mirror.stop();
+    }
+
+    /**
+     * 验证任务是否可以正常运行
+     */
+    public static boolean isValid(Quest quest) {
+        // 无任务阶段
+        if (quest.getStage().isEmpty()) {
+            return false;
+        }
+        QuestStage stage = quest.getStage().get(0);
+        // 无阶段内容
+        if (stage.getContent().isEmpty() && stage.getContentCompleted().isEmpty() && stage.getContentGlobal().isEmpty()) {
+            return false;
+        }
+        // 无阶段条目
+        return !stage.getTask().isEmpty();
     }
 }

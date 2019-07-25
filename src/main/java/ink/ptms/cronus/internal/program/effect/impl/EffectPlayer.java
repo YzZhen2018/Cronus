@@ -64,6 +64,7 @@ public class EffectPlayer extends Effect {
                     }
                     break;
                 }
+                case "heart":
                 case "health": {
                     double v = NumberConversions.toDouble(value);
                     switch (symbol) {
@@ -82,7 +83,8 @@ public class EffectPlayer extends Effect {
                     }
                     break;
                 }
-                case "food": {
+                case "food":
+                case "hunger": {
                     int v = NumberConversions.toInt(value);
                     switch (symbol) {
                         case "+":
@@ -100,6 +102,7 @@ public class EffectPlayer extends Effect {
                     }
                     break;
                 }
+                case "xp":
                 case "exp":
                 case "experience": {
                     int v = NumberConversions.toInt(value);
@@ -137,7 +140,9 @@ public class EffectPlayer extends Effect {
                     }
                     break;
                 }
-                case "money": {
+                case "$":
+                case "money":
+                case "balance": {
                     int v = NumberConversions.toInt(value);
                     switch (symbol) {
                         case "+":
