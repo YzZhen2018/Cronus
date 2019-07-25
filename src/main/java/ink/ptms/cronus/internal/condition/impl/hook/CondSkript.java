@@ -1,7 +1,7 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.hook.SkriptHook;
+import ink.ptms.cronus.internal.hook.SkriptHook;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import io.izzel.taboolib.module.locale.TLocale;

@@ -1,4 +1,4 @@
-package ink.ptms.cronus.asm;
+package ink.ptms.cronus.internal.asm;
 
 import ink.ptms.cronus.Cronus;
 import io.izzel.taboolib.module.inject.TFunction;
@@ -22,7 +22,7 @@ public abstract class AsmHandler {
 
     static void init() {
         try {
-            AsmHandler.impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
+            AsmHandler.impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.internal.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
         } catch (Throwable t) {
             t.printStackTrace();
         }

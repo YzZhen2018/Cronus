@@ -1,7 +1,7 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import ink.ptms.cronus.hook.WorldEditHook;
+import ink.ptms.cronus.internal.hook.WorldEditHook;
 import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.program.QuestProgram;

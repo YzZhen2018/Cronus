@@ -1,4 +1,4 @@
-package ink.ptms.cronus.asm;
+package ink.ptms.cronus.internal.asm;
 
 import com.google.common.collect.Lists;
 import io.izzel.taboolib.Version;

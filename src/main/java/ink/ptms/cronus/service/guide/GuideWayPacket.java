@@ -1,7 +1,7 @@
 package ink.ptms.cronus.service.guide;
 
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.asm.AsmHandler;
+import ink.ptms.cronus.internal.asm.AsmHandler;
 import io.izzel.taboolib.module.lite.SimpleReflection;
 import io.izzel.taboolib.module.packet.TPacketListener;
 import org.bukkit.entity.Entity;

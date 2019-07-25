@@ -1,4 +1,4 @@
-package ink.ptms.cronus.hook;
+package ink.ptms.cronus.internal.hook;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalConfiguration;

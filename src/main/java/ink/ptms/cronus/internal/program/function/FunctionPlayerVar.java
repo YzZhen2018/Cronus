@@ -4,24 +4,23 @@ import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
-import io.izzel.taboolib.TabooLibAPI;
 
 /**
  * @Author 坏黑
- * @Since 2019-05-12 15:24
+ * @Since 2019-05-11 13:16
  */
 @Auto
-public class FunctionMoney extends Function {
+public class FunctionPlayerVar extends Function {
 
     @Override
     public String getName() {
-        return "money";
+        return "player.val";
     }
 
     @Override
     public Object eval(Program program, String... args) {
         if (program instanceof QuestProgram) {
-            return TabooLibAPI.getPluginBridge().economyLook(((QuestProgram) program).getPlayer());
+            return ((QuestProgram) program).getDataPlayer().getDataTemp().get(args[0], args.length > 1 ? args[1] : "<Null.Var>");
         }
         return "<Non-Quest>";
     }

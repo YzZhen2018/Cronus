@@ -1,6 +1,6 @@
 package ink.ptms.cronus.internal.task.player;
 
-import ink.ptms.cronus.asm.AsmHandler;
+import ink.ptms.cronus.internal.asm.AsmHandler;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
