@@ -13,7 +13,7 @@ import java.util.Base64;
  * @Author 坏黑
  * @Since 2019-06-17 23:44
  */
-public class SkriptHook {
+public class HookSkript {
 
     private static String currentEventName;
     private static Class<? extends Event>[] currentEvents;

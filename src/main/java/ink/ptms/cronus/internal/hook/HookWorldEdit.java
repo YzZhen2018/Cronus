@@ -30,7 +30,7 @@ import java.io.IOException;
  * @Author 坏黑
  * @Since 2019-06-19 15:17
  */
-public class WorldEditHook {
+public class HookWorldEdit {
 
     @TInject
     private static TLogger logger;

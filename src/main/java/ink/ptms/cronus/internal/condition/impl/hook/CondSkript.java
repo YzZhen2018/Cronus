@@ -1,7 +1,7 @@
 package ink.ptms.cronus.internal.condition.impl.hook;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.hook.SkriptHook;
+import ink.ptms.cronus.internal.hook.HookSkript;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import io.izzel.taboolib.module.locale.TLocale;
@@ -23,14 +23,14 @@ public class CondSkript extends Condition {
 
     @Override
     public void init(Matcher matcher, String text) {
-        SkriptHook.toggleCurrentEvent(true);
+        HookSkript.toggleCurrentEvent(true);
         try {
             origin = matcher.group("script");
             condition = ch.njol.skript.lang.Condition.parse(matcher.group("script"), null);
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        SkriptHook.toggleCurrentEvent(false);
+        HookSkript.toggleCurrentEvent(false);
     }
 
     @Override

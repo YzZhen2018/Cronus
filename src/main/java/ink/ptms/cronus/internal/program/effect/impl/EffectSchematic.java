@@ -1,7 +1,7 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import ink.ptms.cronus.internal.hook.WorldEditHook;
+import ink.ptms.cronus.internal.hook.HookWorldEdit;
 import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -44,7 +44,7 @@ public class EffectSchematic extends Effect {
     @Override
     public void eval(Program program) {
         if (program instanceof QuestProgram && location.isBukkit()) {
-            WorldEditHook.pasteSchematic(((QuestProgram) program).getPlayer(), name, location.toBukkit(), symbol != null);
+            HookWorldEdit.pasteSchematic(((QuestProgram) program).getPlayer(), name, location.toBukkit(), symbol != null);
         }
     }
 

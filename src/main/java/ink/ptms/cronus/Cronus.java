@@ -1,10 +1,12 @@
 package ink.ptms.cronus;
 
+import ink.ptms.cronus.internal.hook.HookPlaceholderAPI;
 import io.izzel.taboolib.module.config.TConfig;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
 import io.izzel.taboolib.util.Strings;
 import io.izzel.taboolib.util.lite.Catchers;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
@@ -21,10 +23,16 @@ public class Cronus extends CronusPlugin {
     private static Cronus inst;
     private static CronusLoader cronusLoader = new CronusLoader();
     private static CronusService cronusService = new CronusService();
+    private static CronusVersion cronusVersion;
     @TInject("config.yml")
     private static TConfig conf;
     @TInject
     private static TLogger logger;
+
+    @Override
+    public void onLoading() {
+        cronusVersion = CronusVersion.fromString(this.getDescription().getVersion());
+    }
 
     @Override
     public void onStarting() {
@@ -45,6 +53,10 @@ public class Cronus extends CronusPlugin {
     @Override
     public void onActivated() {
         cronusLoader.start();
+        // placeholder hook
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            PlaceholderAPI.registerPlaceholderHook(this, new HookPlaceholderAPI());
+        }
     }
 
     public void reloadQuest() {
@@ -67,6 +79,10 @@ public class Cronus extends CronusPlugin {
 
     public static CronusService getCronusService() {
         return cronusService;
+    }
+
+    public static CronusVersion getCronusVersion() {
+        return cronusVersion;
     }
 
     public static TConfig getConf() {
