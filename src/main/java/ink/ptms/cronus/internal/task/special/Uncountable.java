@@ -4,6 +4,7 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.util.StringExpression;
 import ink.ptms.cronus.util.Utils;
+import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -30,12 +31,12 @@ public abstract class Uncountable<C extends Event> extends QuestTask<C> {
 
     @Override
     public boolean isCompleted(DataQuest dataQuest) {
-        return dataQuest.getDataStage().getInt(getId() + ".complete") > 0 || total.isSelect(dataQuest.getDataStage().getInt(getId() + ".total"));
+        return dataQuest.getDataStage().getInt(getId() + ".complete") > 0 || (total == null || total.isSelect(dataQuest.getDataStage().getInt(getId() + ".total")));
     }
 
     @Override
     public void next(Player player, DataQuest dataQuest, C event) {
-        double v = dataQuest.getDataStage().getInt(getId() + ".total") + getCount(player, dataQuest, event);
+        double v = Numbers.format(dataQuest.getDataStage().getDouble(getId() + ".total") + getCount(player, dataQuest, event));
         dataQuest.getDataStage().set(getId() + ".total", Utils.isInt(v) ? NumberConversions.toInt(v) : v);
     }
 
@@ -50,5 +51,13 @@ public abstract class Uncountable<C extends Event> extends QuestTask<C> {
         dataQuest.getDataStage().set(getId() + ".count", 0);
     }
 
+    public double getTotal(DataQuest dataQuest) {
+        return dataQuest.getDataStage().getDouble(getId() + ".total");
+    }
+
     abstract public double getCount(Player player, DataQuest dataQuest, C event);
+
+    public StringExpression getTotal() {
+        return total;
+    }
 }

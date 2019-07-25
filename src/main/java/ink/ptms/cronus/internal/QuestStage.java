@@ -6,6 +6,7 @@ import ink.ptms.cronus.event.CronusInitQuestStageEvent;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.Actionable;
+import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
@@ -27,15 +28,17 @@ public class QuestStage extends Actionable {
     public QuestStage(ConfigurationSection config) {
         this.id = config.getName();
         this.config = config;
-        this.contentGlobal = config.getStringList("content-global");
+        this.contentGlobal = TLocale.Translate.setColored(config.getStringList("content-global"));
         this.conditionRestart = ConditionParser.fromObject(config.get("restart"));
         ConfigurationSection content = config.getConfigurationSection("content");
         if (content != null) {
-            content.getKeys(false).forEach(id -> this.content.add(content.getStringList(id)));
+            content.getKeys(false).forEach(id -> this.content.add(TLocale.Translate.setColored(content.getStringList(id))));
         }
         ConfigurationSection contentCompleted = config.getConfigurationSection("content-completed");
         if (contentCompleted != null) {
-            contentCompleted.getKeys(false).forEach(id -> this.contentCompleted.add(contentCompleted.getStringList(id)));
+            contentCompleted.getKeys(false).forEach(id -> this.contentCompleted.add(TLocale.Translate.setColored(contentCompleted.getStringList(id))));
+        } else {
+            this.contentCompleted.addAll(this.content);
         }
         CronusInitQuestStageEvent.call(this);
     }

@@ -7,6 +7,7 @@ import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
+import io.izzel.taboolib.util.lite.Numbers;
 import io.izzel.taboolib.util.lite.Servers;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
@@ -34,6 +35,14 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
         super(config);
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public double getDamage(DataQuest dataQuest) {
+        return dataQuest.getDataStage().getDouble(getId() + ".damage");
+    }
+
     @Override
     public void init(Map<String, Object> data) {
         damage = NumberConversions.toInt(data.getOrDefault("damage", 1));
@@ -44,7 +53,7 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
 
     @Override
     public boolean isCompleted(DataQuest dataQuest) {
-        return dataQuest.getDataStage().getInt(getId() + ".damage") >= damage;
+        return dataQuest.getDataStage().getDouble(getId() + ".damage") >= damage;
     }
 
     @Override
@@ -62,7 +71,7 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
     @Override
     public void next(Player player, DataQuest dataQuest, Event event) {
         EntityDamageEvent e = ((EntityDamageEvent) event);
-        dataQuest.getDataStage().set(getId() + ".damage", dataQuest.getDataStage().getInt(getId() + ".damage") + e.getDamage());
+        dataQuest.getDataStage().set(getId() + ".damage", Numbers.format(dataQuest.getDataStage().getInt(getId() + ".damage") + e.getDamage()));
     }
 
     @Override

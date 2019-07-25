@@ -6,10 +6,14 @@ import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.event.CronusTaskNextEvent;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.program.QuestProgram;
+import ink.ptms.cronus.internal.task.player.damage.TaskPlayerAttack;
+import ink.ptms.cronus.internal.task.player.damage.TaskPlayerDamaged;
 import ink.ptms.cronus.internal.task.special.Countable;
+import ink.ptms.cronus.internal.task.special.Uncountable;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
+import ink.ptms.cronus.util.StringExpression;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.util.lite.SoundPack;
 import org.bukkit.Bukkit;
@@ -93,8 +97,37 @@ public class Status implements Service, Listener {
                 BossBar newBar = Bukkit.createBossBar(parsed, barColor, barStyle);
                 // 移除老的血条
                 Optional.ofNullable(statusBar.put(player.getName(), newBar)).ifPresent(BossBar::removeAll);
-                // 创建新的血条
-                newBar.setProgress(questTask instanceof Countable ? (double) ((Countable) questTask).getCount(dataQuest) / ((Countable) questTask).getCountMax() : questTask.isCompleted(dataQuest) ? 1 : 0.5);
+                // 直接计数
+                if (questTask instanceof Countable) {
+                    newBar.setProgress((double) ((Countable) questTask).getCount(dataQuest) / ((Countable) questTask).getCountMax());
+                }
+                // 表达式计数
+                else if (questTask instanceof Uncountable) {
+                    StringExpression total = ((Uncountable) questTask).getTotal();
+                    if (total == null) {
+                        newBar.setProgress(questTask.isCompleted(dataQuest) ? 1 : 0.5);
+                    } else {
+                        double totalNumber = total.getNumber().getNumber().doubleValue();
+                        double totalCurrent = ((Uncountable) questTask).getTotal(dataQuest);
+                        if (totalNumber >= 0) {
+                            newBar.setProgress(totalCurrent / totalNumber);
+                        } else {
+                            newBar.setProgress(totalCurrent > 0 ? 0 : ((totalCurrent * -1) / (totalNumber * -1)));
+                        }
+                    }
+                }
+                // 造成伤害
+                else if (questTask instanceof TaskPlayerAttack) {
+                    newBar.setProgress(((TaskPlayerAttack) questTask).getDamage(dataQuest) / ((TaskPlayerAttack) questTask).getDamage());
+                }
+                // 承受伤害
+                else if (questTask instanceof TaskPlayerDamaged) {
+                    newBar.setProgress(((TaskPlayerDamaged) questTask).getDamage(dataQuest) / ((TaskPlayerDamaged) questTask).getDamage());
+                }
+                // 不可计数
+                else {
+                    newBar.setProgress(questTask.isCompleted(dataQuest) ? 1 : 0.5);
+                }
                 newBar.setVisible(true);
                 newBar.addPlayer(player);
                 break;

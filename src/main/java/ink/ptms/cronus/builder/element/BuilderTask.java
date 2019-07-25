@@ -248,7 +248,7 @@ public class BuilderTask extends BuilderQuest {
                 .build());
         inventory.setItem(14, new ItemBuilder(Material.NAME_TAG)
                 .name("§b任务状态显示")
-                .lore("", "§f" + (guideTarget == null ? "无" : status))
+                .lore("", "§f" + (status == null ? "无" : status))
                 .build());
         inventory.setItem(19, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b条目进行动作")

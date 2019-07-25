@@ -121,6 +121,9 @@ public class Scoreboard implements Service, Listener {
                 format.add(FunctionParser.parseAll(new QuestProgram(player, quest),  quest.getQuest().getDisplay()));
             } else if (line.equalsIgnoreCase("{content}")) {
                 QuestStage questStage = quest.getStage();
+                if (questStage == null) {
+                    continue;
+                }
                 for (String content : questStage.getContentGlobal()) {
                     StringBuilder builder = new StringBuilder();
                     for (Variables.Variable variable : new Variables(FunctionParser.parseAll(new QuestProgram(player, quest), content)).find().getVariableList()) {

@@ -33,7 +33,7 @@ public abstract class QuestTask<E extends Event> extends Actionable {
         this.config = config;
         this.condition = ConditionParser.fromObject(config.get("condition"));
         this.conditionRestart = ConditionParser.fromObject(config.get("restart"));
-        this.status = config.getString("status", "<no-status>");
+        this.status = TLocale.Translate.setColored(config.getString("status", "<no-status>"));
         if (config.contains("data")) {
             init(config.getConfigurationSection("data").getValues(false));
         }

@@ -57,17 +57,17 @@ public class CountDamage extends TaskData {
         else if (e.isRightClick()) {
             // -100
             if (e.isShiftClick() && !Utils.isActionCooldown(e.getWhoClicked())) {
-                data = Math.max(NumberConversions.toInt(data) - 100, 1);
+                data = Math.max(NumberConversions.toInt(data) - 100, 10);
             }
             // -10
             else {
-                data = Math.max(NumberConversions.toInt(data) - 10, 1);
+                data = Math.max(NumberConversions.toInt(data) - 10, 10);
             }
         }
     }
 
     @Override
     public Object defaultValue() {
-        return 1;
+        return 10;
     }
 }
