@@ -8,7 +8,9 @@ import ink.ptms.cronus.event.CronusInitQuestBookEvent;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.util.Utils;
+import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import io.izzel.taboolib.module.tellraw.TellrawJson;
 import io.izzel.taboolib.util.Variables;
 import io.izzel.taboolib.util.book.BookFormatter;
@@ -28,6 +30,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class QuestBook {
 
+    @TInject
+    private static TLogger logger;
     private ConfigurationSection config;
     private String id;
     private List<String> head;
@@ -75,14 +79,22 @@ public class QuestBook {
                                         bookBuilder.addPages(ComponentSerializer.parse(json[0].toRawMessage(player)));
                                         json[0] = TellrawJson.create();
                                     }
-                                    appendLine(json[0], new QuestProgram(player, q), c);
+                                    try {
+                                        appendLine(json[0], new QuestProgram(player, q), c);
+                                    } catch (Throwable t) {
+                                        logger.error("Book format invalid: " + t.getMessage());
+                                    }
                                 }
                             } else {
                                 if (line.incrementAndGet() == 15) {
                                     bookBuilder.addPages(ComponentSerializer.parse(json[0].toRawMessage(player)));
                                     json[0] = TellrawJson.create();
                                 }
-                                appendLine(json[0], new QuestProgram(player, q), f.replace("{id}", q.getCurrentQuest()).replace("{display}", q.getQuest().getDisplay()));
+                                try {
+                                    appendLine(json[0], new QuestProgram(player, q), f.replace("{id}", q.getCurrentQuest()).replace("{display}", q.getQuest().getDisplay()));
+                                } catch (Throwable t) {
+                                    logger.error("Book format invalid: " + t.getMessage());
+                                }
                             }
                         }
                     } catch (Throwable t) {

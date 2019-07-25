@@ -10,6 +10,8 @@ import ink.ptms.cronus.internal.QuestBook;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import io.izzel.taboolib.module.tellraw.TellrawJson;
 import io.izzel.taboolib.util.book.BookFormatter;
 import io.izzel.taboolib.util.book.builder.BookBuilder;
@@ -29,6 +31,8 @@ import java.util.List;
  */
 public class DataQuest implements TSerializable {
 
+    @TInject
+    private static TLogger logger;
     // 任务数据
     private YamlConfiguration dataQuest = new YamlConfiguration();
     // 阶段数据
@@ -124,7 +128,11 @@ public class DataQuest implements TSerializable {
         for (List<String> content : playerData.isQuestCompleted(currentQuest) ? stage.getContentCompleted() : stage.getContent()) {
             TellrawJson json = TellrawJson.create();
             for (String line : content) {
-                QuestBook.appendLine(json, new QuestProgram(player, this), line);
+                try {
+                    QuestBook.appendLine(json, new QuestProgram(player, this), line);
+                } catch (Throwable t) {
+                    logger.error("Book format invalid: " + t.getMessage());
+                }
             }
             bookBuilder.addPages(ComponentSerializer.parse(json.toRawMessage(player)));
         }
