@@ -37,6 +37,9 @@ public class DataPlayer implements TSerializable {
     // 任务完成记录
     @TSerializeMap
     private Map<String, Long> questCompleted = Maps.newConcurrentMap();
+    // 物品使用冷却
+    @TSerializeMap
+    private Map<String, Long> itemCooldown = Maps.newHashMap();
     // 任务计分板隐藏
     @TSerializeCollection
     private List<String> questHide = Lists.newArrayList();
@@ -183,6 +186,10 @@ public class DataPlayer implements TSerializable {
 
     public Map<String, Long> getQuestCompleted() {
         return questCompleted;
+    }
+
+    public Map<String, Long> getItemCooldown() {
+        return itemCooldown;
     }
 
     public List<String> getQuestHide() {
