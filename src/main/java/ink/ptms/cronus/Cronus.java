@@ -6,7 +6,6 @@ import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
 import io.izzel.taboolib.util.Strings;
 import io.izzel.taboolib.util.lite.Catchers;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
@@ -52,10 +51,11 @@ public class Cronus extends CronusPlugin {
 
     @Override
     public void onActivated() {
+        cronusService.active();
         cronusLoader.start();
         // placeholder hook
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            PlaceholderAPI.registerPlaceholderHook(this, new HookPlaceholderAPI());
+            new HookPlaceholderAPI().register();
         }
     }
 

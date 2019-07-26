@@ -2,6 +2,7 @@ package ink.ptms.cronus.database.data.item.hook;
 
 import ink.ptms.cronus.database.data.item.ItemStorage;
 import me.skymc.purtmars.item.PurtmarsItem;
+import me.skymc.purtmars.item.PurtmarsItemManager;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public class StoragePurtmars extends ItemStorage {
 
     @Override
     public ItemStack getItem(String name) {
-        return PurtmarsItem.getManager().getItem(name);
+        PurtmarsItemManager manager = PurtmarsItem.getManager();
+        return manager == null ? null : manager.getItem(name);
     }
 
     @Override

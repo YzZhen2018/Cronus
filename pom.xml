@@ -13,6 +13,7 @@
     </properties>
 
     <build>
+        <finalName>Cronus</finalName>
         <defaultGoal>clean install package</defaultGoal>
         <resources>
             <resource>

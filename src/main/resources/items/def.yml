@@ -14,6 +14,6 @@ def_0:
   - 'inventory.hand - 1'
   - 'send.title &r|&e你使用了特殊物品.|10|10|10'
   # 物品触发动作（条件不足）
-  effect-condition: ~
+  effect-condition: []
   # 物品触发动作（冷却）
-  effect-cooldown: ~
+  effect-cooldown: []

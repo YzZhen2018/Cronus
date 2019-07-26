@@ -59,6 +59,7 @@ public class CommandService extends Command {
             }
             service.cancel();
             service.init();
+            service.active();
             normal(sender, "服务 &f" + args[0] + " &7已重载.");
         }
     };

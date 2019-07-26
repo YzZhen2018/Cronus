@@ -71,6 +71,11 @@ public class CronusVersion {
         }
     }
 
+    @Override
+    public String toString() {
+        return v1 + "." + v2 + "." + v3 + "." + year + "." + month + "." + day + " " + type;
+    }
+
     // *********************************
     //
     //        Getter and Setter

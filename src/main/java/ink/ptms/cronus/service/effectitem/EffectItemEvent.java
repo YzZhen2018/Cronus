@@ -6,7 +6,7 @@ package ink.ptms.cronus.service.effectitem;
  */
 public enum EffectItemEvent {
 
-    USE, LEFT_CLICK, RIGHt_CLICK, NONE;
+    USE, LEFT_CLICK, RIGHT_CLICK, NONE;
 
     public static EffectItemEvent fromString(String in) {
         try {

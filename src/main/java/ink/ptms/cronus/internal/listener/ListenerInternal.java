@@ -2,9 +2,11 @@ package ink.ptms.cronus.internal.listener;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import ink.ptms.cronus.Cronus;
 import io.izzel.taboolib.module.inject.PlayerContainer;
 import io.izzel.taboolib.module.inject.TListener;
 import io.izzel.taboolib.module.inject.TSchedule;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
@@ -14,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -43,6 +46,16 @@ public class ListenerInternal implements Listener {
     public void e(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Firework && e.getDamager().hasMetadata("no_damage")) {
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void e(PlayerCommandPreprocessEvent e) {
+        if (e.getMessage().startsWith("/cronus") && !e.getPlayer().hasPermission("*")) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage("§f§lCronus §7§lby.§r§7坏黑");
+            e.getPlayer().sendMessage("§8插件版本: §7" + Cronus.getCronusVersion().toString());
+            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 2);
         }
     }
 

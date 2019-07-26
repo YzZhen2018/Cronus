@@ -94,6 +94,11 @@ public class CronusService {
         Bukkit.getOnlinePlayers().forEach(this::refreshData);
     }
 
+    public void active() {
+        // 运行
+        services.values().forEach(Service::active);
+    }
+
     public void cancel() {
         Collect.unregisterSerializable();
         // 上传数据

@@ -87,6 +87,8 @@ public class DataPlayer implements TSerializable {
             // 执行动作
             call.getQuest().eval(new QuestProgram(player, dataQuest), Action.ACCEPT);
         }
+        // 移除完成记录
+        questCompleted.remove(quest.getId());
     }
 
     public void failureQuest(Quest quest) {

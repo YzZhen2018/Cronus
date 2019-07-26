@@ -6,8 +6,13 @@ package ink.ptms.cronus.service;
  */
 public interface Service {
 
-    void init();
+    default void init() {
+    }
 
-    void cancel();
+    default void active() {
+    }
+
+    default void cancel() {
+    }
 
 }

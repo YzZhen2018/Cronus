@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.io.File;
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class EffectItem implements Service, Listener {
     private List<EffectItemData> items = Lists.newArrayList();
 
     @Override
-    public void init() {
+    public void active() {
         long time = System.currentTimeMillis();
         folder = new File(Cronus.getInst().getDataFolder(), "items");
         if (!folder.exists()) {
@@ -46,13 +47,8 @@ public class EffectItem implements Service, Listener {
         }
         items.clear();
         load(folder);
-        logger.info(Cronus.getCronusService().getRegisteredQuest().size() + " EffectItem Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
+        logger.info(items.size() + " Item Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
         CronusReloadItemEvent.call();
-    }
-
-    @Override
-    public void cancel() {
-
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -60,12 +56,14 @@ public class EffectItem implements Service, Listener {
         eval(e.getPlayer(), EffectItemEvent.USE, e);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void e(PlayerInteractEvent e) {
-        if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            eval(e.getPlayer(), EffectItemEvent.LEFT_CLICK, e);
-        } else if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            eval(e.getPlayer(), EffectItemEvent.RIGHt_CLICK, e);
+        if (e.getHand() == EquipmentSlot.HAND) {
+            if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                eval(e.getPlayer(), EffectItemEvent.LEFT_CLICK, e);
+            } else if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                eval(e.getPlayer(), EffectItemEvent.RIGHT_CLICK, e);
+            }
         }
     }
 
@@ -107,7 +105,7 @@ public class EffectItem implements Service, Listener {
                 try {
                     items.add(new EffectItemData(load.getConfigurationSection(id)));
                 } catch (Throwable t) {
-                    logger.error("EffectItem " + id + " failed to load.");
+                    logger.error("Item " + id + " failed to load.");
                     t.printStackTrace();
                 }
             }
