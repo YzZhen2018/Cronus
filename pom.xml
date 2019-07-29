@@ -125,6 +125,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/libs/TabooLib.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>14</groupId>
+            <artifactId>1</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/SkillAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

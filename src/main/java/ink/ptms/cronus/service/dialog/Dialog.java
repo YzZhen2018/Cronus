@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
@@ -48,7 +49,6 @@ public class Dialog implements Service, Listener {
     @EventHandler
     public void e(CronusReloadEvent e) {
         long time = System.currentTimeMillis();
-        // 老数据迁移
         folder = new File(Cronus.getInst().getDataFolder(), "dialogs");
         if (!folder.exists()) {
             Cronus.getInst().saveResource("dialogs/def.yml", true);
@@ -58,7 +58,7 @@ public class Dialog implements Service, Listener {
         logger.info(dialogs.size() + " Dialog Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void e(PlayerInteractEntityEvent e) {
         if (cooldown.isCooldown(e.getPlayer().getName(), 0)) {
             return;

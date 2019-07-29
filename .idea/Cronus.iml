@@ -130,5 +130,14 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: 14:1:1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/SkillAPI.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

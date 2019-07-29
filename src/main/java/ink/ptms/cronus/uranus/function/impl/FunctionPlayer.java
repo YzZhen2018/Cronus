@@ -80,6 +80,12 @@ public class FunctionPlayer extends Function {
                     return player.getFireTicks();
                 case "ip":
                     return player.getAddress().getHostName();
+                case "playtime":
+                    return player.getPlayerTime();
+                case "playtime.first":
+                    return player.getFirstPlayed();
+                case "playtime.last":
+                    return player.getLastPlayed();
                 default:
                     return "<invalid>";
             }

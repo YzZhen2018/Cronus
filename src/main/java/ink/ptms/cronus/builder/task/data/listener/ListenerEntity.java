@@ -7,6 +7,7 @@ import io.izzel.taboolib.module.inject.TListener;
 import io.izzel.taboolib.util.lite.Catchers;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -20,7 +21,7 @@ import java.util.LinkedList;
 @TListener
 public class ListenerEntity implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void e(PlayerInteractAtEntityEvent e) {
         if (e.getHand() == EquipmentSlot.HAND && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
             LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());

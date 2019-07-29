@@ -12,6 +12,7 @@
       <w>firetick</w>
       <w>gamemode</w>
       <w>mainhand</w>
+      <w>mana</w>
       <w>motd</w>
       <w>mythicmob</w>
       <w>mythicmobs</w>
@@ -19,6 +20,7 @@
       <w>ptms</w>
       <w>purtmars</w>
       <w>redstone</w>
+      <w>skillapi</w>
       <w>skript</w>
       <w>taboolib</w>
       <w>teleport</w>
