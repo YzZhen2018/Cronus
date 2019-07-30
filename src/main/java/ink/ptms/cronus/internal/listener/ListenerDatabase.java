@@ -1,7 +1,7 @@
 package ink.ptms.cronus.internal.listener;
 
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.CronusAPI;
+import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.event.CronusDataPushEvent;
 import io.izzel.taboolib.module.inject.TListener;
 import org.bukkit.event.EventHandler;
@@ -23,6 +23,9 @@ public class ListenerDatabase implements Listener {
 
     @EventHandler
     public void e(PlayerQuitEvent e) {
-        CronusDataPushEvent.call(e.getPlayer(), CronusAPI.getData(e.getPlayer()).push());
+        DataPlayer dataPlayer = Cronus.getCronusService().getPlayerData().remove(e.getPlayer().getName());
+        if (dataPlayer != null) {
+            CronusDataPushEvent.call(e.getPlayer(), dataPlayer.push());
+        }
     }
 }
