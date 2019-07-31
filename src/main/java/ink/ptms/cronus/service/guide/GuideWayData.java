@@ -3,6 +3,7 @@ package ink.ptms.cronus.service.guide;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import io.izzel.taboolib.Version;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
@@ -22,13 +23,13 @@ public class GuideWayData {
 
     private static GuideWay service = Cronus.getCronusService().getService(GuideWay.class);
     private static DecimalFormat doubleFormat = new DecimalFormat("#.##");
-    private Player owner;
+    private String owner;
     private Location target;
     private List<ArmorStand> entity;
     private List<String> text;
     private double distance;
 
-    GuideWayData(Player owner, Location target, List<ArmorStand> entity, List<String> text, double distance) {
+    GuideWayData(String owner, Location target, List<ArmorStand> entity, List<String> text, double distance) {
         this.owner = owner;
         this.target = target;
         this.entity = entity;
@@ -56,16 +57,21 @@ public class GuideWayData {
                     e.setMetadata("cronus_guide_owner", new FixedMetadataValue(Cronus.getInst(), player.getName()));
                 }));
             }
-            return new GuideWayData(player, target, list, text, distance);
+            return new GuideWayData(player.getName(), target, list, text, distance);
         }
         return null;
     }
 
     public void update() {
         try {
-            Location midPoint = getMidPoint(owner.getEyeLocation(), target, distance);
+            Player player = Bukkit.getPlayer(owner);
+            if (player == null) {
+                cancel();
+                return;
+            }
+            Location midPoint = getMidPoint(player.getEyeLocation(), target, distance);
             if (midPoint != null) {
-                String dis = doubleFormat.format(owner.getLocation().distance(target));
+                String dis = doubleFormat.format(player.getLocation().distance(target));
                 for (int i = 0; i < entity.size(); i++) {
                     entity.get(i).setCustomName(text.get(i).replace("{distance}", dis));
                     entity.get(i).teleport(midPoint.clone().add(0, i * -0.3 - 0.5, 0));
@@ -81,7 +87,10 @@ public class GuideWayData {
     }
 
     public void display() {
-        owner.spawnParticle(Version.isAfter(Version.v1_9) ? Particle.END_ROD : Particle.CLOUD, target, 500, 0, 100, 0, 0);
+        Player player = Bukkit.getPlayer(owner);
+        if (player != null) {
+            player.spawnParticle(Version.isAfter(Version.v1_9) ? Particle.END_ROD : Particle.CLOUD, target, 500, 0, 100, 0, 0);
+        }
     }
 
     public static Location getMidPoint(Location start, Location end, double distance) {
@@ -101,7 +110,7 @@ public class GuideWayData {
     //
     // *********************************
 
-    public Player getOwner() {
+    public String getOwner() {
         return owner;
     }
 
