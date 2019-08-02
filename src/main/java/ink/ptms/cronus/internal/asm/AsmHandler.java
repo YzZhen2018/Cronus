@@ -26,7 +26,6 @@ public abstract class AsmHandler {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        System.out.println(impl);
     }
 
     abstract public Entity getEntityByEntityId(int id);
