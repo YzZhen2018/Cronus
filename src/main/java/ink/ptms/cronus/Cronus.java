@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
  * @Author 坏黑
  * @Since 2019-05-23 18:06
  */
+@CronusPlugin.Version(5.01)
 public class Cronus extends CronusPlugin {
 
     @TInject
