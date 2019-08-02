@@ -73,6 +73,9 @@ public class CommandBuilder extends CronusCommand {
             return new Argument[] {
                     new Argument("名称", () -> {
                         File file = Files.folder(new File(Cronus.getCronusLoader().getFolder(), "builder"));
+                        if (file.listFiles() == null) {
+                            return null;
+                        }
                         return Arrays.stream(file.listFiles()).map(s -> {
                             try {
                                 return s.getName().substring(0, s.getName().indexOf("."));
