@@ -22,10 +22,11 @@ public abstract class AsmHandler {
 
     static void init() {
         try {
-            AsmHandler.impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.internal.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
+            impl = (AsmHandler) SimpleVersionControl.createNMS("ink.ptms.cronus.internal.asm.AsmHandlerImpl").useCache().translate(Cronus.getInst()).newInstance();
         } catch (Throwable t) {
             t.printStackTrace();
         }
+        System.out.println(impl);
     }
 
     abstract public Entity getEntityByEntityId(int id);

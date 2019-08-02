@@ -160,7 +160,7 @@ quest_0:
         - ''
         - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
         - ''
-        - '完成于 {date.format:{quest:time.complete}|yyy年MM月dd日}'
+        - '完成于 {format.date:{quest:time.complete}|yyy年MM月dd日}'
 
       # 任务纵览描述
       # 用于在任务纵览中显示任务信息

@@ -24,8 +24,7 @@ public class GuideWayPacket extends TPacketListener {
                 if (entity != null && entity.hasMetadata("cronus_guide_owner")) {
                     return player.getName().equals(entity.getMetadata("cronus_guide_owner").get(0).asString());
                 }
-            } catch (Throwable t) {
-                t.printStackTrace();
+            } catch (Throwable ignore) {
             }
         }
         return true;
