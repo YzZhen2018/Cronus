@@ -23,9 +23,9 @@ public abstract class DisplayBase extends DialogDisplay {
 
     abstract public void open(Player player, DialogPack dialogPack);
 
-    abstract public void preReply(Player player, DialogPack dialogPack, String id, int index);
+    abstract public void preReply(Player player, DialogPack replyPack, String id, int index);
 
-    abstract public void postReply(Player player, int index);
+    abstract public void postReply(Player player, DialogPack dialogPack, ReplyMap replyMap, int index);
 
     /**
      * 是否隐藏对话
@@ -98,7 +98,7 @@ public abstract class DisplayBase extends DialogDisplay {
             }
         }
         try {
-            postReply(player, index);
+            postReply(player, dialogPack, replyMap, index);
         } catch (Throwable t) {
             t.printStackTrace();
         }

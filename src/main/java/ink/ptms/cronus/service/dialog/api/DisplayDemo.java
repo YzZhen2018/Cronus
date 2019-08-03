@@ -33,15 +33,15 @@ public class DisplayDemo extends DisplayBase implements Listener {
     }
 
     @Override
-    public void preReply(Player player, DialogPack dialogPack, String id, int index) {
+    public void preReply(Player player, DialogPack replyPack, String id, int index) {
         TellrawJson.create()
                 .append("§8" + (index + 1) + ". §f§o")
-                .append(dialogPack.getText().isEmpty() ? "..." : dialogPack.getText().get(0)).hoverText(String.join("\n", dialogPack.getText())).clickCommand("cronus_dialog_reply:" + id)
+                .append(replyPack.getText().isEmpty() ? "..." : replyPack.getText().get(0)).hoverText(String.join("\n", replyPack.getText())).clickCommand("cronus_dialog_reply:" + id)
                 .send(player);
     }
 
     @Override
-    public void postReply(Player player, int index) {
+    public void postReply(Player player, DialogPack dialogPack, ReplyMap replyMap, int index) {
         TellrawJson.create()
                 .append("§8" + (index + 1) + ". §f§o")
                 .append("再见").hoverText("...").clickCommand("cronus_dialog_reply:close")

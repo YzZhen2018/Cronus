@@ -59,6 +59,7 @@ ink\ptms\cronus\builder\element\BuilderQuest$1.class
 ink\ptms\cronus\internal\task\item\TaskItemPick.class
 ink\ptms\cronus\builder\task\TaskText$1.class
 ink\ptms\cronus\internal\condition\impl\player\CondPlayTime.class
+ink\ptms\cronus\event\CronusReloadDialogEvent.class
 ink\ptms\cronus\internal\task\block\TaskBlockPlace.class
 ink\ptms\cronus\internal\condition\special\CondString.class
 ink\ptms\cronus\internal\metrics\Metrics$SimpleBarChart.class
@@ -233,7 +234,6 @@ ink\ptms\cronus\builder\task\player\PlayerJump.class
 ink\ptms\cronus\builder\element\BuilderTask.class
 ink\ptms\cronus\builder\task\player\PlayerThrowXpBottle.class
 ink\ptms\cronus\internal\program\effect\impl\EffectQuestVar.class
-ink\ptms\cronus\event\CronusDialogEvent.class
 ink\ptms\cronus\internal\task\listener\version\v1_10.class
 ink\ptms\cronus\internal\metrics\Metrics.class
 ink\ptms\cronus\builder\task\other\Permission.class
@@ -357,6 +357,7 @@ ink\ptms\cronus\builder\task\data\enums\FishState.class
 ink\ptms\cronus\command\impl\CommandItem$3.class
 ink\ptms\cronus\internal\version\MaterialControl$1.class
 ink\ptms\cronus\database\data\time\TimeType.class
+ink\ptms\cronus\event\CronusDialogInteractEvent.class
 ink\ptms\cronus\event\CronusInitQuestTaskEvent.class
 ink\ptms\cronus\builder\task\Cache.class
 ink\ptms\cronus\internal\bukkit\Entity$Point.class
@@ -468,7 +469,6 @@ ink\ptms\cronus\builder\task\player\PlayerResurrect.class
 ink\ptms\cronus\database\data\DataPlayer.class
 ink\ptms\cronus\internal\task\other\TaskPermission.class
 ink\ptms\cronus\service\status\Status.class
-ink\ptms\cronus\event\CronusDialogNextEvent.class
 ink\ptms\cronus\builder\editor\module\action\ActionEditDelete.class
 ink\ptms\cronus\internal\condition\impl\hook\CondMoney.class
 ink\ptms\cronus\database\DatabaseType.class
