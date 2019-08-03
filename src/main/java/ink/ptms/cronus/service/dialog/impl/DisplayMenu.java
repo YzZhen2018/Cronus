@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.event.CronusDialogNextEvent;
+import ink.ptms.cronus.event.CronusDialogEvalEvent;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.service.dialog.DialogDisplay;
 import ink.ptms.cronus.service.dialog.DialogPack;
@@ -64,7 +64,7 @@ public class DisplayMenu extends DialogDisplay {
                         DialogPack reply = slots.get(e.castClick().getRawSlot());
                         if (reply != null) {
                             try {
-                                CronusDialogNextEvent event = CronusDialogNextEvent.call(reply, e.getClicker());
+                                CronusDialogEvalEvent event = CronusDialogEvalEvent.call(reply, e.getClicker());
                                 if (event.isCancelled()) {
                                     return;
                                 }

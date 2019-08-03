@@ -2,9 +2,12 @@ package ink.ptms.cronus.service.dialog;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.event.CronusDialogEvent;
+import ink.ptms.cronus.event.CronusDialogInteractEvent;
+import ink.ptms.cronus.event.CronusReloadDialogEvent;
 import ink.ptms.cronus.event.CronusReloadEvent;
 import ink.ptms.cronus.service.Service;
+import ink.ptms.cronus.service.dialog.api.DisplayBase;
+import ink.ptms.cronus.service.dialog.api.DisplayDemo;
 import ink.ptms.cronus.service.selector.EntitySelector;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import io.izzel.taboolib.module.inject.TInject;
@@ -37,9 +40,15 @@ public class Dialog implements Service, Listener {
 
     private File folder;
     private List<DialogGroup> dialogs = Lists.newArrayList();
+    private List<DisplayBase> registeredBase = Lists.newArrayList();
+    private boolean init;
 
     @Override
     public void init() {
+        if (!init) {
+            init = true;
+            registeredBase.add(new DisplayDemo());
+        }
     }
 
     @Override
@@ -56,6 +65,7 @@ public class Dialog implements Service, Listener {
         dialogs.clear();
         loadDialog(folder);
         logger.info(dialogs.size() + " Dialog Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
+        CronusReloadDialogEvent.call();
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -67,7 +77,7 @@ public class Dialog implements Service, Listener {
             EntitySelector selector = Cronus.getCronusService().getService(EntitySelector.class);
             for (DialogGroup dialog : dialogs) {
                 if (selector.isSelect(e.getRightClicked(), dialog.getTarget())) {
-                    CronusDialogEvent dialogEvent = CronusDialogEvent.call(dialog.getDialog(), e.getRightClicked(), e.getPlayer());
+                    CronusDialogInteractEvent dialogEvent = CronusDialogInteractEvent.call(dialog.getDialog(), e.getRightClicked(), e.getPlayer());
                     if (!dialogEvent.isCancelled()) {
                         try {
                             dialogEvent.getPack().display(e.getPlayer());
@@ -79,6 +89,27 @@ public class Dialog implements Service, Listener {
                 }
             }
         });
+    }
+
+    public String getDialogStyle() {
+        return Cronus.getConf().getString("Settings.dialog-style", "cronus_menu");
+    }
+
+    public DisplayBase getDisplay(String id) {
+        return registeredBase.stream().filter(b -> b.getName().equalsIgnoreCase(id)).findFirst().orElse(null);
+    }
+
+    public void registerDisplay(Class<? extends DisplayBase> base) throws IllegalAccessException, InstantiationException {
+        registeredBase.add(base.newInstance());
+    }
+
+    public void registerDisplay(DisplayBase base) {
+        for (DisplayBase registered : registeredBase) {
+            if (registered.getName().equalsIgnoreCase(base.getName())) {
+                throw new IllegalStateException(base.getName() + " already registered.");
+            }
+        }
+        registeredBase.add(base);
     }
 
     public void loadDialog(File file) {

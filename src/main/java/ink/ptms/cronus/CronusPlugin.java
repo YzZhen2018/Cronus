@@ -386,7 +386,7 @@ public abstract class CronusPlugin extends JavaPlugin {
                     // 如果插件使用不合理的版本则跳过下载防止死循环
                     // 并跳过插件加载
                     if (requireVersion > NumberConversions.toInt(newVersion[0])) {
-                        Bukkit.getConsoleSender().sendMessage("§4[TabooLib] §c无效的依赖版本...");
+                        Bukkit.getConsoleSender().sendMessage("§4[TabooLib] §c无效的依赖版本... " + requireVersion + " > " + newVersion[0]);
                         initFailed = true;
                         return;
                     }

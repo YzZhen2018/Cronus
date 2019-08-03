@@ -2,37 +2,30 @@ package ink.ptms.cronus.event;
 
 import ink.ptms.cronus.service.dialog.DialogPack;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class CronusDialogEvent extends PlayerEvent implements Cancellable {
+public class CronusDialogEvalEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private DialogPack pack;
-    private Entity target;
     private boolean cancelled;
 
-    public CronusDialogEvent(Player who, DialogPack pack, Entity target) {
+    public CronusDialogEvalEvent(Player who, DialogPack pack) {
         super(who);
         this.pack = pack;
-        this.target = target;
     }
 
-    public static CronusDialogEvent call(DialogPack pack, Entity target, Player player) {
-        CronusDialogEvent event = new CronusDialogEvent(player, pack, target);
+    public static CronusDialogEvalEvent call(DialogPack pack, Player player) {
+        CronusDialogEvalEvent event = new CronusDialogEvalEvent(player, pack);
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }
 
     public DialogPack getPack() {
         return pack;
-    }
-
-    public Entity getTarget() {
-        return target;
     }
 
     public void setPack(DialogPack pack) {

@@ -4,6 +4,10 @@ Settings:
   # 视觉优先 = Visual（更流畅的全息移动）
   # 性能优先 = Performance（更高的性能）
   guide-mode: Performance
+  # 对话模式
+  # 箱子界面 = cronus_menu
+  # 聊天文本 = cronus_demo
+  dialog-style: cronus_menu
   # 对话设置（界面模式）
   dialog-chest:
     # 界面行数

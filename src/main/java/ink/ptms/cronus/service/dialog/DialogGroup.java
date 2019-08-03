@@ -1,11 +1,13 @@
 package ink.ptms.cronus.service.dialog;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusInitDialogEvent;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import ink.ptms.cronus.service.dialog.impl.DisplayMenu;
+import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -15,6 +17,8 @@ import org.bukkit.entity.Player;
  */
 public class DialogGroup {
 
+    @TInject
+    private static TLogger logger;
     private ConfigurationSection config;
     private String id;
     private String title;
@@ -25,14 +29,18 @@ public class DialogGroup {
     private QuestEffect close;
 
     public DialogGroup(ConfigurationSection config) {
+        Dialog service = Cronus.getCronusService().getService(Dialog.class);
         this.config = config;
         this.id = config.getName();
         this.title = TLocale.Translate.setColored(config.getString("title", "对话"));
         this.target = config.getString("target");
-        this.dialog = new DialogPack(this, config.getConfigurationSection("dialog").getValues(false));
-        this.display = new DisplayMenu();
         this.open = config.contains("open") ? new QuestEffect(config.getStringList("open")) : null;
         this.close = config.contains("close") ? new QuestEffect(config.getStringList("close")) : null;
+        this.dialog = new DialogPack(this, config.getConfigurationSection("dialog").getValues(false));
+        this.display = service.getDisplay(service.getDialogStyle());
+        if (this.display == null) {
+            logger.warn("Invalid dialog style: " + service.getDialogStyle());
+        }
         CronusInitDialogEvent.call(this);
     }
 

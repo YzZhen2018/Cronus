@@ -74,7 +74,9 @@ public class DialogPack {
 
     public void display(Player player) {
         parent.openEval(player);
-        parent.getDisplay().display(player, this);
+        if (parent.getDisplay() != null) {
+            parent.getDisplay().display(player, this);
+        }
     }
 
     public void effectEval(Player player) {
