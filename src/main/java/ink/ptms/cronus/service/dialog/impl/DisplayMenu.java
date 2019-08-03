@@ -4,15 +4,16 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.event.CronusDialogEvalEvent;
 import ink.ptms.cronus.internal.version.MaterialControl;
-import ink.ptms.cronus.service.dialog.DialogDisplay;
 import ink.ptms.cronus.service.dialog.DialogPack;
+import ink.ptms.cronus.service.dialog.api.DisplayBase;
+import ink.ptms.cronus.service.dialog.api.Reply;
+import ink.ptms.cronus.service.dialog.api.ReplyMap;
+import ink.ptms.cronus.service.dialog.api.Result;
 import io.izzel.taboolib.util.item.Items;
 import io.izzel.taboolib.util.item.inventory.ClickType;
 import io.izzel.taboolib.util.item.inventory.MenuBuilder;
 import io.izzel.taboolib.util.lite.Scripts;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -28,18 +29,62 @@ import java.util.Map;
 
 /**
  * @Author 坏黑
- * @Since 2019-06-10 17:51
+ * @Since 2019-08-03 17:20
  */
-public class DisplayMenu extends DialogDisplay {
+public class DisplayMenu extends DisplayBase {
 
     private CompiledScript rowsScript;
     private Integer slotMessage;
     private Integer[] slotReply;
 
     public DisplayMenu() {
+        rowsScript = Scripts.compile(Cronus.getConf().getString("Settings.dialog-chest.rows-script"));
         slotMessage = Cronus.getConf().getInt("Settings.dialog-chest.slot-message");
         slotReply = Cronus.getConf().getIntegerList("Settings.dialog-chest.slot-reply").toArray(new Integer[0]);
-        rowsScript = Scripts.compile(Cronus.getConf().getString("Settings.dialog-chest.rows-script"));
+    }
+
+    @Override
+    public String getName() {
+        return "CRONUS_MENU";
+    }
+
+    @Override
+    public void open(Player player, DialogPack dialogPack) {
+    }
+
+    @Override
+    public void preReply(Player player, DialogPack replyPack, String id, int index) {
+    }
+
+    @Override
+    public void postReply(Player player, DialogPack dialogPack, ReplyMap replyMap, int index) {
+        // 界面物品缓存
+        Map<Integer, Reply> slots = Maps.newHashMap();
+        // 创建界面
+        Inventory inventory = MenuBuilder.builder(Cronus.getInst())
+                .title(dialogPack.getParent().getTitle())
+                .rows(toRows(player, dialogPack))
+                .event(e -> {
+                    if (e.getClickType() == ClickType.CLICK) {
+                        e.castClick().setCancelled(true);
+                        // 执行对话回复
+                        if (slots.containsKey(e.castClick().getRawSlot()) && eval(player, slots.get(e.castClick().getRawSlot())) == Result.EFFECT) {
+                            player.closeInventory();
+                        }
+                    }
+                })
+                .close(e -> close(player))
+                .items()
+                .build();
+        // 对话物品
+        inventory.setItem(slotMessage, toItem(MaterialControl.fromString(dialogPack.getConfig().getOrDefault("item", "BOOK")), dialogPack.getText()));
+        // 回复物品
+        for (int i = 0; i < slotReply.length && i < replyMap.getReply().size(); i++) {
+            DialogPack reply = replyMap.getReply().get(i).getDialogPack();
+            inventory.setItem(slotReply[i], toItem(MaterialControl.fromString(reply.getConfig().getOrDefault("item", reply.isQuest() ? "MAP" : "PAPER")), reply.getText()));
+            slots.put(slotReply[i], replyMap.getReply().get(i));
+        }
+        player.openInventory(inventory);
     }
 
     public int toRows(Player player, DialogPack dialogPack) {
@@ -49,68 +94,6 @@ public class DisplayMenu extends DialogDisplay {
             t.printStackTrace();
         }
         return 0;
-    }
-
-    @Override
-    public void display(Player player, DialogPack dialogPack) {
-        boolean[] closed = new boolean[1];
-        Map<Integer, DialogPack> slots = Maps.newHashMap();
-        Inventory inventory = MenuBuilder.builder(Cronus.getInst())
-                .title(dialogPack.getParent().getTitle())
-                .rows(toRows(player, dialogPack))
-                .event(e -> {
-                    if (e.getClickType() == ClickType.CLICK) {
-                        e.castClick().setCancelled(true);
-                        DialogPack reply = slots.get(e.castClick().getRawSlot());
-                        if (reply != null) {
-                            try {
-                                CronusDialogEvalEvent event = CronusDialogEvalEvent.call(reply, e.getClicker());
-                                if (event.isCancelled()) {
-                                    return;
-                                }
-                                if (event.getPack().getDialog() != null) {
-                                    closed[0] = true;
-                                    dialogPack.getParent().openEval(e.getClicker());
-                                    display(e.getClicker(), event.getPack().getDialog());
-                                } else if (event.getPack().getEffect() != null) {
-                                    closed[0] = true;
-                                    e.getClicker().closeInventory();
-                                    event.getPack().effectEval(e.getClicker());
-                                }
-                            } catch (Throwable t) {
-                                t.printStackTrace();
-                            }
-                        }
-                    }
-                }).close(e -> {
-                    if (!closed[0] && dialogPack.getParent().getClose() != null) {
-                        dialogPack.getParent().closeEval((Player) e.getPlayer());
-                    }
-                    slots.clear();
-                }).items().build();
-        // 异步计算
-        Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
-            // 对话
-            inventory.setItem(slotMessage, toItem(MaterialControl.fromString(dialogPack.getConfig().getOrDefault("item", "BOOK")), dialogPack.getText()));
-            List<DialogPack> replies = Lists.newArrayList();
-            // 条件
-            for (int i = 0; i < slotReply.length && i < dialogPack.getReply().size(); i++) {
-                DialogPack reply = dialogPack.getReply().get(i).getPack(player, null);
-                // 忽略空气
-                if (String.valueOf(reply.getConfig().get("item")).equalsIgnoreCase("air")) {
-                    continue;
-                }
-                replies.add(reply);
-            }
-            // 物品
-            for (int i = 0; i < slotReply.length && i < replies.size(); i++) {
-                DialogPack reply = replies.get(i);
-                inventory.setItem(slotReply[i], toItem(MaterialControl.fromString(reply.getConfig().getOrDefault("item", reply.isQuest() ? "MAP" : "PAPER")), reply.getText()));
-                slots.put(slotReply[i], reply);
-            }
-            // 返回主线程打开菜单
-            Bukkit.getScheduler().runTask(Cronus.getInst(), () -> player.openInventory(inventory));
-        });
     }
 
     public ItemStack toItem(MaterialControl material, List<String> list) {

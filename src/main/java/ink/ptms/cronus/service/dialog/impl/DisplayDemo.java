@@ -1,7 +1,10 @@
-package ink.ptms.cronus.service.dialog.api;
+package ink.ptms.cronus.service.dialog.impl;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.service.dialog.DialogPack;
+import ink.ptms.cronus.service.dialog.api.DisplayBase;
+import ink.ptms.cronus.service.dialog.api.Reply;
+import ink.ptms.cronus.service.dialog.api.ReplyMap;
 import io.izzel.taboolib.module.tellraw.TellrawJson;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -64,5 +67,10 @@ public class DisplayDemo extends DisplayBase implements Listener {
                 eval(e.getPlayer(), reply);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DisplayDemo{}";
     }
 }

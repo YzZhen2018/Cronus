@@ -7,7 +7,8 @@ import ink.ptms.cronus.event.CronusReloadDialogEvent;
 import ink.ptms.cronus.event.CronusReloadEvent;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.service.dialog.api.DisplayBase;
-import ink.ptms.cronus.service.dialog.api.DisplayDemo;
+import ink.ptms.cronus.service.dialog.impl.DisplayDemo;
+import ink.ptms.cronus.service.dialog.impl.DisplayMenu;
 import ink.ptms.cronus.service.selector.EntitySelector;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import io.izzel.taboolib.module.inject.TInject;
@@ -48,6 +49,7 @@ public class Dialog implements Service, Listener {
         if (!init) {
             init = true;
             registeredBase.add(new DisplayDemo());
+            registeredBase.add(new DisplayMenu());
         }
     }
 

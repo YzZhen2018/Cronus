@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.program.function.skillapi;
+package ink.ptms.cronus.internal.program.function.hook;
 
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;

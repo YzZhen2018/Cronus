@@ -1,11 +1,13 @@
 package ink.ptms.cronus.service.dialog.api;
 
 import com.google.common.collect.Maps;
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusDialogEvalEvent;
 import ink.ptms.cronus.service.dialog.DialogDisplay;
 import ink.ptms.cronus.service.dialog.DialogPack;
 import io.izzel.taboolib.module.inject.PlayerContainer;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.Map;
 import java.util.UUID;
@@ -48,11 +50,13 @@ public abstract class DisplayBase extends DialogDisplay {
         }
         // 打开新的对话
         if (event.getPack().getDialog() != null) {
+            player.setMetadata("cronus:ignore_close", new FixedMetadataValue(Cronus.getInst(), 1));
             display(player, event.getPack().getDialog());
             return Result.DIALOG;
         }
         // 执行点击动作
         else if (event.getPack().getEffect() != null) {
+            player.setMetadata("cronus:ignore_close", new FixedMetadataValue(Cronus.getInst(), 1));
             event.getPack().effectEval(player);
             return Result.EFFECT;
         }
@@ -65,16 +69,17 @@ public abstract class DisplayBase extends DialogDisplay {
     public void close(Player player) {
         ReplyMap replyMap = resetDialog(player);
         if (replyMap != null) {
-            // 关闭动作
-            replyMap.getCurrent().getParent().closeEval(player);
+            if (player.hasMetadata("cronus:ignore_close")) {
+                player.removeMetadata("cronus:ignore_close", Cronus.getInst());
+            } else {
+                replyMap.getCurrent().getParent().closeEval(player);
+            }
         }
     }
 
     @Override
     public void display(Player player, DialogPack dialogPack) {
         ReplyMap replyMap = new ReplyMap(dialogPack);
-        // 重置数据
-        map.put(player.getName(), replyMap);
         // 基本界面
         try {
             open(player, dialogPack);
@@ -104,6 +109,8 @@ public abstract class DisplayBase extends DialogDisplay {
         }
         // 开始动作
         dialogPack.getParent().openEval(player);
+        // 重置数据
+        map.put(player.getName(), replyMap);
     }
 
     public static boolean hasDialog(Player player) {

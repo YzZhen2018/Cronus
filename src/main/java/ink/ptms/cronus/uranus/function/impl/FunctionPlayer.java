@@ -3,6 +3,7 @@ package ink.ptms.cronus.uranus.function.impl;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.Function;
 import ink.ptms.cronus.uranus.program.Program;
+import io.izzel.taboolib.TabooLibAPI;
 import io.izzel.taboolib.cronus.CronusUtils;
 import org.bukkit.entity.Player;
 
@@ -86,6 +87,10 @@ public class FunctionPlayer extends Function {
                     return player.getFirstPlayed();
                 case "playtime.last":
                     return player.getLastPlayed();
+                case "$":
+                case "money":
+                case "balance":
+                    return TabooLibAPI.getPluginBridge().economyLook(player);
                 default:
                     return "<invalid>";
             }

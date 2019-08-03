@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.program.function.skript;
+package ink.ptms.cronus.internal.program.function.hook;
 
 import ch.njol.skript.variables.Variables;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -11,11 +11,11 @@ import ink.ptms.cronus.uranus.program.Program;
  * @Since 2019-05-11 13:16
  */
 @Auto
-public class FunctionSkriptVar extends Function {
+public class FunctionSkript extends Function {
 
     @Override
     public String getName() {
-        return "skript.var";
+        return "skript";
     }
 
     @Override

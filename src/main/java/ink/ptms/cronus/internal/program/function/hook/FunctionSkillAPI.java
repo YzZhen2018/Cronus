@@ -1,4 +1,4 @@
-package ink.ptms.cronus.internal.program.function.skillapi;
+package ink.ptms.cronus.internal.program.function.hook;
 
 import com.sucy.skill.SkillAPI;
 import com.sucy.skill.api.player.PlayerClass;

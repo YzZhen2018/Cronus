@@ -11,7 +11,7 @@ Settings:
   # 对话设置（界面模式）
   dialog-chest:
     # 界面行数
-    rows-script: 'Math.ceil($size / 5.0) + 2'
+    rows-script: 'Math.max(Math.ceil($size / 5.0) + 2, 3)'
     # 对话位置
     slot-message: 10
     # 回复位置

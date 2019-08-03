@@ -27,6 +27,7 @@ ink\ptms\cronus\builder\editor\module\action\ActionEditAppend.class
 ink\ptms\cronus\internal\condition\collect\CollectA.class
 ink\ptms\cronus\uranus\function\Result.class
 ink\ptms\cronus\builder\task\data\item\ItemMatrix.class
+ink\ptms\cronus\internal\program\function\hook\FunctionWorldGuard.class
 ink\ptms\cronus\internal\bukkit\FishState.class
 ink\ptms\cronus\internal\program\function\FunctionPlayerVal.class
 ink\ptms\cronus\internal\task\special\Uncountable.class
@@ -49,6 +50,7 @@ ink\ptms\cronus\builder\task\data\Effect$1.class
 ink\ptms\cronus\internal\condition\CondNull.class
 ink\ptms\cronus\internal\condition\impl\player\CondLevel.class
 ink\ptms\cronus\command\impl\CommandTest$5.class
+ink\ptms\cronus\internal\program\function\hook\FunctionSkript.class
 ink\ptms\cronus\uranus\function\impl\FunctionSender.class
 ink\ptms\cronus\internal\task\player\TaskPlayerShoot.class
 ink\ptms\cronus\internal\metrics\Metrics$SingleLineChart.class
@@ -226,6 +228,7 @@ ink\ptms\cronus\event\CronusStageAcceptEvent.class
 ink\ptms\cronus\builder\task\data\expression\ExpressionForce.class
 ink\ptms\cronus\command\impl\Command$13.class
 ink\ptms\cronus\internal\metrics\Metrics$DrilldownPie.class
+ink\ptms\cronus\service\dialog\impl\DisplayMenu1.class
 ink\ptms\cronus\internal\program\function\FunctionLocationCheck.class
 ink\ptms\cronus\internal\condition\impl\quest\CondQuestCompleted.class
 ink\ptms\cronus\internal\version\MaterialControl$MinecraftVersion.class
@@ -298,6 +301,7 @@ ink\ptms\cronus\builder\task\data\location\LocationFrom.class
 ink\ptms\cronus\builder\element\BuilderListEffect.class
 ink\ptms\cronus\internal\task\item\TaskItemDrop.class
 ink\ptms\cronus\builder\task\data\entity\EntityMother.class
+ink\ptms\cronus\internal\program\function\hook\FunctionPlaceholder.class
 ink\ptms\cronus\builder\task\data\Enchant.class
 ink\ptms\cronus\internal\condition\impl\argument\CondEffect.class
 ink\ptms\cronus\builder\element\BuilderQuest$EditTask.class
@@ -326,6 +330,7 @@ ink\ptms\cronus\internal\task\player\TaskPlayerTeleport.class
 ink\ptms\cronus\internal\program\Actionable.class
 ink\ptms\cronus\CronusPlugin$Version.class
 ink\ptms\cronus\service\dialog\DialogDisplay.class
+ink\ptms\cronus\service\dialog\impl\DisplayDemo.class
 ink\ptms\cronus\internal\condition\impl\player\CondWorld.class
 ink\ptms\cronus\internal\bukkit\Block.class
 ink\ptms\cronus\internal\program\effect\impl\EffectInventory.class
@@ -422,6 +427,7 @@ ink\ptms\cronus\event\CronusReloadItemEvent.class
 ink\ptms\cronus\internal\condition\impl\argument\CondTag.class
 ink\ptms\cronus\service\selector\EntitySelector.class
 ink\ptms\cronus\builder\task\item\ItemDrop.class
+ink\ptms\cronus\internal\program\function\hook\FunctionSkillAPI.class
 ink\ptms\cronus\command\impl\CommandTest$3.class
 ink\ptms\cronus\builder\task\player\PlayerTeleport.class
 ink\ptms\cronus\internal\condition\Cond.class
@@ -444,7 +450,6 @@ ink\ptms\cronus\builder\task\data\expression\ExpressionExp.class
 ink\ptms\cronus\command\impl\CommandTest$4.class
 ink\ptms\cronus\internal\task\item\TaskItemPickArrow.class
 ink\ptms\cronus\internal\task\player\damage\TaskPlayerDeath.class
-ink\ptms\cronus\internal\program\function\FunctionMoney.class
 ink\ptms\cronus\internal\Quest$1.class
 ink\ptms\cronus\internal\condition\impl\player\CondHunger.class
 ink\ptms\cronus\CronusLoader.class
