@@ -29,16 +29,16 @@ public abstract class DisplayBase extends DialogDisplay {
 
     abstract public void postReply(Player player, DialogPack dialogPack, ReplyMap replyMap, int index);
 
-    /**
-     * 是否隐藏对话
-     */
     public boolean isHide(Player player, DialogPack dialogPack) {
         return String.valueOf(dialogPack.getConfig().get("item")).equalsIgnoreCase("air") || dialogPack.getConfig().containsKey("hide");
     }
 
-    /**
-     * 判断条件并执行对话动作
-     */
+    public void preDialog(Player player, Reply reply) {
+    }
+
+    public void preEffect(Player player, Reply reply) {
+    }
+
     public Result eval(Player player, Reply reply) {
         DialogPack pack = reply.getDialogPackOrigin().getPack(player, null);
         if (pack == null) {
@@ -51,21 +51,20 @@ public abstract class DisplayBase extends DialogDisplay {
         // 打开新的对话
         if (event.getPack().getDialog() != null) {
             player.setMetadata("cronus:ignore_close", new FixedMetadataValue(Cronus.getInst(), 1));
+            preDialog(player, reply);
             display(player, event.getPack().getDialog());
             return Result.DIALOG;
         }
         // 执行点击动作
         else if (event.getPack().getEffect() != null) {
             player.setMetadata("cronus:ignore_close", new FixedMetadataValue(Cronus.getInst(), 1));
+            preEffect(player, reply);
             event.getPack().effectEval(player);
             return Result.EFFECT;
         }
         return Result.NONE;
     }
 
-    /**
-     * 释放对话缓存并执行关闭动作
-     */
     public void close(Player player) {
         ReplyMap replyMap = resetDialog(player);
         if (replyMap != null) {

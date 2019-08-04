@@ -9,7 +9,6 @@ import ink.ptms.cronus.service.dialog.DialogPack;
 import ink.ptms.cronus.service.dialog.api.DisplayBase;
 import ink.ptms.cronus.service.dialog.api.Reply;
 import ink.ptms.cronus.service.dialog.api.ReplyMap;
-import ink.ptms.cronus.service.dialog.api.Result;
 import io.izzel.taboolib.util.item.Items;
 import io.izzel.taboolib.util.item.inventory.ClickType;
 import io.izzel.taboolib.util.item.inventory.MenuBuilder;
@@ -57,6 +56,11 @@ public class DisplayMenu extends DisplayBase {
     }
 
     @Override
+    public void preEffect(Player player, Reply reply) {
+        player.closeInventory();
+    }
+
+    @Override
     public void postReply(Player player, DialogPack dialogPack, ReplyMap replyMap, int index) {
         // 界面物品缓存
         Map<Integer, Reply> slots = Maps.newHashMap();
@@ -68,8 +72,8 @@ public class DisplayMenu extends DisplayBase {
                     if (e.getClickType() == ClickType.CLICK) {
                         e.castClick().setCancelled(true);
                         // 执行对话回复
-                        if (slots.containsKey(e.castClick().getRawSlot()) && eval(player, slots.get(e.castClick().getRawSlot())) == Result.EFFECT) {
-                            player.closeInventory();
+                        if (slots.containsKey(e.castClick().getRawSlot())) {
+                            eval(player, slots.get(e.castClick().getRawSlot()));
                         }
                     }
                 })

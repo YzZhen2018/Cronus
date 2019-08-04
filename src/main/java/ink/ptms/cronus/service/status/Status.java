@@ -74,7 +74,7 @@ public class Status implements Service, Listener {
     public void e(CronusTaskNextEvent e) {
         Bukkit.getScheduler().runTask(Cronus.getInst(), () -> {
             // 事件未被取消
-            if (!e.isCancelled()) {
+            if (!e.isCancelled() && !e.getQuestTask().getStatus().equals("<no-status>")) {
                 display(e.getPlayer(), e.getDataQuest(), e.getQuestTask());
                 // 延迟关闭并注销之前的延迟关闭任务
                 Optional.ofNullable(cancelTask.put(e.getPlayer().getName(), Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> {

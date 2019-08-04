@@ -50,6 +50,10 @@ public class MatchEntry {
         }
     }
 
+    public String toSimple() {
+        return type == MatchType.SINGLE ? single : (collect.isEmpty() ? "-" : collect.get(0).toSimple());
+    }
+
     public void save(ConfigurationSection section, String key) {
         section.set(key, toObject());
     }

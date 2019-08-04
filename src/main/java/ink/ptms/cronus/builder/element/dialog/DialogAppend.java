@@ -6,7 +6,7 @@ package ink.ptms.cronus.builder.element.dialog;
  */
 public class DialogAppend extends Dialog {
 
-    public DialogAppend() {
-        super(false);
+    public DialogAppend(Dialog parent) {
+        super(false, parent);
     }
 }

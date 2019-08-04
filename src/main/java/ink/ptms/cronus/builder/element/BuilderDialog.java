@@ -57,7 +57,7 @@ public class BuilderDialog extends BuilderQuest {
             actionClose = section.getStringList("close");
         }
         if (section.contains("dialog")) {
-            dialog = new Dialog(false);
+            dialog = new Dialog(false, null);
             dialog.import0(section.getConfigurationSection("dialog").getValues(false));
         }
     }
@@ -85,7 +85,7 @@ public class BuilderDialog extends BuilderQuest {
     @Override
     public void open(Player player) {
         if (dialog == null) {
-            dialog = new Dialog(false);
+            dialog = new Dialog(false, null);
         }
         Inventory inventory = Builders.normal("对话构建 : " + id,
                 e -> {

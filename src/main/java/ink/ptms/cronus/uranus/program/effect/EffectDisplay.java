@@ -4,6 +4,7 @@ import ink.ptms.cronus.uranus.Uranus;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
+import ink.ptms.cronus.util.SoundResource;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.module.locale.logger.TLogger;
@@ -91,8 +92,29 @@ public class EffectDisplay extends Effect {
                     Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new SoundPack(parsed).play(((Player) program.getSender()).getLocation()));
                 }
                 break;
+            case "sound.resource":
+            case "sounds.resource":
+                if (program.getSender() instanceof Player) {
+                    Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new SoundResource(parsed).play((Player) program.getSender()));
+                }
+                break;
+            case "sound.resource.all":
+            case "sounds.resource.all":
+                Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> {
+                    SoundResource sound = new SoundResource(parsed);
+                    Bukkit.getOnlinePlayers().forEach(sound::play);
+                });
+                break;
+            case "sound.resource.loc":
+            case "sound.resource.location":
+            case "sounds.resource.loc":
+            case "sounds.resource.location":
+                if (program.getSender() instanceof Player) {
+                    Bukkit.getScheduler().runTaskAsynchronously(Uranus.getInst(), () -> new SoundResource(parsed).play(((Player) program.getSender()).getLocation()));
+                }
+                break;
             default:
-                program.getSender().sendMessage(parsed);
+                program.getSender().sendMessage("§cError: " +parsed);
                 break;
         }
     }

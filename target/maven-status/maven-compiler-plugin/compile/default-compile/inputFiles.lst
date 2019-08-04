@@ -21,7 +21,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\location\LocationT
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\Block.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\QuestProgram.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\event\EventCondition.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionMoney.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondGround.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\hook\CondMoney.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\listener\ListenerLocation.java
@@ -38,6 +37,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\command\impl\CommandBuilder.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\status\StatusType.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectCheck.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerCommand.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\hook\FunctionSkript.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\item\ItemPickupArrow.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerThrowPotion.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\parser\BukkitParser.java
@@ -58,13 +58,13 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionHash.ja
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerBucketEmpty.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityBottle.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\PotionEffect.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\hook\FunctionSkillAPI.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityBaby.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\damage\PlayerAttack.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\TaskExpression.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\item\TaskItemDrop.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\Entity.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionFormatTimeDay.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\skript\FunctionSkriptVar.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\other\TaskQuestVar.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\block\TaskBlockBreak.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\ConditionParser.java
@@ -89,6 +89,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionQu
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\BuilderTaskList.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\location\LocationEnchant.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionPlayerVal.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\impl\DisplayDemo.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\damage\PlayerDamaged.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondLeashed.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddExp.java
@@ -114,6 +115,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\Task.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityCaught.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\argument\CondEffect.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\listener\ListenerBlock.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\hook\FunctionPlaceholder.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\event\UranusScriptEvalEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\text\TextKey.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectItem.java
@@ -148,6 +150,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerChat.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\Result.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\total\TaskPlayerLevel.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\util\Utils.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusDialogEvalEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\expression\ExpressionTotal.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\Actionable.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\damage\TaskPlayerDeath.java
@@ -181,7 +184,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\block\BlockAgainst
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerThrow.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\QuestStage.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\editor\module\action\ActionEditSet.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusDialogNextEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\QuestEffect.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityVictim.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityFather.java
@@ -270,6 +272,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\guide\GuideWayPacket.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\item\ItemWeapon.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionFormatTimeMinutes.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\listener\ListenerDatabase.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\api\Reply.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\condition\MatchEntry.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\Effect.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\listener\ListenerInternal.java
@@ -288,6 +291,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerSwim.
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectCastSkill.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\editor\module\action\ActionEditAppend.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\Ignore.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\api\ReplyMap.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\questitem\QuestItemV1_9.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\expression\ExpressionPower.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\command\CronusCommand.java
@@ -314,6 +318,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\Condition.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionQuestStrike.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\editor\data\PlayerData.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\damage\PlayerDeath.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\util\SoundResource.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\total\ItemDamage.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\item\TaskItemConsume.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\other\TaskPermission.java
@@ -376,7 +381,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\Entity.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondGliding.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\metrics\Metrics.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionPlayerVar.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusDialogEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\EffectNull.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerLeash.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\entity\EntityVehicle.java
@@ -385,7 +389,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\metrics\MetricsLoader.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddMana.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\FunctionQuest.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionSender.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\skillapi\FunctionSkillAPI.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\dialog\DialogItem.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectPlayerVal.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerBreed.java
@@ -396,6 +399,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerTame.
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\block\BlockBreak.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\damage\PlayerKill.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\EffectParser.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\hook\FunctionWorldGuard.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\Dialog.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerVehicleExit.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondHunger.java
@@ -422,7 +426,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\expression\Express
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\other\Location.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\CronusVersion.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\CondRandom.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\function\skillapi\FunctionWorldGuard.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\QuestBook.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\BuilderTaskType.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionChar.java
@@ -433,6 +436,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\skillapi\Con
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddLevel.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerJump.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectQuestVal.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\api\Result.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\block\BlockAnvil.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionFormatTimeSeconds.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\argument\CondScript.java
@@ -440,8 +444,10 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\ItemStack.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\questitem\QuestItem.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerTeleport.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\block\BlockInteract.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusReloadDialogEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusQuestSuccessEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusStageSuccessEvent.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\dialog\api\DisplayBase.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusInitQuestStageEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddAttributePoints.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerResurrect.java
@@ -456,6 +462,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectT
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\other\Permission.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\scoreboard\Scoreboard.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\editor\data\PlayerDataHandler.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusDialogInteractEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\annotations\Auto.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\total\TaskPlayerRegain.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\BuilderQuest.java

@@ -10,6 +10,8 @@ import ink.ptms.cronus.builder.element.BuilderList;
 import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.util.Utils;
+import io.izzel.taboolib.Version;
+import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.util.item.ItemBuilder;
 import io.izzel.taboolib.util.item.Items;
 import io.izzel.taboolib.util.item.inventory.ClickType;
@@ -24,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @Author 坏黑
@@ -37,15 +40,21 @@ public class Dialog extends BuilderDialog {
     private MatchEntry condition;
     private Dialog conditionDialog;
     private Dialog dialog;
+    private Dialog parent;
     private ItemStack item;
     private boolean inReply;
     private boolean toggle;
     private CloseTask closeTask = e -> {
     };
 
-    public Dialog(boolean inReply) {
+    public Dialog(boolean inReply, Dialog parent) {
+        this(inReply, false, parent);
+    }
+
+    public Dialog(boolean inReply, boolean inCondition, Dialog parent) {
         super("");
         this.inReply = inReply;
+        this.parent = parent;
         this.item = new ItemStack(inReply ? Material.PAPER : Material.BOOK);
     }
 
@@ -55,7 +64,7 @@ public class Dialog extends BuilderDialog {
         }
         if (map.get("reply") instanceof List) {
             ((List) map.get("reply")).forEach(r -> {
-                Dialog reply = new Dialog(!inReply);
+                Dialog reply = new Dialog(!inReply, this);
                 reply.import0((Map) r);
                 this.reply.add(reply);
             });
@@ -64,14 +73,14 @@ public class Dialog extends BuilderDialog {
             effect = (List) map.get("effect");
         }
         if (map.containsKey("dialog")) {
-            dialog = new Dialog(!inReply);
+            dialog = new Dialog(!inReply, this);
             dialog.import0((Map) map.get("dialog"));
         }
         if (map.containsKey("condition")) {
             condition = new MatchEntry(map.get("condition"));
         }
         if (map.containsKey("condition-dialog")) {
-            conditionDialog = new Dialog(true);
+            conditionDialog = new Dialog(true, true, this);
             conditionDialog.import0((Map) map.get("condition-dialog"));
         }
         if (map.containsKey("item")) {
@@ -134,7 +143,7 @@ public class Dialog extends BuilderDialog {
                                         }
                                     } else {
                                         if (dialog == null) {
-                                            dialog = new Dialog(!inReply);
+                                            dialog = new Dialog(!inReply, this);
                                         }
                                         toggle = true;
                                         dialog.open(player, c -> open(player));
@@ -167,7 +176,7 @@ public class Dialog extends BuilderDialog {
                                         }
                                     } else {
                                         if (conditionDialog == null) {
-                                            conditionDialog = new Dialog(true);
+                                            conditionDialog = new Dialog(true, true, this);
                                         }
                                         toggle = true;
                                         conditionDialog.open(player, c -> open(player));
@@ -267,9 +276,54 @@ public class Dialog extends BuilderDialog {
                 .name("§c上级目录")
                 .lore("", "§7点击")
                 .build());
+        inventory.setItem(40, getStructureItem());
         player.openInventory(inventory);
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         this.toggle = false;
+    }
+
+    public ItemStack getStructureItem() {
+        Dialog top = this;
+        while (top.parent != null) {
+            top = top.parent;
+        }
+        return new ItemBuilder(Version.isAfter(Version.v1_9) ? Material.STRUCTURE_VOID : Material.NETHER_STAR).name("§b结构目录").lore(top.toStructure(this, 0)).build();
+    }
+
+    public List<String> toStructure(Dialog current, int index) {
+        List<String> list = Lists.newArrayList();
+        if (inReply) {
+            list.add(toPrefix(index) + " §7回复 [§8" + toSimple(text.isEmpty() ? "-" : text.get(0)) + "§7] " + current(current));
+            if (conditionDialog != null) {
+                list.add(toPrefix(index + 1) + " §7条件 [§8" + toSimple(condition.toSimple()) + "§7]");
+                list.addAll(conditionDialog.toStructure(current, index + 2));
+            }
+            if (dialog != null) {
+                list.addAll(dialog.toStructure(current, index + 1));
+            }
+            if (!effect.isEmpty()) {
+                list.add(toPrefix(index + 1) + " §7动作 [§8" + toSimple(effect.isEmpty() ? "-" : effect.get(0)) + "§7]");
+            }
+        } else {
+            list.add(toPrefix(index) + " §7对话 [§8" + toSimple(text.isEmpty() ? "-" : text.get(0)) + "§7] " + current(current));
+            for (Dialog reply : reply) {
+                list.addAll(reply.toStructure(current, index + 1));
+            }
+            return list;
+        }
+        return list;
+    }
+
+    public String toSimple(String in) {
+        return Utils.toSimple(TLocale.Translate.setUncolored(TLocale.Translate.setColored(in)));
+    }
+
+    public String current(Dialog current) {
+        return current == this ? " §f<-- 当前" : "";
+    }
+
+    public String toPrefix(int index) {
+        return IntStream.range(0, index).mapToObj(i -> "§f  |").collect(Collectors.joining());
     }
 
     public List<String> getText() {

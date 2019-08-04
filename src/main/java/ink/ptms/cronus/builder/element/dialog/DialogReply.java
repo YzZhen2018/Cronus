@@ -43,7 +43,7 @@ public class DialogReply {
         this.toggle = true;
         this.page = page;
         this.reply = Lists.newArrayList(dialog.getReply());
-        this.reply.add(new DialogAppend());
+        this.reply.add(new DialogAppend(dialog));
         Inventory inventory = Builders.normal("结构编辑 : 对话回复",
                 e -> {
                     if (e.getClickType() == ClickType.CLICK && !Items.isNull(e.castClick().getCurrentItem())) {
@@ -83,7 +83,7 @@ public class DialogReply {
                                     } else {
                                         // 新建
                                         if (replyDialog instanceof DialogAppend) {
-                                            dialog.getReply().add(new Dialog(!dialog.isInReply()));
+                                            dialog.getReply().add(new Dialog(!dialog.isInReply(), dialog));
                                             open(page);
                                         }
                                         // 修改

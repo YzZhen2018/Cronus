@@ -1,5 +1,6 @@
 package ink.ptms.cronus.command.impl;
 
+import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.element.BuilderDialog;
 import ink.ptms.cronus.command.CronusCommand;
@@ -74,7 +75,7 @@ public class CommandBuilderDialog extends CronusCommand {
                     new Argument("名称", () -> {
                         File file = Files.folder(new File(Cronus.getCronusService().getService(Dialog.class).getFolder(), "builder"));
                         if (file.listFiles() == null) {
-                            return null;
+                            return Lists.newArrayList();
                         }
                         return Arrays.stream(file.listFiles()).map(s -> {
                             try {

@@ -189,6 +189,7 @@ ink\ptms\cronus\builder\element\BuilderTaskList.class
 ink\ptms\cronus\util\StringNumber$NumberType.class
 ink\ptms\cronus\builder\task\TaskEnum.class
 ink\ptms\cronus\internal\task\player\total\TaskPlayerRegain.class
+ink\ptms\cronus\util\SoundResource.class
 ink\ptms\cronus\builder\element\BuilderQuest.class
 ink\ptms\cronus\builder\task\damage\PlayerAttack.class
 ink\ptms\cronus\uranus\program\ProgramLine.class
@@ -228,7 +229,6 @@ ink\ptms\cronus\event\CronusStageAcceptEvent.class
 ink\ptms\cronus\builder\task\data\expression\ExpressionForce.class
 ink\ptms\cronus\command\impl\Command$13.class
 ink\ptms\cronus\internal\metrics\Metrics$DrilldownPie.class
-ink\ptms\cronus\service\dialog\impl\DisplayMenu1.class
 ink\ptms\cronus\internal\program\function\FunctionLocationCheck.class
 ink\ptms\cronus\internal\condition\impl\quest\CondQuestCompleted.class
 ink\ptms\cronus\internal\version\MaterialControl$MinecraftVersion.class

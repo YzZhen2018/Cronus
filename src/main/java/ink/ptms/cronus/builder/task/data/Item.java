@@ -32,7 +32,7 @@ public class Item extends TaskData {
 
     @Override
     public String getKey() {
-        return "item1";
+        return "item";
     }
 
     @Override

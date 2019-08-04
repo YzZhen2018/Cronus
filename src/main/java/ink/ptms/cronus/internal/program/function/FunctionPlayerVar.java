@@ -14,7 +14,7 @@ public class FunctionPlayerVar extends Function {
 
     @Override
     public String getName() {
-        return "player.val";
+        return "player.var";
     }
 
     @Override

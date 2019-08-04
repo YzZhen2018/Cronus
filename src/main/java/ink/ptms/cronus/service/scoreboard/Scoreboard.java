@@ -90,7 +90,7 @@ public class Scoreboard implements Service, Listener {
         List<DataQuest> quests = data.getQuest().values().stream()
                 .filter(f -> {
                     Quest quest = f.getQuest();
-                    return quest != null && quest.getBookTag().stream().anyMatch(list::containsKey) && !data.getQuestHide().contains(quest.getId());
+                    return quest != null && quest.getBookTag().stream().anyMatch(list::containsKey) && !data.getQuestHide().contains(quest.getId()) && !data.isQuestCompleted(quest.getId());
                 })
                 .sorted((b, a) -> Integer.compare(a.getQuest().getBookTag().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0), b.getQuest().getBookTag().stream().filter(list::containsKey).map(list::get).findFirst().orElse(0)))
                 .collect(Collectors.toList());
