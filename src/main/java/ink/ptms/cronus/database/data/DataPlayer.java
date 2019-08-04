@@ -86,12 +86,13 @@ public class DataPlayer implements TSerializable {
         CronusQuestAcceptEvent call = CronusQuestAcceptEvent.call(player, quest);
         if (!call.isCancelled()) {
             // 获取数据
-            DataQuest dataQuest = this.quest.computeIfAbsent(call.getQuest().getId(), d -> new DataQuest(call.getQuest().getId(), call.getQuest().getFirstStage()));
+            DataQuest dataQuest = new DataQuest(call.getQuest().getId(), call.getQuest().getFirstStage());
             // 执行动作
             call.getQuest().eval(new QuestProgram(player, dataQuest), Action.ACCEPT);
+            // 移除记录
+            this.quest.put(quest.getId(), dataQuest);
+            this.questCompleted.remove(quest.getId());
         }
-        // 移除完成记录
-        questCompleted.remove(quest.getId());
     }
 
     public void failureQuest(Quest quest) {
