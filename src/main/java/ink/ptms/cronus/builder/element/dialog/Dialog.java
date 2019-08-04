@@ -294,7 +294,7 @@ public class Dialog extends BuilderDialog {
         List<String> list = Lists.newArrayList();
         if (inReply) {
             list.add(toPrefix(index) + " §7回复 [§8" + toSimple(text.isEmpty() ? "-" : text.get(0)) + "§7] " + current(current));
-            if (conditionDialog != null) {
+            if (conditionDialog != null && condition != null) {
                 list.add(toPrefix(index + 1) + " §7条件 [§8" + toSimple(condition.toSimple()) + "§7]");
                 list.addAll(conditionDialog.toStructure(current, index + 2));
             }
