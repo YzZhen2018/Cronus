@@ -1,7 +1,6 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.listener.ListenerInternal;
@@ -22,7 +21,7 @@ import java.util.Map;
 @Task(name = "player_leash")
 public class TaskPlayerLeash extends Countable<PlayerMoveEvent> {
 
-    private Entity entity;
+    private String entity;
     private ItemStack item;
 
     public TaskPlayerLeash(ConfigurationSection config) {
@@ -33,12 +32,12 @@ public class TaskPlayerLeash extends Countable<PlayerMoveEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
-        entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
+        entity = data.containsKey("entity") ? String.valueOf(data.get("entity")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PlayerMoveEvent e) {
-        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), MaterialControl.LEAD.parseMaterial())))) && (entity == null || ListenerInternal.getLeashedEntity(player).stream().allMatch(entity::isSelect));
+        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), MaterialControl.LEAD.parseMaterial())))) && (entity == null || ListenerInternal.getLeashedEntity(player).stream().allMatch(i -> entitySelector.isSelect(i, entity)));
     }
 
     @Override

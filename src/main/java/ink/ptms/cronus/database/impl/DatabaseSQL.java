@@ -1,5 +1,6 @@
 package ink.ptms.cronus.database.impl;
 
+import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.Database;
 import ink.ptms.cronus.database.data.DataPlayer;
@@ -11,6 +12,7 @@ import io.izzel.taboolib.module.db.sql.SQLTable;
 import org.bukkit.entity.Player;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 /**
  * @Author 坏黑
@@ -20,6 +22,7 @@ public class DatabaseSQL extends Database {
 
     private SQLHost host;
     private SQLTable table;
+    private SQLTable tableVar;
     private DataSource dataSource;
     private boolean uniqueId;
 
@@ -27,9 +30,11 @@ public class DatabaseSQL extends Database {
     public void init() {
         host = new SQLHost(Cronus.getConf().getConfigurationSection("Database"), Cronus.getInst());
         table = new SQLTable(Cronus.getConf().getStringColored("Database.table"), SQLColumn.PRIMARY_KEY_ID, new SQLColumn(SQLColumnType.TEXT, "player"), new SQLColumn(SQLColumnType.LONGTEXT, "data"));
+        tableVar = new SQLTable(Cronus.getConf().getStringColored("Database.table") + "_variable", SQLColumn.PRIMARY_KEY_ID, new SQLColumn(SQLColumnType.TEXT, "key"), new SQLColumn(SQLColumnType.LONGTEXT, "value"));
         try {
             dataSource = DBSource.create(host);
             table.executeUpdate(table.createQuery()).dataSource(dataSource).run();
+            tableVar.executeUpdate(tableVar.createQuery()).dataSource(dataSource).run();
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -43,21 +48,13 @@ public class DatabaseSQL extends Database {
 
     @Override
     protected void upload0(Player player, DataPlayer dataPlayer) {
-        if (isExists(player)) {
-            table.executeUpdate("data = ?", "player = ?")
-                    .dataSource(dataSource)
-                    .statement(s -> {
-                        s.setString(1, dataPlayer.writeBase64());
-                        s.setString(2, toName(player));
-                    }).run();
-        } else {
-            table.executeInsert("?, ?")
-                    .dataSource(dataSource)
-                    .statement(s -> {
-                        s.setString(1, toName(player));
-                        s.setString(2, dataPlayer.writeBase64());
-                    }).run();
-        }
+        table.executeQuery("insert into " + table.getTableName() + " values(null, ?, ?) on duplicate key update data = ?")
+                .dataSource(dataSource)
+                .statement(s -> {
+                    s.setString(1, toName(player));
+                    s.setString(2, dataPlayer.writeBase64());
+                    s.setString(3, dataPlayer.writeBase64());
+                }).run();
     }
 
     @Override
@@ -71,12 +68,33 @@ public class DatabaseSQL extends Database {
         return dataPlayer;
     }
 
-    public boolean isExists(Player player) {
-        return table.executeSelect("player = ?")
+    @Override
+    protected void setGV0(String key, String value) {
+        tableVar.executeQuery("insert into " + tableVar.getTableName() + " values(null, ?, ?) on duplicate key update value = ?")
                 .dataSource(dataSource)
-                .statement(s -> s.setString(1, toName(player)))
-                .resultNext(r -> true)
-                .run(false, false);
+                .statement(s -> {
+                    s.setString(1, key);
+                    s.setString(2, value);
+                    s.setString(3, value);
+                }).run();
+    }
+
+    @Override
+    protected String getGV0(String key) {
+        return tableVar.executeSelect("key = ?")
+                .dataSource(dataSource)
+                .statement(s -> s.setString(1, key))
+                .resultNext(r -> r.getString("value"))
+                .run(null, "");
+    }
+
+    @Override
+    protected Map<String, String> getGV0() {
+        Map<String, String> map = Maps.newHashMap();
+        tableVar.executeSelect()
+                .dataSource(dataSource)
+                .resultAutoNext(r -> map.put(r.getString("key"), r.getString("value"))).run();
+        return map;
     }
 
     public String toName(Player player) {

@@ -1,10 +1,8 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.ExpBottleEvent;
@@ -18,7 +16,7 @@ import java.util.Map;
 @Task(name = "player_throw_xp_bottle")
 public class TaskPlayerThrowXpBottle extends Countable<ExpBottleEvent> {
 
-    private Entity bottle;
+    private String bottle;
 
     public TaskPlayerThrowXpBottle(ConfigurationSection config) {
         super(config);
@@ -27,12 +25,12 @@ public class TaskPlayerThrowXpBottle extends Countable<ExpBottleEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        bottle = data.containsKey("bottle") ? BukkitParser.toEntity(data.get("bottle")) : null;
+        bottle = data.containsKey("bottle") ? String.valueOf(data.get("bottle")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, ExpBottleEvent e) {
-        return (bottle == null || bottle.isSelect(e.getEntity()));
+        return (bottle == null || entitySelector.isSelect(e.getEntity(), bottle));
     }
 
     @Override

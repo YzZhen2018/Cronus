@@ -1,6 +1,5 @@
 package ink.ptms.cronus.service.selector.impl;
 
-import ink.ptms.cronus.service.selector.Selector;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
 import io.lumine.xikage.mythicmobs.mobs.MythicMob;

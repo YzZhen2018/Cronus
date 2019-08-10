@@ -1,4 +1,4 @@
-package ink.ptms.cronus.service.selector;
+package ink.ptms.cronus.service.selector.impl;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;

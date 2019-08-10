@@ -1,10 +1,8 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.vehicle.VehicleExitEvent;
@@ -18,7 +16,7 @@ import java.util.Map;
 @Task(name = "player_vehicle_exit")
 public class TaskPlayerVehicleExit extends Countable<VehicleExitEvent> {
 
-    private Entity vehicle;
+    private String vehicle;
 
     public TaskPlayerVehicleExit(ConfigurationSection config) {
         super(config);
@@ -27,12 +25,12 @@ public class TaskPlayerVehicleExit extends Countable<VehicleExitEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        vehicle = data.containsKey("vehicle") ? BukkitParser.toEntity(data.get("vehicle")) : null;
+        vehicle = data.containsKey("vehicle") ? String.valueOf(data.get("vehicle")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, VehicleExitEvent event) {
-        return vehicle == null || vehicle.isSelect(event.getVehicle());
+        return vehicle == null || entitySelector.isSelect(event.getVehicle(), vehicle);
     }
 
     @Override

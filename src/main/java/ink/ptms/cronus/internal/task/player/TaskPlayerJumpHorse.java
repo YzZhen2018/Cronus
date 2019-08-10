@@ -1,10 +1,8 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.util.StringExpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -19,7 +17,7 @@ import java.util.Map;
 @Task(name = "player_jump_horse")
 public class TaskPlayerJumpHorse extends Countable<HorseJumpEvent> {
 
-    private Entity horse;
+    private String horse;
     private StringExpression power;
 
     public TaskPlayerJumpHorse(ConfigurationSection config) {
@@ -29,13 +27,13 @@ public class TaskPlayerJumpHorse extends Countable<HorseJumpEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        horse = data.containsKey("horse") ? BukkitParser.toEntity(data.get("horse")) : null;
+        horse = data.containsKey("horse") ? String.valueOf(data.get("horse")) : null;
         power = data.containsKey("power") ? new StringExpression(data.get("power")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, HorseJumpEvent e) {
-        return (horse == null || horse.isSelect(e.getEntity())) && (power == null || power.isSelect(e.getPower()));
+        return (horse == null || entitySelector.isSelect(e.getEntity(), horse)) && (power == null || power.isSelect(e.getPower()));
     }
 
     @Override

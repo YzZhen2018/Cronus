@@ -1,8 +1,6 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
-import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.Countable;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,7 +16,7 @@ import java.util.Map;
 @Task(name = "player_throw")
 public class TaskPlayerThrow extends Countable<ProjectileLaunchEvent> {
 
-    private Entity projectile;
+    private String projectile;
 
     public TaskPlayerThrow(ConfigurationSection config) {
         super(config);
@@ -27,12 +25,12 @@ public class TaskPlayerThrow extends Countable<ProjectileLaunchEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        projectile = data.containsKey("projectile") ? BukkitParser.toEntity(data.get("projectile")) : null;
+        projectile = data.containsKey("projectile") ? String.valueOf(data.get("projectile")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, ProjectileLaunchEvent e) {
-        return (projectile == null || projectile.isSelect(e.getEntity()));
+        return (projectile == null || entitySelector.isSelect(e.getEntity(), projectile));
     }
 
     @Override

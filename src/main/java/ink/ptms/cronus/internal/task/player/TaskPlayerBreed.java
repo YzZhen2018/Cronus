@@ -1,11 +1,10 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityBreedEvent;
@@ -21,9 +20,9 @@ import java.util.Map;
 public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
 
     private int count;
-    private Entity mother;
-    private Entity father;
-    private Entity entity;
+    private String mother;
+    private String father;
+    private String entity;
     private ItemStack item;
 
     public TaskPlayerBreed(ConfigurationSection config) {
@@ -33,15 +32,15 @@ public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
     @Override
     public void init(Map<String, Object> data) {
         count = NumberConversions.toInt(data.getOrDefault("count", 1));
-        mother = data.containsKey("mother") ? BukkitParser.toEntity(data.get("mother")) : null;
-        father = data.containsKey("father") ? BukkitParser.toEntity(data.get("father")) : null;
-        entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
+        mother = data.containsKey("mother") ? String.valueOf(data.get("mother")) : null;
+        father = data.containsKey("father") ? String.valueOf(data.get("father")) : null;
+        entity = data.containsKey("entity") ? String.valueOf(data.get("entity")) : null;
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, EntityBreedEvent e) {
-        return (item == null || item.isItem(e.getBredWith())) && (mother == null || mother.isSelect(e.getMother())) && (father == null || father.isSelect(e.getFather())) && (entity == null || entity.isSelect(e.getEntity()));
+        return (item == null || item.isItem(e.getBredWith())) && (mother == null || entitySelector.isSelect(e.getMother(), mother)) && (father == null || entitySelector.isSelect(e.getFather(), father)) && (entity == null || entitySelector.isSelect(e.getEntity(), entity));
     }
 
     @Override

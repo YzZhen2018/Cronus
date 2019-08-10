@@ -3,6 +3,7 @@ package ink.ptms.cronus.database.data;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
+import ink.ptms.cronus.event.CronusDataPushEvent;
 import ink.ptms.cronus.event.CronusQuestAcceptEvent;
 import ink.ptms.cronus.event.CronusQuestFailureEvent;
 import ink.ptms.cronus.event.CronusStageFailureEvent;
@@ -172,6 +173,7 @@ public class DataPlayer implements TSerializable {
     }
 
     public DataPlayer push() {
+        CronusDataPushEvent.call(player, this);
         Cronus.getCronusService().async(() -> Cronus.getCronusService().getDatabase().upload(player, this));
         return this;
     }

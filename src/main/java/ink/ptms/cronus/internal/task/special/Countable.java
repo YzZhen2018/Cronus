@@ -1,7 +1,9 @@
 package ink.ptms.cronus.internal.task.special;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.QuestTask;
+import ink.ptms.cronus.service.selector.EntitySelector;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -16,6 +18,7 @@ import java.util.Map;
 public abstract class Countable<C extends Event> extends QuestTask<C> {
 
     protected int count;
+    protected EntitySelector entitySelector;
 
     public Countable(ConfigurationSection config) {
         super(config);
@@ -24,6 +27,7 @@ public abstract class Countable<C extends Event> extends QuestTask<C> {
     @Override
     public void init(Map<String, Object> data) {
         count = NumberConversions.toInt(data.getOrDefault("count", 1));
+        entitySelector = Cronus.getCronusService().getService(EntitySelector.class);
     }
 
     @Override

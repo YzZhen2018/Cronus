@@ -1,12 +1,13 @@
 package ink.ptms.cronus.internal.task.player.damage;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.bukkit.DamageCause;
-import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.service.selector.EntitySelector;
 import io.izzel.taboolib.util.lite.Numbers;
 import io.izzel.taboolib.util.lite.Servers;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class TaskPlayerDamaged extends QuestTask<Event> {
 
     private int damage;
-    private Entity attacker;
+    private String attacker;
     private ItemStack weapon;
     private DamageCause cause;
 
@@ -46,8 +47,8 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
     @Override
     public void init(Map<String, Object> data) {
         damage = NumberConversions.toInt(data.getOrDefault("damage", 1));
+        attacker = data.containsKey("attacker") ? String.valueOf(data.get("attacker")) : null;
         weapon = data.containsKey("weapon") ? BukkitParser.toItemStack(data.get("weapon")) : null;
-        attacker = data.containsKey("attacker") ? BukkitParser.toEntity(data.get("attacker")) : null;
         cause = data.containsKey("cause") ? BukkitParser.toDamageCause(data.get("cause")) : null;
     }
 
@@ -61,7 +62,7 @@ public class TaskPlayerDamaged extends QuestTask<Event> {
         if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event;
             LivingEntity a = Servers.getLivingAttackerInDamageEvent(e);
-            return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || attacker.isSelect(a)) && (cause == null || cause.isSelect(e.getCause()));
+            return (weapon == null || weapon.isItem(a.getEquipment().getItemInHand())) && (attacker == null || Cronus.getCronusService().getService(EntitySelector.class).isSelect(a, attacker)) && (cause == null || cause.isSelect(e.getCause()));
         } else {
             EntityDamageEvent e = (EntityDamageEvent) event;
             return weapon == null && attacker == null && (cause == null || cause.isSelect(e.getCause()));

@@ -1,12 +1,11 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.FishState;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -22,7 +21,7 @@ import java.util.Map;
 @Task(name = "player_fish")
 public class TaskPlayerFish extends Countable<PlayerFishEvent> {
 
-    private Entity entity;
+    private String entity;
     private ItemStack item;
     private FishState state;
 
@@ -33,14 +32,14 @@ public class TaskPlayerFish extends Countable<PlayerFishEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
+        entity = data.containsKey("entity") ? String.valueOf(data.get("entity")) : null;
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
-        entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
         state = data.containsKey("state") ? BukkitParser.toFishState(data.get("state")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PlayerFishEvent e) {
-        return (state == null || state.isSelect(e.getState())) && (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.FISHING_ROD)))) && (entity == null || (e.getCaught() != null && entity.isSelect(e.getCaught())));
+        return (state == null || state.isSelect(e.getState())) && (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.FISHING_ROD)))) && (entity == null || (e.getCaught() != null && entitySelector.isSelect(e.getCaught(), entity)));
     }
 
     @Override

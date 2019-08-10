@@ -1,6 +1,5 @@
 package ink.ptms.cronus.service.selector.impl;
 
-import ink.ptms.cronus.service.selector.Selector;
 import net.citizensnpcs.Citizens;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Entity;

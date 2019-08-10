@@ -46,7 +46,7 @@ public class CronusService {
     private Map<String, TaskCache> registeredTask = Maps.newHashMap();
     private Map<String, ConditionCache> registeredCondition = Maps.newHashMap();
     private Map<String, DataPlayer> playerData = Maps.newConcurrentMap();
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ExecutorService executorService = Executors.newFixedThreadPool(16);
 
     public void init() {
         Collect.registerSerializable();

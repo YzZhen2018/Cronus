@@ -1,11 +1,10 @@
 package ink.ptms.cronus.internal.task.player;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.internal.bukkit.Entity;
 import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
-import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
+import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,7 +20,7 @@ import java.util.Map;
 @Task(name = "player_shear")
 public class TaskPlayerShear extends Countable<PlayerShearEntityEvent> {
 
-    private Entity entity;
+    private String entity;
     private ItemStack item;
 
     public TaskPlayerShear(ConfigurationSection config) {
@@ -32,12 +31,12 @@ public class TaskPlayerShear extends Countable<PlayerShearEntityEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
-        entity = data.containsKey("entity") ? BukkitParser.toEntity(data.get("entity")) : null;
+        entity = data.containsKey("entity") ? String.valueOf(data.get("entity")) : null;
     }
 
     @Override
     public boolean check(Player player, DataQuest dataQuest, PlayerShearEntityEvent e) {
-        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.SHEARS)))) && (entity == null || entity.isSelect(e.getEntity()));
+        return (item == null || item.isItem(Utils.NonNull(Utils.getUsingItem(e.getPlayer(), Material.SHEARS)))) && (entity == null || entitySelector.isSelect(e.getEntity(), entity));
     }
 
     @Override

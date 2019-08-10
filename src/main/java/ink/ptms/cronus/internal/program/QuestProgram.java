@@ -37,7 +37,7 @@ public class QuestProgram extends Program {
         delay = 0;
         for (Effect effect : effects) {
             if (delay == 0) {
-                eval(effect);
+                Bukkit.getScheduler().runTask(Cronus.getInst(), () -> eval(effect));
             } else {
                 Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> eval(effect), delay);
             }

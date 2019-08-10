@@ -88,6 +88,7 @@ ink\ptms\cronus\builder\task\item\ItemConsume.class
 ink\ptms\cronus\event\CronusInitQuestStageEvent.class
 ink\ptms\cronus\builder\task\player\PlayerRide.class
 ink\ptms\cronus\command\impl\CommandTest$7.class
+ink\ptms\cronus\service\dialog\api\Result.class
 ink\ptms\cronus\internal\bukkit\EnumEntry.class
 ink\ptms\cronus\builder\task\data\item\ItemResult.class
 ink\ptms\cronus\internal\program\effect\impl\EffectSchematic.class
@@ -99,9 +100,11 @@ ink\ptms\cronus\service\effectitem\EffectItemData.class
 ink\ptms\cronus\uranus\event\UranusScriptEvalEvent.class
 ink\ptms\cronus\internal\task\listener\ListenerItem.class
 ink\ptms\cronus\internal\bukkit\Location$Mode.class
+ink\ptms\cronus\event\CronusDialogEvalEvent.class
 ink\ptms\cronus\builder\element\BuilderList$1.class
 ink\ptms\cronus\database\data\item\ItemStorageCronus.class
 ink\ptms\cronus\util\StringNumber$1.class
+ink\ptms\cronus\service\selector\EntityCache.class
 ink\ptms\cronus\internal\task\player\TaskPlayerBook.class
 ink\ptms\cronus\command\CronusCommand.class
 ink\ptms\cronus\builder\task\block\BlockBreak.class
@@ -128,6 +131,7 @@ ink\ptms\cronus\service\status\Status$1.class
 ink\ptms\cronus\builder\task\TaskExpression.class
 ink\ptms\cronus\internal\program\effect\impl\EffectPlayerVar.class
 ink\ptms\cronus\CronusMirror.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddExp.class
 ink\ptms\cronus\event\CronusDataPullEvent.class
 ink\ptms\cronus\internal\metrics\MetricsLoader$1.class
 ink\ptms\cronus\builder\task\data\text\TextCommand.class
@@ -150,6 +154,7 @@ ink\ptms\cronus\internal\task\player\total\TaskPlayerLevel.class
 ink\ptms\cronus\builder\task\player\PlayerWalk.class
 ink\ptms\cronus\internal\program\effect\impl\EffectTeleport.class
 ink\ptms\cronus\builder\element\BuilderList$Candidate.class
+ink\ptms\cronus\internal\condition\impl\skillapi\CondHasClass.class
 ink\ptms\cronus\internal\condition\impl\player\CondBlocking.class
 ink\ptms\cronus\uranus\function\impl\FunctionInt.class
 ink\ptms\cronus\builder\task\player\PlayerThrowPotion.class
@@ -175,6 +180,7 @@ ink\ptms\cronus\builder\task\data\entity\EntityCaught.class
 ink\ptms\cronus\builder\element\BuilderTaskData.class
 ink\ptms\cronus\builder\task\data\item\ItemWeapon.class
 ink\ptms\cronus\command\impl\Command$12.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddSkill.class
 ink\ptms\cronus\internal\asm\AsmHandlerImpl.class
 ink\ptms\cronus\builder\task\player\PlayerVehicleExit.class
 ink\ptms\cronus\builder\task\other\PlayerVar.class
@@ -237,6 +243,7 @@ ink\ptms\cronus\builder\task\player\PlayerJump.class
 ink\ptms\cronus\builder\element\BuilderTask.class
 ink\ptms\cronus\builder\task\player\PlayerThrowXpBottle.class
 ink\ptms\cronus\internal\program\effect\impl\EffectQuestVar.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectCastSkill.class
 ink\ptms\cronus\internal\task\listener\version\v1_10.class
 ink\ptms\cronus\internal\metrics\Metrics.class
 ink\ptms\cronus\builder\task\other\Permission.class
@@ -256,6 +263,7 @@ ink\ptms\cronus\builder\task\player\PlayerBreed.class
 ink\ptms\cronus\uranus\function\impl\FunctionRandomDouble.class
 ink\ptms\cronus\uranus\function\FunctionParser.class
 ink\ptms\cronus\builder\task\item\ItemEnchant.class
+ink\ptms\cronus\internal\condition\impl\skillapi\CondHasAttribute.class
 ink\ptms\cronus\internal\task\item\TaskItemEnchant.class
 ink\ptms\cronus\builder\task\player\PlayerBucketFill.class
 ink\ptms\cronus\command\impl\Command.class
@@ -280,6 +288,7 @@ ink\ptms\cronus\internal\task\other\TaskPlayerVar.class
 ink\ptms\cronus\internal\task\other\TaskQuestVar.class
 ink\ptms\cronus\internal\task\player\TaskPlayerJumpHorse.class
 ink\ptms\cronus\internal\condition\impl\CondLocation.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectLoseExp.class
 ink\ptms\cronus\database\data\time\Time.class
 ink\ptms\cronus\internal\task\TaskCache.class
 ink\ptms\cronus\internal\task\player\total\TaskPlayerExp.class
@@ -354,6 +363,7 @@ ink\ptms\cronus\builder\task\item\ItemBreak.class
 ink\ptms\cronus\event\CronusInitQuestEvent.class
 ink\ptms\cronus\event\CronusVisibleToggleEvent.class
 ink\ptms\cronus\internal\program\QuestProgram.class
+ink\ptms\cronus\service\dialog\api\Reply.class
 ink\ptms\cronus\internal\task\block\TaskBlockBreak.class
 ink\ptms\cronus\builder\task\other\PlayerVal.class
 ink\ptms\cronus\service\questitem\QuestItemV1_9.class
@@ -364,6 +374,7 @@ ink\ptms\cronus\internal\version\MaterialControl$1.class
 ink\ptms\cronus\database\data\time\TimeType.class
 ink\ptms\cronus\event\CronusDialogInteractEvent.class
 ink\ptms\cronus\event\CronusInitQuestTaskEvent.class
+ink\ptms\cronus\internal\condition\impl\skillapi\CondHasSkill.class
 ink\ptms\cronus\builder\task\Cache.class
 ink\ptms\cronus\internal\bukkit\Entity$Point.class
 ink\ptms\cronus\internal\task\player\TaskPlayerVehicleExit.class
@@ -375,6 +386,7 @@ ink\ptms\cronus\CronusPlugin$Loader.class
 ink\ptms\cronus\internal\task\player\TaskPlayerVehicleEnter.class
 ink\ptms\cronus\internal\condition\impl\player\CondLeashed.class
 ink\ptms\cronus\uranus\program\ProgramLoader.class
+ink\ptms\cronus\service\dialog\api\ReplyMap.class
 ink\ptms\cronus\command\impl\CommandTest$8.class
 ink\ptms\cronus\internal\condition\impl\player\CondHealth.class
 ink\ptms\cronus\builder\task\data\block\BlockAnvil.class
@@ -387,13 +399,16 @@ ink\ptms\cronus\internal\task\Task.class
 ink\ptms\cronus\builder\task\other\Location.class
 ink\ptms\cronus\builder\task\data\Item$1.class
 ink\ptms\cronus\builder\task\data\expression\ExpressionHealth.class
+ink\ptms\cronus\service\dialog\api\DisplayBase.class
 ink\ptms\cronus\command\impl\Command$1.class
 ink\ptms\cronus\internal\bukkit\TeleportCause.class
 ink\ptms\cronus\builder\task\data\enums\TeleportCause.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddPoints.class
 ink\ptms\cronus\uranus\function\impl\FunctionFormatTimeMinutes.class
 ink\ptms\cronus\builder\editor\module\IModule.class
 ink\ptms\cronus\internal\task\player\TaskPlayerShear.class
 ink\ptms\cronus\internal\bukkit\BlockFace.class
+ink\ptms\cronus\internal\condition\impl\skillapi\CondCanProfess.class
 ink\ptms\cronus\command\impl\CommandItem$5.class
 ink\ptms\cronus\builder\task\block\BlockPlace.class
 ink\ptms\cronus\builder\task\TaskEntry.class
@@ -442,18 +457,21 @@ ink\ptms\cronus\internal\metrics\Metrics$AdvancedPie.class
 ink\ptms\cronus\internal\condition\impl\player\CondName.class
 ink\ptms\cronus\builder\task\player\PlayerBook.class
 ink\ptms\cronus\internal\metrics\Metrics$SimplePie.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddLevel.class
 ink\ptms\cronus\builder\element\dialog\DialogReply.class
 ink\ptms\cronus\uranus\function\FunctionLoader.class
 ink\ptms\cronus\command\impl\CommandService$2.class
 ink\ptms\cronus\internal\condition\collect\CollectO.class
+ink\ptms\cronus\service\selector\impl\Selector.class
 ink\ptms\cronus\builder\task\data\expression\ExpressionExp.class
 ink\ptms\cronus\command\impl\CommandTest$4.class
 ink\ptms\cronus\internal\task\item\TaskItemPickArrow.class
 ink\ptms\cronus\internal\task\player\damage\TaskPlayerDeath.class
+ink\ptms\cronus\internal\task\listener\ListenerMythicMobs.class
 ink\ptms\cronus\internal\Quest$1.class
 ink\ptms\cronus\internal\condition\impl\player\CondHunger.class
 ink\ptms\cronus\CronusLoader.class
-ink\ptms\cronus\service\selector\Selector.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddMana.class
 ink\ptms\cronus\internal\task\item\TaskItemCraft.class
 ink\ptms\cronus\builder\element\BuilderStageList$1.class
 ink\ptms\cronus\internal\hook\HookWorldEdit.class
@@ -469,6 +487,7 @@ ink\ptms\cronus\builder\task\player\PlayerFish.class
 ink\ptms\cronus\event\CronusQuestInitEvent.class
 ink\ptms\cronus\builder\editor\module\tag\TagParser.class
 ink\ptms\cronus\internal\bukkit\Location$1.class
+ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddAttributePoints.class
 ink\ptms\cronus\internal\task\listener\ListenerPlayer.class
 ink\ptms\cronus\builder\task\player\PlayerResurrect.class
 ink\ptms\cronus\database\data\DataPlayer.class

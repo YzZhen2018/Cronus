@@ -17,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -132,6 +133,10 @@ public class ListenerPlayer implements Listener {
     public void e(EntityDeathEvent e) {
         if (e.getEntity().getKiller() instanceof Player) {
             CronusAPI.stageHandle(e.getEntity().getKiller(), e, TaskPlayerKill.class);
+        }
+        // 宠物击杀
+        if (e.getEntity().getKiller() instanceof Tameable && ((Tameable) e.getEntity().getKiller()).getOwner() instanceof Player) {
+            CronusAPI.stageHandle((Player) ((Tameable) e.getEntity().getKiller()).getOwner(), e, TaskPlayerKill.class);
         }
     }
 

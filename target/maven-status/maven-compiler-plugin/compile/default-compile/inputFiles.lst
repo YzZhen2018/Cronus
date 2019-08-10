@@ -79,6 +79,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\condition\MatchType.
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondGameMode.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\CronusMirror.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\event\EventPeriod.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\selector\EntityCache.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionPlayer.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\database\data\DataQuestSerializer.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\item\ItemFishingRod.java
@@ -137,6 +138,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondL
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\CronusPlugin.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\Cronus.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\special\Countable.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\selector\impl\Selector.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\bukkit\DamageCause.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionFormatTimeHours.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\item\ItemBow.java
@@ -286,6 +288,7 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\condition\impl\player\CondH
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\Function.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\element\BuilderStageList.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\data\expression\ExpressionDamage.java
+D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\listener\ListenerMythicMobs.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\event\CronusQuestStopEvent.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerSwim.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectCastSkill.java
@@ -455,7 +458,6 @@ D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\selector\impl\SelectorCitize
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerTrade.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\uranus\function\impl\FunctionInt.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\skillapi\EffectAddPoints.java
-D:\Git\Cronus\src\main\java\ink\ptms\cronus\service\selector\Selector.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\task\player\TaskPlayerElytra.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\builder\task\player\PlayerVehicleEnter.java
 D:\Git\Cronus\src\main\java\ink\ptms\cronus\internal\program\effect\impl\EffectTeleport.java
