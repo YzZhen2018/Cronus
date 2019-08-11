@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class CronusVersion {
 
-    private static Pattern pattern = Pattern.compile("(?<v1>\\d+)\\.(?<v2>\\d+)\\.(?<v3>\\d+)\\.(?<year>\\d+)\\.(?<month>\\d+)\\.(?<day>\\d+)( (?<type>.+))?");
+    private static Pattern pattern = Pattern.compile("(?<v1>\\d+)\\.(?<v2>\\d+)\\.(?<v3>\\d+)\\.(?<year>\\d+)\\.(?<month>\\d+)\\.(?<day>\\d+)(-(?<type>.+))?");
     private int v1;
     private int v2;
     private int v3;

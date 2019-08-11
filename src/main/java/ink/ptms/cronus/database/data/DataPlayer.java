@@ -3,10 +3,7 @@ package ink.ptms.cronus.database.data;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
-import ink.ptms.cronus.event.CronusDataPushEvent;
-import ink.ptms.cronus.event.CronusQuestAcceptEvent;
-import ink.ptms.cronus.event.CronusQuestFailureEvent;
-import ink.ptms.cronus.event.CronusStageFailureEvent;
+import ink.ptms.cronus.event.*;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestStage;
 import ink.ptms.cronus.internal.QuestTask;
@@ -74,6 +71,9 @@ public class DataPlayer implements TSerializable {
     }
 
     public void acceptQuest(Quest quest) {
+        if (quest == null) {
+            return;
+        }
         // 条件判断
         if (quest.getConditionAccept() != null && !quest.getConditionAccept().check(player)) {
             quest.eval(new QuestProgram(player, new DataQuest(quest.getId(), quest.getFirstStage())), Action.ACCEPT_FAIL);
@@ -97,6 +97,9 @@ public class DataPlayer implements TSerializable {
     }
 
     public void failureQuest(Quest quest) {
+        if (quest == null) {
+            return;
+        }
         DataQuest dataQuest = this.quest.remove(quest.getId());
         if (dataQuest != null) {
             // 阶段失败
@@ -114,7 +117,7 @@ public class DataPlayer implements TSerializable {
     }
 
     public void completeQuest(Quest quest) {
-        if (isQuestCompleted(quest.getId())) {
+        if (quest == null || isQuestCompleted(quest.getId())) {
             return;
         }
         DataQuest dataQuest = this.quest.get(quest.getId());
@@ -132,6 +135,16 @@ public class DataPlayer implements TSerializable {
         // 任务检查
         dataQuest.checkAndComplete(player);
         completeQuest(quest);
+    }
+
+    public void stopQuest(Quest quest) {
+        if (quest == null) {
+            return;
+        }
+        if (this.quest.containsKey(quest.getId())) {
+            this.quest.remove(quest.getId());
+            CronusQuestStopEvent.call(player, quest);
+        }
     }
 
     public boolean isQuestCooldown(Quest quest) {

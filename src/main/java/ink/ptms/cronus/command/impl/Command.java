@@ -7,7 +7,6 @@ import ink.ptms.cronus.CronusMirror;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.event.CronusQuestStopEvent;
 import ink.ptms.cronus.event.CronusVisibleToggleEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestBook;
@@ -27,7 +26,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -184,6 +186,10 @@ public class Command extends CronusCommand {
                 error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
                 return;
             }
+            if (dataPlayer.isQuestCompleted(args[1])) {
+                error(sender, "玩家 &7" + args[0] + " &c已完成该任务.");
+                return;
+            }
             dataPlayer.failureQuest(dataQuest.getQuest());
             dataPlayer.push();
         }
@@ -217,9 +223,8 @@ public class Command extends CronusCommand {
                 error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
                 return;
             }
-            dataPlayer.getQuest().remove(dataQuest.getQuest().getId());
+            dataPlayer.stopQuest(dataQuest.getQuest());
             dataPlayer.push();
-            CronusQuestStopEvent.call(player, dataQuest.getQuest());
         }
     };
 
