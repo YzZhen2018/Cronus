@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
-import ink.ptms.cronus.event.CronusReloadItemEvent;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import io.izzel.taboolib.module.inject.TInject;
@@ -48,7 +48,7 @@ public class EffectItem implements Service, Listener {
         items.clear();
         load(folder);
         logger.info(items.size() + " Item Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
-        CronusReloadItemEvent.call();
+        CronusReloadServiceEvent.call(this);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

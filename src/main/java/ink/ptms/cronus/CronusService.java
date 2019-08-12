@@ -122,6 +122,10 @@ public class CronusService {
         return (T) services.get(clazz.getSimpleName());
     }
 
+    public <T> T getService(String name, Class<? extends T> clazz) {
+        return (T) services.get(name);
+    }
+
     public Service getService(String name) {
         return services.get(name);
     }

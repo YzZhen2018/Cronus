@@ -137,6 +137,7 @@ public class GuideWay implements Service, Listener {
         }, 0, 40);
         // 性能优化模式
         performance = Cronus.getConf().getString("Settings.guide-mode", "performance").equalsIgnoreCase("performance");
+        CronusReloadServiceEvent.call(this);
     }
 
     @Override

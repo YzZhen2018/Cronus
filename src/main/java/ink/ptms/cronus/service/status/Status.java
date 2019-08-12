@@ -3,6 +3,7 @@ package ink.ptms.cronus.service.status;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.event.CronusTaskNextEvent;
 import ink.ptms.cronus.internal.QuestTask;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -63,6 +64,7 @@ public class Status implements Service, Listener {
             }
         }
         sound = new SoundPack(Cronus.getConf().getString("Status.sound"));
+        CronusReloadServiceEvent.call(this);
     }
 
     @Override

@@ -52,15 +52,32 @@ public class CommandService extends Command {
 
         @Override
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
-            Service service = Cronus.getCronusService().getService(args[0]);
-            if (service == null) {
-                error(sender, "服务 &7" + args[0] + " &c无效.");
-                return;
+            if (args[0].equalsIgnoreCase("all")) {
+                for (Service service : Cronus.getCronusService().getServices().values()) {
+                    try {
+                        service.cancel();
+                        service.init();
+                        service.active();
+                        normal(sender, "服务 &f" + service.getClass().getSimpleName() + " &7已重载.");
+                    } catch (Throwable t) {
+                        error(sender, "服务 &7" + service.getClass().getSimpleName() + " &c重载失败: " + t.getMessage());
+                    }
+                }
+            } else {
+                Service service = Cronus.getCronusService().getService(args[0]);
+                if (service == null) {
+                    error(sender, "服务 &7" + args[0] + " &c无效.");
+                    return;
+                }
+                try {
+                    service.cancel();
+                    service.init();
+                    service.active();
+                    normal(sender, "服务 &f" + service.getClass().getSimpleName() + " &7已重载.");
+                } catch (Throwable t) {
+                    error(sender, "服务 &7" + service.getClass().getSimpleName() + " &c重载失败: " + t.getMessage());
+                }
             }
-            service.cancel();
-            service.init();
-            service.active();
-            normal(sender, "服务 &f" + args[0] + " &7已重载.");
         }
     };
 

@@ -6,6 +6,7 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.event.CronusTaskNextEvent;
 import ink.ptms.cronus.event.CronusVisibleToggleEvent;
 import ink.ptms.cronus.internal.Quest;
@@ -54,6 +55,7 @@ public class Scoreboard implements Service, Listener {
                 Bukkit.getOnlinePlayers().forEach(this::update);
             }
         }, 0, 40);
+        CronusReloadServiceEvent.call(this);
     }
 
     @Override

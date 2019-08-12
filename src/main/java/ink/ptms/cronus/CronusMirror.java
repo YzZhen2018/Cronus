@@ -52,6 +52,16 @@ public class CronusMirror {
             times = 0;
         }
 
+        public void check(Runnable runnable) {
+            start();
+            try {
+                runnable.run();
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            stop();
+        }
+
         // *********************************
         //
         //        Getter and Setter

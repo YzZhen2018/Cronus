@@ -19,12 +19,4 @@ public abstract class ItemStorage implements Service {
 
     abstract public List<String> getItems();
 
-    public void init() {
-
-    }
-
-    public void cancel() {
-
-    }
-
 }

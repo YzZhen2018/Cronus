@@ -2,6 +2,7 @@ package ink.ptms.cronus.service.questitem;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import io.izzel.taboolib.module.inject.TSchedule;
@@ -37,6 +38,7 @@ public class QuestItem implements Service, Listener {
         if (questItem != null) {
             questItem.getKeys(false).forEach(id -> items.add(new QuestItemData(questItem.getConfigurationSection(id))));
         }
+        CronusReloadServiceEvent.call(this);
     }
 
     @Override

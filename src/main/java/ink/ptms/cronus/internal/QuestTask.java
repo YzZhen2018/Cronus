@@ -56,11 +56,26 @@ public abstract class QuestTask<E extends Event> extends Actionable {
 
     abstract public void next(Player player, DataQuest dataQuest, E event);
 
+    public boolean check(Player player, E event) {
+        try {
+            return check(player, new DataQuest(), event);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return false;
+    }
+
     public void complete(DataQuest dataQuest) {
     }
 
     public void reset(DataQuest dataQuest) {
     }
+
+    // *********************************
+    //
+    //        Getter and Setter
+    //
+    // *********************************
 
     public String getId() {
         return id;

@@ -3,8 +3,8 @@ package ink.ptms.cronus.service.dialog;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusDialogInteractEvent;
-import ink.ptms.cronus.event.CronusReloadDialogEvent;
 import ink.ptms.cronus.event.CronusReloadEvent;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.service.dialog.api.DisplayBase;
 import ink.ptms.cronus.service.dialog.impl.DisplayDemo;
@@ -67,7 +67,7 @@ public class Dialog implements Service, Listener {
         dialogs.clear();
         loadDialog(folder);
         logger.info(dialogs.size() + " Dialog Loaded. (" + (System.currentTimeMillis() - time + "ms)"));
-        CronusReloadDialogEvent.call();
+        CronusReloadServiceEvent.call(this);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

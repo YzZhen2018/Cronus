@@ -2,6 +2,7 @@ package ink.ptms.cronus.service.selector;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import ink.ptms.cronus.event.CronusReloadServiceEvent;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.service.selector.impl.Selector;
@@ -33,6 +34,7 @@ public class EntitySelector implements Service {
         selectors.add(new SelectorMythicMobs());
         selectors.add(new SelectorShopkeepers());
         selectors.forEach(Selector::init);
+        CronusReloadServiceEvent.call(this);
     }
 
     @Override
