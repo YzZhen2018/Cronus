@@ -14,7 +14,7 @@ public class EffectStop extends Effect {
 
     @Override
     public String pattern() {
-        return "stop";
+        return "^stop";
     }
 
     @Override

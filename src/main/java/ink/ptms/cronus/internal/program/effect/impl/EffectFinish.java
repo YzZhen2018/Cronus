@@ -14,7 +14,7 @@ public class EffectFinish extends Effect {
 
     @Override
     public String pattern() {
-        return "(push|update|upload|finish)";
+        return "^(push|update|upload|finish)";
     }
 
     @Override
