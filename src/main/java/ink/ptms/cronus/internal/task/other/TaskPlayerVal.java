@@ -28,7 +28,7 @@ public class TaskPlayerVal extends UnEvent {
     @Override
     public void init(Map<String, Object> data) {
         key = String.valueOf(data.getOrDefault("key", "non-name"));
-        value = data.containsKey("value") ? String.valueOf(data.get("key")) : null;
+        value = data.containsKey("value") ? String.valueOf(data.get("value")) : null;
     }
 
     @Override
