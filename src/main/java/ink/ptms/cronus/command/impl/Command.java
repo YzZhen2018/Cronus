@@ -522,7 +522,7 @@ public class Command extends CronusCommand {
 
         @Override
         public void onCommand(CommandSender sender, org.bukkit.command.Command command, String s, String[] args) {
-            Cronus.getInst().reloadQuest();
+            Cronus.reloadQuest();
             normal(sender, "重载完成.");
         }
     };

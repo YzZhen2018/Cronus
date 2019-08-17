@@ -6,6 +6,7 @@ import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.uranus.function.FunctionParser;
+import io.izzel.taboolib.module.inject.THook;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
  * @Author 坏黑
  * @Since 2019-07-26 0:41
  */
+@THook
 public class HookPlaceholderAPI extends PlaceholderExpansion {
 
     @Override

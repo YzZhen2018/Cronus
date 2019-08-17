@@ -51,6 +51,7 @@ public class EffectDisplay extends Effect {
             case "message":
                 program.getSender().sendMessage(parsed);
                 break;
+            case "all":
             case "text.all":
             case "message.all":
                 Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(parsed));
