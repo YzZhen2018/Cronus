@@ -5,7 +5,7 @@ import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.function.FunctionParser;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class CondFunction extends Condition {
     private boolean negative;
     private boolean booleanMode;
     private String function;
-    private StringExpression expression;
+    private Sxpression expression;
 
     @Override
     public void init(Matcher matcher, String text) {
@@ -32,7 +32,7 @@ public class CondFunction extends Condition {
             negative = text.startsWith("!");
             function = matcher.group("function2");
         } else {
-            expression = new StringExpression(matcher.group("expression"));
+            expression = new Sxpression(matcher.group("expression"));
             function = matcher.group("function1");
         }
     }

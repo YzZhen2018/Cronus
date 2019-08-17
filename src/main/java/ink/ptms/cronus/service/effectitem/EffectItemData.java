@@ -5,7 +5,7 @@ import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.QuestEffect;
-import ink.ptms.cronus.util.StringDate;
+import ink.ptms.cronus.util.Utils;
 import org.bukkit.configuration.ConfigurationSection;
 
 /**
@@ -31,7 +31,7 @@ public class EffectItemData {
         effectCooldown = config.contains("effect-cooldown") ? new QuestEffect(config.getStringList("effect-cooldown")) : null;
         event = EffectItemEvent.fromString(config.getString("event"));
         item = config.contains("item") ? BukkitParser.toItemStack(config.getString("item")) : null;
-        cooldown = config.contains("cooldown") ? StringDate.parse(config.getString("cooldown")) : 0;
+        cooldown = config.contains("cooldown") ? Utils.toTime(config.getString("cooldown")) : 0;
     }
 
     public String getId() {

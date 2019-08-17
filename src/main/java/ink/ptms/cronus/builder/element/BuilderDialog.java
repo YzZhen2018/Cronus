@@ -3,6 +3,7 @@ package ink.ptms.cronus.builder.element;
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.builder.Builders;
+import ink.ptms.cronus.builder.element.condition.MatchEntry;
 import ink.ptms.cronus.builder.element.dialog.Dialog;
 import ink.ptms.cronus.builder.task.data.Entity;
 import ink.ptms.cronus.internal.version.MaterialControl;
@@ -11,6 +12,7 @@ import io.izzel.taboolib.util.Files;
 import io.izzel.taboolib.util.item.ItemBuilder;
 import io.izzel.taboolib.util.item.inventory.ClickType;
 import io.izzel.taboolib.util.lite.Catchers;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -29,6 +31,7 @@ public class BuilderDialog extends BuilderQuest {
 
     private String title = "对话";
     private String target;
+    private MatchEntry condition;
     private List<String> actionOpen = Lists.newArrayList();
     private List<String> actionClose = Lists.newArrayList();
     private Dialog dialog;
@@ -56,6 +59,9 @@ public class BuilderDialog extends BuilderQuest {
         if (section.contains("close")) {
             actionClose = section.getStringList("close");
         }
+        if (section.contains("condition")) {
+            condition = new MatchEntry(section.get("condition"));
+        }
         if (section.contains("dialog")) {
             dialog = new Dialog(false, null);
             dialog.import0(section.getConfigurationSection("dialog").getValues(false));
@@ -74,6 +80,9 @@ public class BuilderDialog extends BuilderQuest {
         }
         if (!actionClose.isEmpty()) {
             yaml.set(id + ".close", actionClose);
+        }
+        if (condition != null) {
+            yaml.set(id + ".condition", condition.toObject());
         }
         try {
             yaml.save(file);
@@ -104,12 +113,20 @@ public class BuilderDialog extends BuilderQuest {
                                 }
                                 break;
                             case 12:
-                                new BuilderListEffect("对话开始动作", actionOpen).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                BuilderCondition condition = new BuilderCondition(this.condition, e.getClicker(), "特殊条件");
+                                condition.setCloseTask(c -> {
+                                    this.condition = condition.getEntry();
+                                    Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> open(e.getClicker()), 1);
+                                });
+                                condition.open(player, 0);
                                 break;
                             case 13:
-                                new BuilderListEffect("对话结束动作", actionClose).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                new BuilderListEffect("对话开始动作", actionOpen).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
                                 break;
                             case 14:
+                                new BuilderListEffect("对话结束动作", actionClose).open(e.getClicker(), 0, c -> open(e.getClicker()), this::getEffect);
+                                break;
+                            case 15:
                                 dialog.open(player, c -> open(player));
                                 break;
                             case 49:
@@ -137,15 +154,19 @@ public class BuilderDialog extends BuilderQuest {
                 .name("§b对话目标")
                 .lore("", "§f" + (target == null ? "无" : getTargetDisplay()), "§8§m                  ", "§7选择: §8左键", "§7删除: §8左键")
                 .build());
-        inventory.setItem(12, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
+        inventory.setItem(12, new ItemBuilder(MaterialControl.TRIPWIRE_HOOK.parseMaterial())
+                .name("§b对话条件")
+                .lore(toLore(condition == null ? Lists.newArrayList() : condition.asList(0)))
+                .build());
+        inventory.setItem(13, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b对话开始动作")
                 .lore(toLore(actionOpen))
                 .build());
-        inventory.setItem(13, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
+        inventory.setItem(14, new ItemBuilder(MaterialControl.REPEATER.parseMaterial())
                 .name("§b对话结束动作")
                 .lore(toLore(actionClose))
                 .build());
-        inventory.setItem(14, new ItemBuilder(MaterialControl.BOOK.parseMaterial())
+        inventory.setItem(15, new ItemBuilder(MaterialControl.BOOK.parseMaterial())
                 .name("§b对话结构")
                 .lore("", dialog == null ? "§f无" : "§f...")
                 .build());

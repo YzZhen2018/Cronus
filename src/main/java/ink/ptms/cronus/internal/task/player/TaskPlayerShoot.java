@@ -5,7 +5,7 @@ import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.Countable;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -21,7 +21,7 @@ public class TaskPlayerShoot extends Countable<EntityShootBowEvent> {
 
     private String projectile;
     private ItemStack bow;
-    private StringExpression force;
+    private Sxpression force;
 
     public TaskPlayerShoot(ConfigurationSection config) {
         super(config);
@@ -31,7 +31,7 @@ public class TaskPlayerShoot extends Countable<EntityShootBowEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         bow = data.containsKey("bow") ? BukkitParser.toItemStack(data.get("bow")) : null;
-        force = data.containsKey("force") ? new StringExpression(data.get("force")) : null;
+        force = data.containsKey("force") ? new Sxpression(data.get("force")) : null;
         projectile = data.containsKey("projectile") ? String.valueOf(data.get("projectile")) : null;
     }
 

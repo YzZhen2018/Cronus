@@ -5,7 +5,7 @@ import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.Uncountable;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class TaskItemDamage extends Uncountable<PlayerItemDamageEvent> {
 
     private ItemStack item;
-    private StringExpression damage;
+    private Sxpression damage;
 
     public TaskItemDamage(ConfigurationSection config) {
         super(config);
@@ -30,7 +30,7 @@ public class TaskItemDamage extends Uncountable<PlayerItemDamageEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         item = data.containsKey("item") ? BukkitParser.toItemStack(data.get("item")) : null;
-        damage = data.containsKey("damage") ? new StringExpression(data.get("damage")) : null;
+        damage = data.containsKey("damage") ? new Sxpression(data.get("damage")) : null;
     }
 
     @Override

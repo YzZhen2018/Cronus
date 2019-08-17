@@ -2,6 +2,7 @@ def_0:
   theme: CRONUS_MENU
   title: '对话'
   target: 'name=dialog_test'
+  condition: 'player.alive'
   dialog:
     text:
     - '&7你好!'

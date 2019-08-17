@@ -8,7 +8,7 @@ import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.Actionable;
 import ink.ptms.cronus.internal.program.QuestProgram;
-import ink.ptms.cronus.util.StringDate;
+import ink.ptms.cronus.util.Utils;
 import io.izzel.taboolib.module.locale.TLocale;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -38,7 +38,7 @@ public class Quest extends Actionable {
         this.display = conf.getString("display", id);
         this.bookTag = conf.getStringList("booktag");
         this.timeout = Time.parse(conf.getString("timeout"));
-        this.cooldown = StringDate.parse(conf.getString("cooldown"));
+        this.cooldown = Utils.toTime(conf.getString("cooldown"));
         this.conditionAccept = ConditionParser.fromObject(conf.get("condition.accept"));
         this.conditionFailure = ConditionParser.fromObject(conf.get("condition.failure"));
         CronusQuestInitEvent.call(this);

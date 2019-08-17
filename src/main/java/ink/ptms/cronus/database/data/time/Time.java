@@ -1,7 +1,7 @@
 package ink.ptms.cronus.database.data.time;
 
 import ink.ptms.cronus.database.data.DataQuest;
-import ink.ptms.cronus.util.StringDate;
+import ink.ptms.cronus.util.Utils;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Calendar;
@@ -20,7 +20,7 @@ public class Time {
     private String origin;
 
     public Time(String libTime) {
-        this(StringDate.parse(libTime));
+        this(Utils.toTime(libTime));
     }
 
     public Time(long time) {

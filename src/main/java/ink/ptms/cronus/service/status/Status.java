@@ -14,7 +14,7 @@ import ink.ptms.cronus.internal.task.special.Uncountable;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.util.lite.SoundPack;
 import org.bukkit.Bukkit;
@@ -105,7 +105,7 @@ public class Status implements Service, Listener {
                 }
                 // 表达式计数
                 else if (questTask instanceof Uncountable) {
-                    StringExpression total = ((Uncountable) questTask).getTotal();
+                    Sxpression total = ((Uncountable) questTask).getTotal();
                     if (total == null) {
                         newBar.setProgress(questTask.isCompleted(dataQuest) ? 1 : 0.5);
                     } else {

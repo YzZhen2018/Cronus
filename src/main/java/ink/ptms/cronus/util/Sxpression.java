@@ -11,22 +11,22 @@ import java.util.regex.Pattern;
  * @Author 坏黑
  * @Since 2019-06-07 23:51
  */
-public class StringExpression {
+public class Sxpression {
 
     @TInject
     private static TLogger logger;
     private static Pattern pattern = Pattern.compile("(?<symbol>>=|>|<=|<|==|=|!=|≈≈|≈|!≈)[ ]?(?<number>.+)");
     private String symbol;
-    private StringNumber number;
+    private Strumber number;
 
-    public StringExpression(Object in) {
+    public Sxpression(Object in) {
         Matcher matcher = pattern.matcher(String.valueOf(in));
         if (!matcher.find()) {
             logger.error("StringExpression \"" + in + "\" parsing failed.");
             return;
         }
         symbol = matcher.group("symbol");
-        number = new StringNumber(matcher.group("number"));
+        number = new Strumber(matcher.group("number"));
     }
 
     public boolean isSelect(String string) {
@@ -99,7 +99,7 @@ public class StringExpression {
         return symbol;
     }
 
-    public StringNumber getNumber() {
+    public Strumber getNumber() {
         return number;
     }
 }

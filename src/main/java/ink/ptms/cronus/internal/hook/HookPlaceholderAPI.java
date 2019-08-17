@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.hook;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
@@ -36,6 +37,7 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
 
     /**
      * 可用变量：
+     * %cronus_server_val_[key]% — 全局变量
      * %cronus_player_val_[key]% — 永久玩家变量
      * %cronus_player_var_[key]% — 临时玩家变量
      * %cronus_quest_val_[id]_[key]% — 永久任务变量
@@ -49,11 +51,14 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player player, String s) {
         DataPlayer dataPlayer = CronusAPI.getData(player);
         String in = s.toLowerCase();
+        if (in.startsWith("server_val_")) {
+            return String.valueOf(Cronus.getCronusService().getDatabase().getGlobalVariable(s.substring("player_val_".length())));
+        }
         if (in.startsWith("player_val_")) {
-            return (String) dataPlayer.getDataGlobal().get(s.substring("player_val_".length()));
+            return String.valueOf(dataPlayer.getDataGlobal().get(s.substring("player_val_".length())));
         }
         if (in.startsWith("player_var_")) {
-            return (String) dataPlayer.getDataTemp().get(s.substring("player_var_".length()));
+            return String.valueOf(dataPlayer.getDataTemp().get(s.substring("player_var_".length())));
         }
         if (in.startsWith("quest_val_")) {
             String[] v = s.substring("quest_val_".length()).split("_");

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
-import ink.ptms.cronus.util.StringNumber;
+import ink.ptms.cronus.util.Strumber;
 import ink.ptms.cronus.util.Utils;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
@@ -62,7 +62,7 @@ public class EffectVal extends Effect {
             } else if (parsed.equalsIgnoreCase("null")) {
                 data.set(name, null);
             } else {
-                data.set(name, new StringNumber(parsed).get());
+                data.set(name, new Strumber(parsed).get());
             }
         }
         // 设置
@@ -89,9 +89,9 @@ public class EffectVal extends Effect {
                     return;
                 }
                 // 文本检查
-                data.set(name, new StringNumber(data.getString(name)).add(parsed).get());
+                data.set(name, new Strumber(data.getString(name)).add(parsed).get());
             } else {
-                data.set(name, new StringNumber(parsed).get());
+                data.set(name, new Strumber(parsed).get());
             }
         }
         // 插入
@@ -118,21 +118,9 @@ public class EffectVal extends Effect {
                     return;
                 }
                 // 文本检查
-                data.set(name, new StringNumber(data.getString(name)).add(parsed).get());
+                data.set(name, new Strumber(data.getString(name)).add(parsed).get());
             } else if (Utils.isDouble(parsed)) {
-                data.set(name, new StringNumber(0).subtract(parsed).get());
-            }
-        }
-        // 乘
-        else if (symbol.equals("*")) {
-            if (data.contains(name)) {
-                data.set(name, new StringNumber(data.getString(name)).multiply(parsed).get());
-            }
-        }
-        // 除
-        else if (symbol.equals("/")) {
-            if (data.contains(name)) {
-                data.set(name, new StringNumber(data.getString(name)).division(parsed).get());
+                data.set(name, new Strumber(0).subtract(parsed).get());
             }
         }
         // 替换

@@ -3,7 +3,7 @@ package ink.ptms.cronus.internal.task.player;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.task.special.Countable;
 import ink.ptms.cronus.internal.task.Task;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerEditBookEvent;
@@ -19,7 +19,7 @@ public class TaskPlayerBook extends Countable<PlayerEditBookEvent> {
 
     private String title;
     private String content;
-    private StringExpression page;
+    private Sxpression page;
 
     public TaskPlayerBook(ConfigurationSection config) {
         super(config);
@@ -30,7 +30,7 @@ public class TaskPlayerBook extends Countable<PlayerEditBookEvent> {
         super.init(data);
         title = data.containsKey("title") ? String.valueOf(data.get("title")) : null;
         content = data.containsKey("content") ? String.valueOf(data.get("content")) : null;
-        page = data.containsKey("page") ? new StringExpression(data.get("page")) : null;
+        page = data.containsKey("page") ? new Sxpression(data.get("page")) : null;
     }
 
     @Override

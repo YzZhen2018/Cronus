@@ -2,6 +2,8 @@ package ink.ptms.cronus.service.dialog;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.event.CronusInitDialogEvent;
+import ink.ptms.cronus.internal.condition.Condition;
+import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.NoneProgram;
 import ink.ptms.cronus.internal.program.QuestEffect;
 import ink.ptms.cronus.internal.program.QuestProgram;
@@ -27,6 +29,7 @@ public class DialogGroup {
     private DialogDisplay display;
     private QuestEffect open;
     private QuestEffect close;
+    private Condition condition;
 
     public DialogGroup(ConfigurationSection config) {
         Dialog service = Cronus.getCronusService().getService(Dialog.class);
@@ -38,6 +41,7 @@ public class DialogGroup {
         this.close = config.contains("close") ? new QuestEffect(config.getStringList("close")) : null;
         this.dialog = new DialogPack(this, config.getConfigurationSection("dialog").getValues(false));
         this.display = service.getDisplay(service.getDialogStyle());
+        this.condition = ConditionParser.fromObject(config.get("condition"));
         if (this.display == null) {
             logger.warn("Invalid dialog style: " + service.getDialogStyle());
         }
@@ -114,6 +118,14 @@ public class DialogGroup {
 
     public void setClose(QuestEffect close) {
         this.close = close;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
     }
 
     public ConfigurationSection getConfig() {

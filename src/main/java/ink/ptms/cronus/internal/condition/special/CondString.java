@@ -2,7 +2,7 @@ package ink.ptms.cronus.internal.condition.special;
 
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Condition;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -14,11 +14,11 @@ import java.util.regex.Matcher;
  */
 public abstract class CondString extends Condition {
 
-    protected StringExpression expression;
+    protected Sxpression expression;
 
     @Override
     public void init(Matcher matcher, String text) {
-        expression = new StringExpression(matcher.group("expression"));
+        expression = new Sxpression(matcher.group("expression"));
     }
 
     @Override

@@ -78,11 +78,11 @@ public class Dialog implements Service, Listener {
         Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
             EntitySelector selector = Cronus.getCronusService().getService(EntitySelector.class);
             for (DialogGroup dialog : dialogs) {
-                if (selector.isSelect(e.getRightClicked(), dialog.getTarget())) {
+                if (selector.isSelect(e.getRightClicked(), dialog.getTarget()) && (dialog.getCondition() == null || dialog.getCondition().check(e.getPlayer()))) {
                     CronusDialogInteractEvent dialogEvent = CronusDialogInteractEvent.call(dialog.getDialog(), e.getRightClicked(), e.getPlayer());
                     if (!dialogEvent.isCancelled()) {
                         try {
-                            dialogEvent.getPack().display(e.getPlayer());
+                            dialog.getDialog().display(e.getPlayer());
                         } catch (Throwable t) {
                             t.printStackTrace();
                         }

@@ -3,7 +3,7 @@ package ink.ptms.cronus.internal.task.player.total;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.task.special.Uncountable;
 import ink.ptms.cronus.internal.task.Task;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Task(name = "player_level")
 public class TaskPlayerLevel extends Uncountable<PlayerLevelChangeEvent> {
 
-    private StringExpression level;
+    private Sxpression level;
 
     public TaskPlayerLevel(ConfigurationSection config) {
         super(config);
@@ -26,7 +26,7 @@ public class TaskPlayerLevel extends Uncountable<PlayerLevelChangeEvent> {
     @Override
     public void init(Map<String, Object> data) {
         super.init(data);
-        level = data.containsKey("level") ? new StringExpression(data.get("level")) : null;
+        level = data.containsKey("level") ? new Sxpression(data.get("level")) : null;
     }
 
     @Override

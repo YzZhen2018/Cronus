@@ -3,7 +3,7 @@ package ink.ptms.cronus.internal.condition.impl.hook;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
 import ink.ptms.cronus.internal.condition.Condition;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class CondPlaceholder extends Condition {
     private boolean negative;
     private boolean booleanMode;
     private String placeholder;
-    private StringExpression expression;
+    private Sxpression expression;
 
     @Override
     public void init(Matcher matcher, String text) {
@@ -30,7 +30,7 @@ public class CondPlaceholder extends Condition {
             negative = text.startsWith("!");
             placeholder = matcher.group("placeholder2");
         } else {
-            expression = new StringExpression(matcher.group("expression"));
+            expression = new Sxpression(matcher.group("expression"));
             placeholder = matcher.group("placeholder1");
         }
     }

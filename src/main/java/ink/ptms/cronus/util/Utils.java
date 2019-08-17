@@ -84,6 +84,10 @@ public class Utils {
                 + "," + (isInt(location.getZ()) ? NumberConversions.toInt(location.getZ()) : location.getZ()) ;
     }
 
+    public static Object parseInt(double in) {
+        return isInt(in) ? (int) in : in;
+    }
+
     public static boolean next(int page, int size, int entry) {
         return size / (double) entry > page + 1;
     }
@@ -131,5 +135,38 @@ public class Utils {
                 .build());
         entity.setFireworkMeta(fireworkMeta);
         return entity;
+    }
+
+    public static long toTime(String in) {
+        if (in == null) {
+            return 0;
+        }
+        if (in.equalsIgnoreCase("never") || in.equalsIgnoreCase("-1")) {
+            return -1;
+        }
+        long time = 0;
+        StringBuilder current = new StringBuilder();
+        for (String charAt : in.toLowerCase().split("")) {
+            if (Utils.isInt(charAt)) {
+                current.append(charAt);
+            } else {
+                switch (charAt) {
+                    case "d":
+                        time += NumberConversions.toInt(current.toString()) * 24L * 60L * 60L * 1000L;
+                        break;
+                    case "h":
+                        time += NumberConversions.toInt(current.toString()) * 60L * 60L * 1000L;
+                        break;
+                    case "m":
+                        time += NumberConversions.toInt(current.toString()) * 60L * 1000L;
+                        break;
+                    case "s":
+                        time += NumberConversions.toInt(current.toString()) * 1000L;
+                        break;
+                }
+                current = new StringBuilder();
+            }
+        }
+        return time;
     }
 }

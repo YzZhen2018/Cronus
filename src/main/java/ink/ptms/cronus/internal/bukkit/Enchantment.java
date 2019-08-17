@@ -1,6 +1,6 @@
 package ink.ptms.cronus.internal.bukkit;
 
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
 import io.izzel.taboolib.util.item.Items;
@@ -38,7 +38,7 @@ public class Enchantment {
     public class Point {
 
         private org.bukkit.enchantments.Enchantment enchant;
-        private StringExpression expression;
+        private Sxpression expression;
 
         public Point(String in) {
             Matcher matcher = pattern.matcher(in);
@@ -51,7 +51,7 @@ public class Enchantment {
                 logger.error("Enchantment \"" + in + "\" parsing failed.");
                 return;
             }
-            expression = new StringExpression(matcher.group("expression"));
+            expression = new Sxpression(matcher.group("expression"));
         }
 
         public boolean isSelect(org.bukkit.enchantments.Enchantment enchant, int level) {

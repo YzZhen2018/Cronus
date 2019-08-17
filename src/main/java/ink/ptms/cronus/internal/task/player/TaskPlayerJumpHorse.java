@@ -3,7 +3,7 @@ package ink.ptms.cronus.internal.task.player;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.Countable;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.HorseJumpEvent;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class TaskPlayerJumpHorse extends Countable<HorseJumpEvent> {
 
     private String horse;
-    private StringExpression power;
+    private Sxpression power;
 
     public TaskPlayerJumpHorse(ConfigurationSection config) {
         super(config);
@@ -28,7 +28,7 @@ public class TaskPlayerJumpHorse extends Countable<HorseJumpEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         horse = data.containsKey("horse") ? String.valueOf(data.get("horse")) : null;
-        power = data.containsKey("power") ? new StringExpression(data.get("power")) : null;
+        power = data.containsKey("power") ? new Sxpression(data.get("power")) : null;
     }
 
     @Override

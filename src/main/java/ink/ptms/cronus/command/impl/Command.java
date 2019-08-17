@@ -464,7 +464,9 @@ public class Command extends CronusCommand {
                 error(sender, "对话 &7" + args[1] + " &c无效.");
                 return;
             }
-            dialog.getDialog().display(player);
+            if (dialog.getCondition() == null || dialog.getCondition().check(player)) {
+                dialog.getDialog().display(player);
+            }
         }
     };
 

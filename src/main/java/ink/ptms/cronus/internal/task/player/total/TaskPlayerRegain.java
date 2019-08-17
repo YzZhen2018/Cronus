@@ -5,7 +5,7 @@ import ink.ptms.cronus.internal.bukkit.RegainReason;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.special.Uncountable;
 import ink.ptms.cronus.internal.task.Task;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class TaskPlayerRegain extends Uncountable<EntityRegainHealthEvent> {
 
     private RegainReason reason;
-    private StringExpression health;
+    private Sxpression health;
 
     public TaskPlayerRegain(ConfigurationSection config) {
         super(config);
@@ -30,7 +30,7 @@ public class TaskPlayerRegain extends Uncountable<EntityRegainHealthEvent> {
     public void init(Map<String, Object> data) {
         super.init(data);
         reason = data.containsKey("reason") ? BukkitParser.toRegainReason(data.get("reason")) : null;
-        health = data.containsKey("health") ? new StringExpression(data.get("health")) : null;
+        health = data.containsKey("health") ? new Sxpression(data.get("health")) : null;
     }
 
     @Override

@@ -2,7 +2,7 @@ package ink.ptms.cronus.builder.task;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.builder.element.BuilderTaskData;
-import ink.ptms.cronus.util.StringExpression;
+import ink.ptms.cronus.util.Sxpression;
 import ink.ptms.cronus.util.Utils;
 import io.izzel.taboolib.module.tellraw.TellrawJson;
 import io.izzel.taboolib.util.item.ItemBuilder;
@@ -23,7 +23,7 @@ public abstract class TaskExpression extends TaskText {
 
     @Override
     public ItemStack getItem() {
-        return new ItemBuilder(getMaterial()).name("§7" + getDisplay()).lore("", "§f" + (data == null ? "无" : new StringExpression(data).translate())).build();
+        return new ItemBuilder(getMaterial()).name("§7" + getDisplay()).lore("", "§f" + (data == null ? "无" : new Sxpression(data).translate())).build();
     }
 
     @Override

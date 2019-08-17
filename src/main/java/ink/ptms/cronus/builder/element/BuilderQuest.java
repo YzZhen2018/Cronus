@@ -9,7 +9,6 @@ import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.database.data.time.TimeType;
 import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.program.ProgramLoader;
-import ink.ptms.cronus.util.StringDate;
 import ink.ptms.cronus.util.Utils;
 import io.izzel.taboolib.module.locale.TLocale;
 import io.izzel.taboolib.module.tellraw.TellrawJson;
@@ -380,7 +379,7 @@ public class BuilderQuest extends CronusCommand {
     }
 
     protected String displayCooldown() {
-        return cooldown.equalsIgnoreCase("never") || cooldown.equals("-1") ? "永不" : getTimeDisplay(StringDate.parse(cooldown));
+        return cooldown.equalsIgnoreCase("never") || cooldown.equals("-1") ? "永不" : getTimeDisplay(Utils.toTime(cooldown));
     }
 
     protected String displayTimeout() {

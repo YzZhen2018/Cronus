@@ -1,5 +1,6 @@
 package ink.ptms.cronus.command.impl;
 
+import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataPlayer;
@@ -68,6 +69,25 @@ public class CommandVariable extends CronusCommand {
             DataPlayer playerData = CronusAPI.getData(player);
             playerData.getDataGlobal().set(args[1], args[2].equalsIgnoreCase("null") ? null : args[2]);
             playerData.push();
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand server = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "设置全局变量";
+        }
+
+        @Override
+        public Argument[] getArguments() {
+            return new Argument[] {new Argument("键"), new Argument("值")};
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            Cronus.getCronusService().getDatabase().setGlobalVariable(args[1], args[2].equalsIgnoreCase("null") ? null : args[2]);
         }
     };
 

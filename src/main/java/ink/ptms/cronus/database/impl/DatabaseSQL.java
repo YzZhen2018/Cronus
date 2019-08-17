@@ -70,13 +70,19 @@ public class DatabaseSQL extends Database {
 
     @Override
     protected void setGV0(String key, String value) {
-        tableVar.executeQuery("insert into " + tableVar.getTableName() + " values(null, ?, ?) on duplicate key update value = ?")
-                .dataSource(dataSource)
-                .statement(s -> {
-                    s.setString(1, key);
-                    s.setString(2, value);
-                    s.setString(3, value);
-                }).run();
+        if (value == null) {
+            tableVar.executeQuery("delete from " + tableVar.getTableName() + " where key = ?")
+                    .dataSource(dataSource)
+                    .statement(s -> s.setString(1, key)).run();
+        } else {
+            tableVar.executeQuery("insert into " + tableVar.getTableName() + " values(null, ?, ?) on duplicate key update value = ?")
+                    .dataSource(dataSource)
+                    .statement(s -> {
+                        s.setString(1, key);
+                        s.setString(2, value);
+                        s.setString(3, value);
+                    }).run();
+        }
     }
 
     @Override
