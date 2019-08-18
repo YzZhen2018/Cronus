@@ -6,7 +6,7 @@ quest_0:
   # 任务索引
   # 用于在任务纵览或计分板中选择显示的任务
   booktag:
-  - '主线任务'
+    - '主线任务'
 
   # 任务标签
   # 如果你使用 Uranus 语法进行任务切换
@@ -41,9 +41,9 @@ quest_0:
   # ===========================================================
   action:
     accept:
-    - 'send.all 玩家 {player:name} 接受 {quest:name} 任务成功!'
+      - 'send.all 玩家 {player:name} 接受 {quest:name} 任务成功!'
     accept-fail:
-    - 'send.all 玩家 {player:name} 接受 {quest:name} 任务失败! (等级不足)'
+      - 'send.all 玩家 {player:name} 接受 {quest:name} 任务失败! (等级不足)'
 
   # 任务条件
   # ===========================================================
@@ -83,8 +83,8 @@ quest_0:
           condition:
             ==: ANY_MATCH
             predicate:
-            - 'item.hand == diamond_spade'
-            - 'item.hand == iron_spade'
+              - 'item.hand == diamond_spade'
+              - 'item.hand == iron_spade'
 
           # 任务条目引导
           # 插件将会创造动态的引导指引玩家前往这里
@@ -96,8 +96,8 @@ quest_0:
             target: 'world,0.5,100.5,0.5'
             # 引导内容
             text:
-            - '&8[&f开采目标&8]'
-            - '距离 {distance}m'
+              - '&8[&f开采目标&8]'
+              - '距离 {distance}m'
 
           # 任务条目动作
           # ===========================================================
@@ -125,10 +125,10 @@ quest_0:
       # ===========================================================
       action:
         success:
-        - 'send.all 玩家 {player:name} 完成 {quest:stage} 阶段!'
+          - 'send.all 玩家 {player:name} 完成 {quest:stage} 阶段!'
         restart:
-        - 'send.all 玩家 {player:name} 重置 {quest:stage} 阶段!'
-        - 'player.level = 100'
+          - 'send.all 玩家 {player:name} 重置 {quest:stage} 阶段!'
+          - 'player.level = 100'
 
       # 任务阶段重置所需条件
       # 当条件满足时任务阶段自动重置
@@ -138,31 +138,31 @@ quest_0:
       # 用于在佣兵日志中显示任务的相关信息
       content:
         c0:
-        - '佣兵日志'
-        - ''
-        - '在开始你的冒险旅途之前'
-        - '先来熟悉这里'
-        - ''
-        - '尝试完成以下目标:'
-        - ''
-        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
+          - '佣兵日志'
+          - ''
+          - '在开始你的冒险旅途之前'
+          - '先来熟悉这里'
+          - ''
+          - '尝试完成以下目标:'
+          - ''
+          - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
 
       # 任务完成描述
       # 用于在佣兵日志中显示任务的最终信息
       content-completed:
         c0:
-        - '佣兵日志'
-        - ''
-        - '在开始你的冒险旅途之前'
-        - '先来熟悉这里'
-        - ''
-        - '尝试完成以下目标:'
-        - ''
-        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
-        - ''
-        - '完成于 {format.date:{quest:time.complete}|yyy年MM月dd日}'
+          - '佣兵日志'
+          - ''
+          - '在开始你的冒险旅途之前'
+          - '先来熟悉这里'
+          - ''
+          - '尝试完成以下目标:'
+          - ''
+          - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
+          - ''
+          - '完成于 {format.date:{quest:time.complete}|yyy年MM月dd日}'
 
       # 任务纵览描述
       # 用于在任务纵览中显示任务信息
       content-global:
-      - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
+        - '{quest.strike:t0}- <hover:{quest.strike:t0}开采石头|在 world,0,100,0 开采石头>{quest.strike:t0} * {quest.var:t0.count|0}/10'
