@@ -1,6 +1,9 @@
 package ink.ptms.cronus.uranus.program.effect;
 
+import ink.ptms.cronus.internal.variable.VariableExecutor;
+import ink.ptms.cronus.internal.variable.impl.EngineY;
 import ink.ptms.cronus.uranus.annotations.Auto;
+import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 
 import java.util.regex.Matcher;
@@ -18,7 +21,7 @@ public class EffectVar extends Effect {
 
     @Override
     public String pattern() {
-        return "var\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+        return "var\\.(?<name>\\S+) (?<symbol>\\S+) (?<value>.+)";
     }
 
     @Override
@@ -35,7 +38,7 @@ public class EffectVar extends Effect {
 
     @Override
     public void eval(Program program) {
-        EffectVal.eval(program, value, symbol, name, program.getData());
+        VariableExecutor.update(new EngineY(program.getData()), name, symbol, FunctionParser.parseAll(program, value));
     }
 
     @Override

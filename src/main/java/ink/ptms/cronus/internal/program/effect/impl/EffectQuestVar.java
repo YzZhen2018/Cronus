@@ -1,10 +1,12 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
 import ink.ptms.cronus.internal.program.QuestProgram;
+import ink.ptms.cronus.internal.variable.VariableExecutor;
+import ink.ptms.cronus.internal.variable.impl.EngineY;
 import ink.ptms.cronus.uranus.annotations.Auto;
+import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import ink.ptms.cronus.uranus.program.effect.EffectVal;
 
 import java.util.regex.Matcher;
 
@@ -21,7 +23,7 @@ public class EffectQuestVar extends Effect {
 
     @Override
     public String pattern() {
-        return "quest\\.var\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+        return "quest\\.var\\.(?<name>\\S+) (?<symbol>\\S+) (?<value>.+)";
     }
 
     @Override
@@ -39,7 +41,7 @@ public class EffectQuestVar extends Effect {
     @Override
     public void eval(Program program) {
         if (program instanceof QuestProgram) {
-            EffectVal.eval(program, value, symbol, name, ((QuestProgram) program).getDataQuest().getDataStage());
+            VariableExecutor.update(new EngineY(((QuestProgram) program).getDataQuest().getDataStage()), name, symbol, FunctionParser.parseAll(program, value));
         }
     }
 

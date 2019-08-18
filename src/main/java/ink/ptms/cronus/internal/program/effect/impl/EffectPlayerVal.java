@@ -1,7 +1,10 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
 import ink.ptms.cronus.internal.program.QuestProgram;
+import ink.ptms.cronus.internal.variable.VariableExecutor;
+import ink.ptms.cronus.internal.variable.impl.EngineY;
 import ink.ptms.cronus.uranus.annotations.Auto;
+import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 
@@ -20,7 +23,7 @@ public class EffectPlayerVal extends Effect {
 
     @Override
     public String pattern() {
-        return "player\\.val\\.(?<name>\\S+) (?<symbol>\\S+)( (?<value>.+))?";
+        return "player\\.val\\.(?<name>\\S+) (?<symbol>\\S+) (?<value>.+)";
     }
 
     @Override
@@ -38,7 +41,7 @@ public class EffectPlayerVal extends Effect {
     @Override
     public void eval(Program program) {
         if (program instanceof QuestProgram) {
-            ink.ptms.cronus.uranus.program.effect.EffectVal.eval(program, value, symbol, name, ((QuestProgram) program).getDataPlayer().getDataGlobal());
+            VariableExecutor.update(new EngineY(((QuestProgram) program).getDataPlayer().getDataGlobal()), name, symbol, FunctionParser.parseAll(program, value));
         }
     }
 
