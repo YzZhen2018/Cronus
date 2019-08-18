@@ -19,6 +19,6 @@ public class FunctionVal extends Function {
 
     @Override
     public Object eval(Program program, String... args) {
-        return EffectVal.get(args[0], args.length > 1 ? args[1] : "<Null.Val>");
+        return EffectVal.getData().get(args[0], args.length > 1 ? args[1] : "<Null.Val>");
     }
 }

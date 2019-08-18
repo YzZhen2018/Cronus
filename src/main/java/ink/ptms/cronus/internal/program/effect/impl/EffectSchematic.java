@@ -1,14 +1,12 @@
 package ink.ptms.cronus.internal.program.effect.impl;
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import ink.ptms.cronus.internal.hook.HookWorldEdit;
 import ink.ptms.cronus.internal.bukkit.Location;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
+import ink.ptms.cronus.internal.hook.HookWorldEdit;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
-import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
 
@@ -22,7 +20,6 @@ public class EffectSchematic extends Effect {
     private String name;
     private String symbol;
     private Location location;
-    private WorldEditPlugin plugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
 
     @Override
     public String pattern() {
@@ -54,7 +51,6 @@ public class EffectSchematic extends Effect {
                 "name='" + name + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", location=" + location +
-                ", plugin=" + plugin +
                 '}';
     }
 }

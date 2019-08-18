@@ -38,7 +38,7 @@ public class EngineG extends VariableEngine {
         Strumber sumber = new Strumber(current);
         if (sumber.isNumber()) {
             if (type.isNumber()) {
-                database.setGlobalVariable(key, String.valueOf(Utils.parseInt(NumberConversions.toDouble(current) + NumberConversions.toDouble(type))));
+                database.setGlobalVariable(key, String.valueOf(Utils.parseInt(NumberConversions.toDouble(current) + NumberConversions.toDouble(value))));
             } else {
                 database.setGlobalVariable(key, current + value);
             }
@@ -56,7 +56,7 @@ public class EngineG extends VariableEngine {
         }
         Strumber sumber = new Strumber(current);
         if (sumber.isNumber() && type.isNumber()) {
-            database.setGlobalVariable(key, String.valueOf(Utils.parseInt(NumberConversions.toDouble(current) - NumberConversions.toDouble(type))));
+            database.setGlobalVariable(key, String.valueOf(Utils.parseInt(NumberConversions.toDouble(current) - NumberConversions.toDouble(value))));
         } else {
             return false;
         }

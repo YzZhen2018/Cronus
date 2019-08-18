@@ -50,7 +50,7 @@ public class EngineY extends VariableEngine {
         }
         if (current instanceof Number) {
             if (type.isNumber()) {
-                yaml.set(key, Utils.parseInt(NumberConversions.toDouble(current) + NumberConversions.toDouble(type)));
+                yaml.set(key, Utils.parseInt(NumberConversions.toDouble(current) + NumberConversions.toDouble(value)));
             } else {
                 yaml.set(key, current + String.valueOf(value));
             }
@@ -69,7 +69,7 @@ public class EngineY extends VariableEngine {
             return true;
         }
         if (current instanceof Number && type.isNumber()) {
-            yaml.set(key, Utils.parseInt(NumberConversions.toDouble(current) - NumberConversions.toDouble(type)));
+            yaml.set(key, Utils.parseInt(NumberConversions.toDouble(current) - NumberConversions.toDouble(value)));
         } else if (current instanceof List) {
             yaml.set(key, remove((List) current, value));
         } else {

@@ -14,7 +14,6 @@ import ink.ptms.cronus.event.CronusDataPullEvent;
 import ink.ptms.cronus.internal.Quest;
 import ink.ptms.cronus.internal.QuestBook;
 import ink.ptms.cronus.internal.condition.ConditionCache;
-import ink.ptms.cronus.internal.condition.collect.Collect;
 import ink.ptms.cronus.internal.task.TaskCache;
 import ink.ptms.cronus.service.Service;
 import ink.ptms.cronus.uranus.annotations.Auto;
@@ -37,8 +36,10 @@ public class CronusService {
 
     @TInject
     private static TLogger logger;
-    private boolean purtmarsHooked;
-    private boolean asgardHooked;
+    @TInject("SacredItem")
+    private static boolean asgardHooked;
+    @TInject("PurtmarsItem")
+    private static boolean purtmarsHooked;
     private DatabaseType databaseType;
     private Map<String, Service> services = Maps.newHashMap();
     private Map<String, Quest> registeredQuest = Maps.newHashMap();
@@ -48,8 +49,7 @@ public class CronusService {
     private Map<String, DataPlayer> playerData = Maps.newConcurrentMap();
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
 
-    public void init() {
-        Collect.registerSerializable();
+    void init() {
         // 数据储存
         databaseType = Cronus.getConf().getString("Database.type").equalsIgnoreCase("SQL") ? DatabaseType.SQL : DatabaseType.YAML;
         if (databaseType == DatabaseType.SQL) {
@@ -59,9 +59,6 @@ public class CronusService {
             services.put("Database", new DatabaseYAML());
             logger.info("Database Using YAML.");
         }
-        // 内部兼容
-        purtmarsHooked = Bukkit.getPluginManager().getPlugin("PurtmarsItem") != null;
-        asgardHooked = Bukkit.getPluginManager().getPlugin("SacredItem") != null;
         // 物品储存
         if (purtmarsHooked) {
             services.put("ItemStorage", new StoragePurtmars());
@@ -94,13 +91,12 @@ public class CronusService {
         Bukkit.getOnlinePlayers().forEach(this::refreshData);
     }
 
-    public void active() {
+    void active() {
         // 运行
         services.values().forEach(Service::active);
     }
 
-    public void cancel() {
-        Collect.unregisterSerializable();
+    void cancel() {
         // 上传数据
         playerData.values().forEach(DataPlayer::push);
         // 卸载

@@ -2,7 +2,7 @@ package ink.ptms.cronus.internal.task.listener;
 
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.internal.task.player.damage.TaskPlayerKill;
-import io.izzel.taboolib.module.inject.TListener;
+import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.util.lite.Servers;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.mobs.ActiveMob;
@@ -22,14 +22,10 @@ import java.util.UUID;
  * @Author 坏黑
  * @Since 2019-08-09 18:32
  */
-@TListener(depend = "MythicMobs", register = "init")
 public class ListenerMythicMobs implements Listener {
 
+    @TInject("MythicMobs")
     private MythicMobs plugin;
-
-    public void init() {
-        plugin = (MythicMobs) Bukkit.getPluginManager().getPlugin("MythicMobs");
-    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void e(EntityDeathEvent e) {

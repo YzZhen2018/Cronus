@@ -17,7 +17,6 @@ import com.sk89q.worldedit.util.io.Closer;
 import com.sk89q.worldedit.world.registry.WorldData;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -34,7 +33,8 @@ public class HookWorldEdit {
 
     @TInject
     private static TLogger logger;
-    private static WorldEditPlugin plugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
+    @TInject("WorldEdit")
+    private static WorldEditPlugin plugin;
 
     public static void pasteSchematic(Player player, String name, Location location, boolean ignoreAir) {
         try {

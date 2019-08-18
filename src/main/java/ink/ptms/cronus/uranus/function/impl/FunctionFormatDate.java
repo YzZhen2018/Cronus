@@ -26,7 +26,8 @@ public class FunctionFormatDate extends Function {
     @Override
     public Object eval(Program program, String... args) {
         try {
-            return formats.computeIfAbsent(args.length > 1 ? args[1] : "yyyy-MM-dd HH:mm:ss", n -> new SimpleDateFormat(args[1])).format(NumberConversions.toLong(args[0]));
+            String format = args.length > 1 ? args[1] : "yyyy-MM-dd HH:mm:ss";
+            return formats.computeIfAbsent(format, n -> new SimpleDateFormat(format)).format(NumberConversions.toLong(args[0]));
         } catch (Throwable t) {
             t.printStackTrace();
         }

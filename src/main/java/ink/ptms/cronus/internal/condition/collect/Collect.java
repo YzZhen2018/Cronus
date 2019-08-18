@@ -2,6 +2,7 @@ package ink.ptms.cronus.internal.condition.collect;
 
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.internal.condition.Condition;
+import io.izzel.taboolib.module.inject.TFunction;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
@@ -36,12 +37,14 @@ public abstract class Collect extends Condition implements ConfigurationSerializ
         return condition;
     }
 
-    public static void registerSerializable() {
+    @TFunction.Init
+    static void registerSerializable() {
         ConfigurationSerialization.registerClass(CollectA.class, "ALL_MATCH");
         ConfigurationSerialization.registerClass(CollectO.class, "ANY_MATCH");
     }
 
-    public static void unregisterSerializable() {
+    @TFunction.Cancel
+    static void unregisterSerializable() {
         ConfigurationSerialization.unregisterClass(CollectA.class);
         ConfigurationSerialization.unregisterClass(CollectO.class);
     }

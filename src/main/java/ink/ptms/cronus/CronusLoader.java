@@ -33,7 +33,7 @@ public class CronusLoader {
     private static TLogger logger;
     private File folder;
 
-    public void init() {
+    void init() {
         TabooLibLoader.getPluginClasses(Cronus.getInst()).ifPresent(classes -> {
             for (Class pClass : classes) {
                 // task

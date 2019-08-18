@@ -14,9 +14,14 @@ import ink.ptms.cronus.service.globalevent.GlobalEvent;
 import ink.ptms.cronus.service.guide.GuideWay;
 import ink.ptms.cronus.service.guide.GuideWayData;
 import io.izzel.taboolib.Version;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.book.BookFormatter;
+import io.izzel.taboolib.util.book.builder.BookBuilder;
+import io.izzel.taboolib.util.book.builder.PageBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -159,5 +164,38 @@ public class CronusAPI {
         }
         // 无阶段条目
         return !stage.getTask().isEmpty();
+    }
+
+    /**
+     * 打开任务日志
+     */
+    public static void openQuestLogs(Player player) {
+        DataPlayer data = getData(player);
+        BookFormatter.forceOpen(player, toBookItem(data.getQuestLogs().isEmpty() ? Lists.newArrayList(TLocale.asString("quest-logs-empty")) : data.getQuestLogs()));
+    }
+
+    /**
+     * 将多行内容创建为成书
+     * 会根据行数自动翻页，但不会自动换行
+     */
+    public static ItemStack toBookItem(List<String> lines) {
+        BookBuilder bookBuilder = BookFormatter.writtenBook();
+        PageBuilder builder = null;
+        int index = 0;
+        for (String line : lines) {
+            if (builder == null) {
+                builder = new PageBuilder();
+            }
+            builder.add(line).newLine();
+            if (index++ == 13) {
+                bookBuilder.addPages(builder.build());
+                builder = null;
+                index = 0;
+            }
+        }
+        if (builder != null) {
+            bookBuilder.addPages(builder.build());
+        }
+        return bookBuilder.build();
     }
 }

@@ -5,8 +5,6 @@ import ink.ptms.cronus.internal.variable.impl.EngineY;
 import ink.ptms.cronus.uranus.annotations.Auto;
 import ink.ptms.cronus.uranus.function.FunctionParser;
 import ink.ptms.cronus.uranus.program.Program;
-import io.izzel.taboolib.module.inject.TInject;
-import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.regex.Matcher;
@@ -18,8 +16,6 @@ import java.util.regex.Matcher;
 @Auto
 public class EffectVal extends Effect {
 
-    @TInject
-    private static TLogger logger;
     private static YamlConfiguration data = new YamlConfiguration();
     private String name;
     private String symbol;

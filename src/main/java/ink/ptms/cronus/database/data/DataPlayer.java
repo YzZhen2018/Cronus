@@ -44,6 +44,9 @@ public class DataPlayer implements TSerializable {
     // 任务计分板隐藏
     @TSerializeCollection
     private List<String> questHide = Lists.newArrayList();
+    // 任务笔记
+    @TSerializeCollection
+    private List<String> questLogs = Lists.newArrayList();
 
     public DataPlayer(Player player) {
         this.player = player;
@@ -163,24 +166,29 @@ public class DataPlayer implements TSerializable {
         }
     }
 
+    public void writeQuestLogs(String in) {
+        if (questLogs.isEmpty()) {
+            questLogs.add(in);
+        } else {
+            questLogs.add(0, in);
+        }
+    }
+
     @Override
     public void read(String fieldName, String value) {
-        switch (fieldName) {
-            case "dataGlobal":
-                try {
-                    dataGlobal.loadFromString(value);
-                } catch (InvalidConfigurationException e) {
-                    e.printStackTrace();
-                }
-                break;
+        if (fieldName.equals("dataGlobal")) {
+            try {
+                dataGlobal.loadFromString(value);
+            } catch (InvalidConfigurationException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public String write(String fieldName, Object value) {
-        switch (fieldName) {
-            case "dataGlobal":
-                return dataGlobal.saveToString();
+        if (fieldName.equals("dataGlobal")) {
+            return dataGlobal.saveToString();
         }
         return null;
     }
@@ -215,6 +223,10 @@ public class DataPlayer implements TSerializable {
 
     public List<String> getQuestHide() {
         return questHide;
+    }
+
+    public List<String> getQuestLogs() {
+        return questLogs;
     }
 
     public YamlConfiguration getDataGlobal() {

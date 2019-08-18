@@ -36,23 +36,26 @@ public class CronusMirror {
         private long times;
         private long runtime;
 
-        public void start() {
+        public Data start() {
             runtime = System.nanoTime();
+            return this;
         }
 
-        public void stop() {
+        public Data stop() {
             timeLatest = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - runtime);
             timeTotal += timeLatest;
             times += 1;
+            return this;
         }
 
-        public void reset() {
+        public Data reset() {
             timeTotal = 0;
             timeLatest = 0;
             times = 0;
+            return this;
         }
 
-        public void check(Runnable runnable) {
+        public Data check(Runnable runnable) {
             start();
             try {
                 runnable.run();
@@ -60,6 +63,7 @@ public class CronusMirror {
                 t.printStackTrace();
             }
             stop();
+            return this;
         }
 
         // *********************************

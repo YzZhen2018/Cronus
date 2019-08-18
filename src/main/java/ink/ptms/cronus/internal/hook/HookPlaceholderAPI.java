@@ -54,7 +54,7 @@ public class HookPlaceholderAPI extends PlaceholderExpansion {
         DataPlayer dataPlayer = CronusAPI.getData(player);
         String in = s.toLowerCase();
         if (in.startsWith("server_val_")) {
-            return String.valueOf(Cronus.getCronusService().getDatabase().getGlobalVariable(s.substring("player_val_".length())));
+            return String.valueOf(Cronus.getCronusService().getDatabase().getGlobalVariable(s.substring("server_val_".length())));
         }
         if (in.startsWith("player_val_")) {
             return String.valueOf(dataPlayer.getDataGlobal().get(s.substring("player_val_".length())));

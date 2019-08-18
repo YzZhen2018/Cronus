@@ -1,6 +1,7 @@
 package ink.ptms.cronus.command.impl;
 
 import ink.ptms.cronus.Cronus;
+import ink.ptms.cronus.CronusMirror;
 import ink.ptms.cronus.command.CronusCommand;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.internal.condition.Cond;
@@ -59,11 +60,14 @@ public class CommandTest extends CronusCommand {
             if (parse instanceof CondNull) {
                 error(sender, "条件格式错误.");
             } else {
-                try {
-                    normal(sender, "条件执行结果: " + (parse.check((Player) sender, new DataQuest(), null) ? "&a成功" : "&c失败"));
-                } catch (Throwable t) {
-                    error(sender, "条件执行失败: " + t.getMessage());
-                }
+                CronusMirror.Data data = new CronusMirror.Data().check(() -> {
+                    try {
+                        normal(sender, "条件执行结果: " + (parse.check((Player) sender, new DataQuest(), null) ? "&a成功" : "&c失败"));
+                    } catch (Throwable t) {
+                        error(sender, "条件执行失败: " + t.getMessage());
+                    }
+                });
+                normal(sender, "执行耗时: &f" + data.getTimeLatest() + "ms");
             }
         }
 
@@ -94,11 +98,14 @@ public class CommandTest extends CronusCommand {
             if (parse instanceof EffectNull) {
                 error(sender, "动作格式错误.");
             } else {
-                try {
-                    parse.eval(new QuestProgram((Player) sender, new DataQuest()));
-                } catch (Throwable t) {
-                    error(sender, "动作执行失败: " + t.getMessage());
-                }
+                CronusMirror.Data data = new CronusMirror.Data().check(() -> {
+                    try {
+                        parse.eval(new QuestProgram((Player) sender, new DataQuest()));
+                    } catch (Throwable t) {
+                        error(sender, "动作执行失败: " + t.getMessage());
+                    }
+                });
+                normal(sender, "执行耗时: &f" + data.getTimeLatest() + "ms");
             }
         }
 
