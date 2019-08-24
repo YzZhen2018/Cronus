@@ -101,7 +101,9 @@ public class DialogPack {
             if (pack.getCondition() == null || !pack.getCondition().check(player, dataQuest, null)) {
                 return pack;
             }
-            pack = pack.getConditionDialog();
+            if ((pack = pack.getConditionDialog()) == null) {
+                return pack;
+            }
         }
     }
 

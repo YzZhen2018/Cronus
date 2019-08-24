@@ -48,13 +48,21 @@ public class DatabaseSQL extends Database {
 
     @Override
     protected void upload0(Player player, DataPlayer dataPlayer) {
-        table.executeQuery("insert into " + table.getTableName() + " values(null, ?, ?) on duplicate key update data = ?")
-                .dataSource(dataSource)
-                .statement(s -> {
-                    s.setString(1, toName(player));
-                    s.setString(2, dataPlayer.writeBase64());
-                    s.setString(3, dataPlayer.writeBase64());
-                }).run();
+        if (isExists(player)) {
+            table.executeUpdate("data = ?", "player = ?")
+                    .dataSource(dataSource)
+                    .statement(s -> {
+                        s.setString(1, dataPlayer.writeBase64());
+                        s.setString(2, toName(player));
+                    }).run();
+        } else {
+            table.executeInsert("null, ?, ?")
+                    .dataSource(dataSource)
+                    .statement(s -> {
+                        s.setString(1, toName(player));
+                        s.setString(2, dataPlayer.writeBase64());
+                    }).run();
+        }
     }
 
     @Override
@@ -101,6 +109,14 @@ public class DatabaseSQL extends Database {
                 .dataSource(dataSource)
                 .resultAutoNext(r -> map.put(r.getString("key"), r.getString("value"))).run();
         return map;
+    }
+
+    public boolean isExists(Player player) {
+        return table.executeSelect("player = ?")
+                .dataSource(dataSource)
+                .statement(s -> s.setString(1, toName(player)))
+                .resultNext(r -> true)
+                .run(false, false);
     }
 
     public String toName(Player player) {
