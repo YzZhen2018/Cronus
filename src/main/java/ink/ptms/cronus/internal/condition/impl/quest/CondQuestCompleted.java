@@ -27,7 +27,7 @@ public class CondQuestCompleted extends CondBoolean {
 
     @Override
     public boolean getBoolean(Player player, DataQuest quest, Event event) {
-        return CronusAPI.getData(player).getQuestCompleted().containsKey(quest);
+        return CronusAPI.getData(player).getQuestCompleted().containsKey(this.quest);
     }
 
     @Override

@@ -139,22 +139,17 @@ public class Command extends CronusCommand {
                 error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
-            Quest quest = Cronus.getCronusService().getRegisteredQuest().get(args[1]);
-            if (quest == null) {
-                error(sender, "任务 &7" + args[1] + " &c无效.");
-                return;
+            switch (CronusAPI.acceptQuest(player, args[1])) {
+                case INVALID:
+                    error(sender, "任务 &7" + args[1] + " &c无效.");
+                    break;
+                case INVALID_CONFIG:
+                    error(sender, "任务 &7" + args[1] + " &c缺少必要配置.");
+                    break;
+                case ACCEPTED:
+                    error(sender, "玩家 &7" + args[0] + " &c已接受该任务.");
+                    break;
             }
-            if (!CronusAPI.isValid(quest)) {
-                error(sender, "任务 &7" + args[1] + " &c缺少必要配置.");
-                return;
-            }
-            DataPlayer playerData = CronusAPI.getData(player);
-            if (playerData.getQuest().containsKey(args[1]) && !playerData.isQuestCompleted(quest.getId())) {
-                error(sender, "玩家 &7" + args[0] + " &c已接受该任务.");
-                return;
-            }
-            playerData.acceptQuest(quest);
-            playerData.push();
         }
     };
 
@@ -180,18 +175,14 @@ public class Command extends CronusCommand {
                 error(sender, "玩家 &7" + args[0] + " &c离线.");
                 return;
             }
-            DataPlayer dataPlayer = CronusAPI.getData(player);
-            DataQuest dataQuest = dataPlayer.getQuest(args[1]);
-            if (dataQuest == null) {
-                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
-                return;
+            switch (CronusAPI.failureQuest(player, args[1])) {
+                case NOT_ACCEPT:
+                    error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
+                    break;
+                case COMPLETED:
+                    error(sender, "玩家 &7" + args[0] + " &c已完成该任务.");
+                    break;
             }
-            if (dataPlayer.isQuestCompleted(args[1])) {
-                error(sender, "玩家 &7" + args[0] + " &c已完成该任务.");
-                return;
-            }
-            dataPlayer.failureQuest(dataQuest.getQuest());
-            dataPlayer.push();
         }
     };
 

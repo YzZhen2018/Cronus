@@ -6,14 +6,14 @@
 
     <groupId>ink.ptms.cronus</groupId>
     <artifactId>Cronus</artifactId>
-    <version>1.1.0.2019.8.18-a1</version>
+    <version>1.1.0.2019.8.27-SNAPSHOT-1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
-        <finalName>Cronus</finalName>
+        <!--<finalName>Cronus</finalName>-->
         <defaultGoal>clean install package</defaultGoal>
         <resources>
             <resource>

@@ -31,10 +31,26 @@ import java.util.List;
  */
 public class CronusAPI {
 
+    /**
+     * 获取玩家的数据，如果数据不存在则返回空数据
+     * 这个空数据不会被写入到数据库中
+     */
     public static DataPlayer getData(Player player) {
         return Cronus.getCronusService().getPlayerData().getOrDefault(player.getName(), new DataPlayer(player));
     }
 
+    /**
+     * 打开任务日志
+     */
+    public static void openQuestLogs(Player player) {
+        DataPlayer data = getData(player);
+        BookFormatter.forceOpen(player, toBookItem(data.getQuestLogs().isEmpty() ? Lists.newArrayList(TLocale.asString("quest-logs-empty")) : data.getQuestLogs()));
+    }
+
+    /**
+     * 处理任务引导
+     * 包括引导的创建和删除，但不包括移动
+     */
     public static void guideHandle(Player player) {
         GuideWay service = Cronus.getCronusService().getService(GuideWay.class);
         service.cancel(player);
@@ -167,14 +183,6 @@ public class CronusAPI {
     }
 
     /**
-     * 打开任务日志
-     */
-    public static void openQuestLogs(Player player) {
-        DataPlayer data = getData(player);
-        BookFormatter.forceOpen(player, toBookItem(data.getQuestLogs().isEmpty() ? Lists.newArrayList(TLocale.asString("quest-logs-empty")) : data.getQuestLogs()));
-    }
-
-    /**
      * 将多行内容创建为成书
      * 会根据行数自动翻页，但不会自动换行
      */
@@ -198,4 +206,45 @@ public class CronusAPI {
         }
         return bookBuilder.build();
     }
+
+    /**
+     * 判断并使玩家接受任务
+     */
+    public static AcceptResult acceptQuest(Player player, String id) {
+        Quest quest = Cronus.getCronusService().getRegisteredQuest().get(id);
+        if (quest == null) {
+            return AcceptResult.INVALID;
+        }
+        if (!CronusAPI.isValid(quest)) {
+            return AcceptResult.INVALID_CONFIG;
+        }
+        DataPlayer playerData = CronusAPI.getData(player);
+        if (playerData.getQuest().containsKey(id) && !playerData.isQuestCompleted(quest.getId())) {
+            return AcceptResult.ACCEPTED;
+        }
+        playerData.acceptQuest(quest);
+        playerData.push();
+        return AcceptResult.SUCCESS;
+    }
+
+    /**
+     * 判断并使玩家退出（放弃）任务
+     */
+    public static FailureResult failureQuest(Player player, String id) {
+        DataPlayer dataPlayer = CronusAPI.getData(player);
+        DataQuest dataQuest = dataPlayer.getQuest(id);
+        if (dataQuest == null) {
+            return FailureResult.NOT_ACCEPT;
+        }
+        if (dataPlayer.isQuestCompleted(id)) {
+            return FailureResult.COMPLETED;
+        }
+        dataPlayer.failureQuest(dataQuest.getQuest());
+        dataPlayer.push();
+        return FailureResult.SUCCESS;
+    }
+
+    public enum AcceptResult {INVALID, INVALID_CONFIG, ACCEPTED, SUCCESS}
+
+    public enum FailureResult {NOT_ACCEPT, COMPLETED, SUCCESS}
 }
