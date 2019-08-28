@@ -1,10 +1,13 @@
 package ink.ptms.cronus.database.data.time;
 
+import com.google.common.collect.Maps;
 import ink.ptms.cronus.database.data.DataQuest;
 import ink.ptms.cronus.util.Utils;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Calendar;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author 坏黑
@@ -12,11 +15,13 @@ import java.util.Calendar;
  */
 public class Time {
 
+    private static Map<String, Time> cacheMap = Maps.newHashMap();
     private TimeType type;
     private int day;
     private int hour;
     private int minute;
     private long time;
+    private long end;
     private String origin;
 
     public Time(String libTime) {
@@ -46,6 +51,24 @@ public class Time {
         return this;
     }
 
+    public Time in(long start) {
+        this.end = start;
+        if (this.type != TimeType.TIME && isTimeout()) {
+            switch (this.type) {
+                case DAY:
+                    this.end += TimeUnit.DAYS.toMillis(1);
+                    break;
+                case WEEK:
+                    this.end += TimeUnit.DAYS.toMillis(7);
+                    break;
+                case MONTH:
+                    this.end += TimeUnit.DAYS.toMillis(Calendar.getInstance().getMaximum(Calendar.DAY_OF_MONTH));
+                    break;
+            }
+        }
+        return this;
+    }
+
     public boolean isTimeout(DataQuest dataQuest) {
         Calendar calendar = Calendar.getInstance();
         return type == TimeType.TIME ? dataQuest.getTimeStart() + time < System.currentTimeMillis() : isTimeout();
@@ -53,21 +76,22 @@ public class Time {
 
     public boolean isTimeout() {
         Calendar calendar = Calendar.getInstance();
+        long[] patch = {System.currentTimeMillis() / 1000 / 60, end / 1000 / 60};
         switch (type) {
             case DAY: {
-                long timeout = (hour * 60L) + (minute);
                 long current = (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current > timeout;
+                long timeout = (hour * 60L) + (minute);
+                return current + patch[0] > timeout + patch[1];
             }
             case WEEK: {
                 long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
                 long current = (calendar.get(Calendar.DAY_OF_WEEK) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current > timeout;
+                return current + patch[0] > timeout + patch[1];
             }
             case MONTH: {
                 long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
                 long current = (calendar.get(Calendar.DAY_OF_MONTH) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current > timeout;
+                return current + patch[0] > timeout + patch[1];
             }
             default:
                 return false;
@@ -98,6 +122,10 @@ public class Time {
     }
 
     public static Time parse(String in) {
+        return cacheMap.computeIfAbsent(in, n -> parse0(in));
+    }
+
+    public static Time parse0(String in) {
         if (in == null) {
             return null;
         }
@@ -153,6 +181,10 @@ public class Time {
 
     public long getTime() {
         return time;
+    }
+
+    public long getEnd() {
+        return end;
     }
 
     public String getOrigin() {

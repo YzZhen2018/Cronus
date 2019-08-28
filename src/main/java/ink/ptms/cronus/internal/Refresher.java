@@ -3,6 +3,7 @@ package ink.ptms.cronus.internal;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.internal.program.Action;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import io.izzel.taboolib.module.inject.TSchedule;
@@ -53,7 +54,8 @@ public class Refresher implements Listener {
                     continue;
                 }
                 // 超时任务
-                if (quest.getTimeout() != null && quest.getTimeout().isTimeout(entry.getValue())) {
+                Time timeout = entry.getValue().getTimeout(quest);
+                if (timeout != null && timeout.isTimeout(entry.getValue())) {
                     playerData.failureQuest(quest);
                     playerData.push();
                     continue;

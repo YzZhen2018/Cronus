@@ -2,6 +2,7 @@ package ink.ptms.cronus.database.data;
 
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
+import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.event.CronusQuestSuccessEvent;
 import ink.ptms.cronus.event.CronusStageAcceptEvent;
 import ink.ptms.cronus.event.CronusStageSuccessEvent;
@@ -139,6 +140,14 @@ public class DataQuest implements TSerializable {
         return bookBuilder;
     }
 
+    public Time getTimeout() {
+        return getTimeout(getQuest());
+    }
+
+    public Time getTimeout(Quest quest) {
+        return quest != null && quest.getTimeout() != null ? Time.parse(quest.getTimeout()).in(timeStart) : null;
+    }
+
     @Nullable
     public Quest getQuest() {
         return Cronus.getCronusService().getRegisteredQuest().get(currentQuest);
@@ -187,6 +196,17 @@ public class DataQuest implements TSerializable {
                 return dataQuest.saveToString();
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "DataQuest{" +
+                "dataQuest=" + dataQuest +
+                ", dataStage=" + dataStage +
+                ", currentQuest='" + currentQuest + '\'' +
+                ", currentStage='" + currentStage + '\'' +
+                ", timeStart=" + timeStart +
+                '}';
     }
 
     // *********************************

@@ -1,7 +1,6 @@
 package ink.ptms.cronus.internal;
 
 import com.google.common.collect.Lists;
-import ink.ptms.cronus.database.data.time.Time;
 import ink.ptms.cronus.event.CronusQuestInitEvent;
 import ink.ptms.cronus.internal.condition.Condition;
 import ink.ptms.cronus.internal.condition.ConditionParser;
@@ -24,7 +23,7 @@ public class Quest extends Actionable {
     protected String id;
     protected String label;
     protected String display;
-    protected Time timeout;
+    protected String timeout;
     protected long cooldown;
     protected Condition conditionAccept;
     protected Condition conditionFailure;
@@ -37,7 +36,7 @@ public class Quest extends Actionable {
         this.label = conf.getString("label");
         this.display = conf.getString("display", id);
         this.bookTag = conf.getStringList("booktag");
-        this.timeout = Time.parse(conf.getString("timeout"));
+        this.timeout = conf.getString("timeout");
         this.cooldown = Utils.toTime(conf.getString("cooldown"));
         this.conditionAccept = ConditionParser.fromObject(conf.get("condition.accept"));
         this.conditionFailure = ConditionParser.fromObject(conf.get("condition.failure"));
@@ -89,7 +88,7 @@ public class Quest extends Actionable {
         return label;
     }
 
-    public Time getTimeout() {
+    public String getTimeout() {
         return timeout;
     }
 
