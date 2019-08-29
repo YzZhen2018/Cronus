@@ -145,7 +145,7 @@ public class DataQuest implements TSerializable {
     }
 
     public Time getTimeout(Quest quest) {
-        return quest != null && quest.getTimeout() != null ? Time.parse(quest.getTimeout()).in(timeStart) : null;
+        return quest != null && quest.getTimeout() != null && Time.parse(quest.getTimeout()) != null ? Time.parse(quest.getTimeout()).in(timeStart) : null;
     }
 
     @Nullable
