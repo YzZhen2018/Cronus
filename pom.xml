@@ -6,7 +6,7 @@
 
     <groupId>ink.ptms.cronus</groupId>
     <artifactId>Cronus</artifactId>
-    <version>1.1.0.2019.8.29-SNAPSHOT-3</version>
+    <version>1.1.0.2019.8.31-SNAPSHOT-4</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

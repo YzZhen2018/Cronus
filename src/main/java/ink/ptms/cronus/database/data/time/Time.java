@@ -7,7 +7,6 @@ import org.bukkit.util.NumberConversions;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author 坏黑
@@ -21,7 +20,8 @@ public class Time {
     private int hour;
     private int minute;
     private long time;
-    private long end;
+    private Map<Long, Calendar> cacheEnd = Maps.newHashMap();
+    private Calendar end;
     private String origin;
 
     public Time(String libTime) {
@@ -52,46 +52,62 @@ public class Time {
     }
 
     public Time in(long start) {
-        this.end = start;
-        if (this.type != TimeType.TIME && isTimeout()) {
-            switch (this.type) {
-                case DAY:
-                    this.end += TimeUnit.DAYS.toMillis(1);
-                    break;
-                case WEEK:
-                    this.end += TimeUnit.DAYS.toMillis(7);
-                    break;
-                case MONTH:
-                    this.end += TimeUnit.DAYS.toMillis(Calendar.getInstance().getMaximum(Calendar.DAY_OF_MONTH));
-                    break;
+        if (this.cacheEnd.containsKey(start)) {
+            this.end = this.cacheEnd.get(start);
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            Calendar startCal = (Calendar) calendar.clone();
+            startCal.setTimeInMillis(start);
+            this.end = (Calendar) calendar.clone();
+            this.cacheEnd.put(start, this.end);
+            this.end.set(Calendar.SECOND, 0);
+            this.end.set(Calendar.MILLISECOND, 0);
+            if (this.type != TimeType.TIME) {
+                switch (this.type) {
+                    case DAY:
+                        this.end.set(Calendar.HOUR_OF_DAY, hour);
+                        this.end.set(Calendar.MINUTE, minute);
+                        if (startCal.after(this.end)) {
+                            this.end.add(Calendar.DATE, 1);
+                        }
+                        break;
+                    case WEEK:
+                        this.end.set(Calendar.DAY_OF_WEEK, day + 1);
+                        this.end.set(Calendar.HOUR_OF_DAY, hour);
+                        this.end.set(Calendar.MINUTE, minute);
+                        if (startCal.after(this.end)) {
+                            this.end.add(Calendar.DATE, 7);
+                        }
+                        break;
+                    case MONTH:
+                        this.end.set(Calendar.DAY_OF_MONTH, day);
+                        this.end.set(Calendar.HOUR_OF_DAY, hour);
+                        this.end.set(Calendar.MINUTE, minute);
+                        if (startCal.after(this.end)) {
+                            this.end.add(Calendar.MONTH, 1);
+                        }
+                        break;
+                }
             }
         }
         return this;
     }
 
     public boolean isTimeout(DataQuest dataQuest) {
-        Calendar calendar = Calendar.getInstance();
         return type == TimeType.TIME ? dataQuest.getTimeStart() + time < System.currentTimeMillis() : isTimeout();
     }
 
     public boolean isTimeout() {
         Calendar calendar = Calendar.getInstance();
-        long[] patch = {System.currentTimeMillis() / 1000 / 60, end / 1000 / 60};
         switch (type) {
             case DAY: {
-                long current = (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                long timeout = (hour * 60L) + (minute);
-                return current + patch[0] > timeout + patch[1];
+                return calendar.after(this.end);
             }
             case WEEK: {
-                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
-                long current = (calendar.get(Calendar.DAY_OF_WEEK) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current + patch[0] > timeout + patch[1];
+                return calendar.after(this.end);
             }
             case MONTH: {
-                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
-                long current = (calendar.get(Calendar.DAY_OF_MONTH) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current + patch[0] > timeout + patch[1];
+                return calendar.after(this.end);
             }
             default:
                 return false;
@@ -102,19 +118,13 @@ public class Time {
         Calendar calendar = Calendar.getInstance();
         switch (type) {
             case DAY: {
-                long timeout = (hour * 60L) + (minute);
-                long current = (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current == timeout;
+                return calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute;
             }
             case WEEK: {
-                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
-                long current = (calendar.get(Calendar.DAY_OF_WEEK) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current == timeout;
+                return calendar.get(Calendar.DAY_OF_WEEK) == day && calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute;
             }
             case MONTH: {
-                long timeout = (day * 60L * 24L) + (hour * 60L) + (minute);
-                long current = (calendar.get(Calendar.DAY_OF_MONTH) * 60L * 24L) + (calendar.get(Calendar.HOUR_OF_DAY) * 60L) + calendar.get(Calendar.MINUTE);
-                return current == timeout;
+                return calendar.get(Calendar.DAY_OF_MONTH) == day && calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.MINUTE) == minute;
             }
             default:
                 return false;
@@ -181,10 +191,6 @@ public class Time {
 
     public long getTime() {
         return time;
-    }
-
-    public long getEnd() {
-        return end;
     }
 
     public String getOrigin() {
