@@ -1,5 +1,6 @@
 package ink.ptms.cronus.command.impl;
 
+import com.google.common.collect.Sets;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusMirror;
 import ink.ptms.cronus.command.CronusCommand;
@@ -11,6 +12,7 @@ import ink.ptms.cronus.internal.condition.ConditionParser;
 import ink.ptms.cronus.internal.program.QuestProgram;
 import ink.ptms.cronus.internal.program.effect.EffectNull;
 import ink.ptms.cronus.internal.program.effect.EffectParser;
+import ink.ptms.cronus.internal.version.MaterialControl;
 import ink.ptms.cronus.uranus.program.ProgramLoader;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import ink.ptms.cronus.util.Utils;
@@ -24,6 +26,8 @@ import io.izzel.taboolib.util.chat.ComponentSerializer;
 import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -31,6 +35,10 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
@@ -309,6 +317,35 @@ public class CommandTest extends CronusCommand {
             TellrawJson.create()
                     .append("§7§l[§f§lCronus§7§l] §7坐标: §f")
                     .append(str).hoverText("§f点击复制").clickSuggest(str)
+                    .send(sender);
+        }
+
+        @Override
+        public CommandType getType() {
+            return CommandType.PLAYER;
+        }
+    };
+
+    @SubCommand
+    BaseSubCommand block = new BaseSubCommand() {
+
+        @Override
+        public String getDescription() {
+            return "打印目标方块";
+        }
+
+        @Override
+        public void onCommand(CommandSender sender, Command command, String s, String[] args) {
+            Set<Material> blocks = Sets.newHashSet(Material.AIR, MaterialControl.CAVE_AIR.parseMaterial(), MaterialControl.VOID_AIR.parseMaterial()).stream().filter(Objects::nonNull).collect(Collectors.toSet());
+            Block targetBlock = ((Player) sender).getTargetBlock(blocks, 10);
+            if (targetBlock == null) {
+                normal(sender, "无效的方块.");
+                return;
+            }
+            TellrawJson.create()
+                    .append("§7§l[§f§lCronus§7§l] §7方块类型: §f")
+                    .append(targetBlock.getType().name()).hoverText("§f点击复制").clickSuggest(targetBlock.getType().name())
+                    .append(" §8(data: " + targetBlock.getData() + ")")
                     .send(sender);
         }
 
