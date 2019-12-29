@@ -4,6 +4,7 @@ import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.CronusAPI;
 import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.DataQuest;
+import ink.ptms.cronus.internal.program.effect.impl.EffectDelay;
 import ink.ptms.cronus.uranus.program.Program;
 import ink.ptms.cronus.uranus.program.effect.Effect;
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author 坏黑
@@ -18,9 +20,9 @@ import java.util.List;
  */
 public class QuestProgram extends Program {
 
+    private AtomicInteger delay = new AtomicInteger(0);
     private DataQuest dataQuest;
     private Event event;
-    private int delay;
 
     public QuestProgram(Player player, DataQuest dataQuest) {
         this.dataQuest = dataQuest;
@@ -34,12 +36,12 @@ public class QuestProgram extends Program {
     }
 
     public void eval(List<Effect> effects) {
-        delay = 0;
+        delay.set(0);
         for (Effect effect : effects) {
-            if (delay == 0) {
-                Bukkit.getScheduler().runTask(Cronus.getInst(), () -> eval(effect));
+            if (delay.get() == 0 || effect instanceof EffectDelay) {
+                eval(effect);
             } else {
-                Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> eval(effect), delay);
+                Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> eval(effect), delay.get());
             }
         }
     }
@@ -65,11 +67,11 @@ public class QuestProgram extends Program {
     }
 
     public int getDelay() {
-        return delay;
+        return delay.get();
     }
 
     public void setDelay(int delay) {
-        this.delay = delay;
+        this.delay.set(delay);
     }
 
     public Event getEvent() {

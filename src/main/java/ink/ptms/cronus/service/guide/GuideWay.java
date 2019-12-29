@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.Collection;
 import java.util.List;
@@ -101,6 +102,11 @@ public class GuideWay implements Service, Listener {
 
     @EventHandler
     public void e(PlayerChangedWorldEvent e) {
+        update(e.getPlayer());
+    }
+
+    @EventHandler
+    public void e(PlayerTeleportEvent e) {
         update(e.getPlayer());
     }
 
