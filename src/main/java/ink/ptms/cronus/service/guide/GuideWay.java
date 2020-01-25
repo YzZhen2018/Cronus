@@ -111,13 +111,13 @@ public class GuideWay implements Service, Listener {
     }
 
     @EventHandler
-    public void e(CronusVisibleToggleEvent e) {
-        CronusAPI.guideHandle(e.getPlayer());
+    public void e(PlayerQuitEvent e) {
+        cancel(e.getPlayer());
     }
 
     @EventHandler
-    public void e(PlayerQuitEvent e) {
-        cancel(e.getPlayer());
+    public void e(CronusVisibleToggleEvent e) {
+        CronusAPI.guideHandle(e.getPlayer());
     }
 
     @EventHandler

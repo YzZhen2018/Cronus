@@ -40,8 +40,8 @@ public class Dialog implements Service, Listener {
     private static Cooldown cooldown = new Cooldown("cronus|dialog", 200);
 
     private File folder;
-    private List<DialogGroup> dialogs = Lists.newArrayList();
-    private List<DisplayBase> registeredBase = Lists.newArrayList();
+    private List<DialogGroup> dialogs = Lists.newCopyOnWriteArrayList();
+    private List<DisplayBase> registeredBase = Lists.newCopyOnWriteArrayList();
     private boolean init;
 
     @Override
@@ -112,6 +112,14 @@ public class Dialog implements Service, Listener {
             }
         }
         registeredBase.add(base);
+    }
+
+    public void unregisterDisplay(String id) {
+        for (DisplayBase registered : registeredBase) {
+            if (registered.getName().equalsIgnoreCase(id)) {
+                registeredBase.remove(registered);
+            }
+        }
     }
 
     public void loadDialog(File file) {
