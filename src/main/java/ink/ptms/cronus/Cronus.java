@@ -1,5 +1,6 @@
 package ink.ptms.cronus;
 
+import io.izzel.taboolib.loader.Plugin;
 import io.izzel.taboolib.module.config.TConfig;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
@@ -15,8 +16,8 @@ import java.nio.charset.StandardCharsets;
  * @Author 坏黑
  * @Since 2019-05-23 18:06
  */
-@CronusPlugin.Version(5.04)
-public class Cronus extends CronusPlugin {
+@Plugin.Version(5.17)
+public class Cronus extends Plugin {
 
     @TInject
     private static Cronus inst;

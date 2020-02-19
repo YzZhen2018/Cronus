@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Cronus.iml" filepath="$PROJECT_DIR$/.idea/Cronus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.iml" filepath="$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ink.ptms.cronus.Cronus.test.iml" />
     </modules>
   </component>
 </project>

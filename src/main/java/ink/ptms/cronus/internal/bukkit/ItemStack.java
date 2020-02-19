@@ -1,5 +1,6 @@
 package ink.ptms.cronus.internal.bukkit;
 
+import io.izzel.taboolib.util.item.ItemBuilder;
 import io.izzel.taboolib.util.item.Items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,6 +29,17 @@ public class ItemStack {
         this.lore = lore;
         this.damage = damage;
         this.amount = amount;
+    }
+
+    public org.bukkit.inventory.ItemStack toBukkitItem() {
+        ItemBuilder builder = new ItemBuilder(Items.asMaterial(type), amount, damage);
+        if (name != null) {
+            builder.name(name);
+        }
+        if (lore != null) {
+            builder.lore(lore.split("\\\\n"));
+        }
+        return builder.colored().build();
     }
 
     public boolean isType(org.bukkit.inventory.ItemStack itemStack) {

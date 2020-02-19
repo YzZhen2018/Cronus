@@ -1,6 +1,6 @@
 name: Cronus
 main: ink.ptms.cronus.Cronus
-version: ${project.version}
+version: {version}
 api-version: 1.13
 
 author: 坏黑

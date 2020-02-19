@@ -24,12 +24,16 @@ public class ListenerEntity implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void e(PlayerInteractAtEntityEvent e) {
         if (e.getHand() == EquipmentSlot.HAND && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
-            LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());
-            for (Catchers.Catcher catcher : catchers) {
-                if (catcher instanceof Entity.EntitySelect) {
-                    e.setCancelled(true);
-                    e.getPlayer().chat(Cronus.getCronusService().getService(EntitySelector.class).fromEntity(e.getRightClicked()));
+            try {
+                LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());
+                for (Catchers.Catcher catcher : catchers) {
+                    if (catcher instanceof Entity.EntitySelect) {
+                        e.setCancelled(true);
+                        e.getPlayer().chat(Cronus.getCronusService().getService(EntitySelector.class).fromEntity(e.getRightClicked()));
+                    }
                 }
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
         }
     }

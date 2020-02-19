@@ -29,6 +29,8 @@ public class FunctionQuest extends Function {
                 return "<Invalid-Quest>";
             }
             switch (args[0].toLowerCase()) {
+                case "display":
+                    return dataQuest.getQuest().getDisplay();
                 case "name":
                     return dataQuest.getCurrentQuest();
                 case "stage":
