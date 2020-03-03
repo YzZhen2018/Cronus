@@ -94,6 +94,8 @@ public class DataQuest implements TSerializable {
             // 执行阶段奖励
             CronusStageSuccessEvent.call(player, quest, stage);
             stage.eval(new QuestProgram(player, this), Action.SUCCESS);
+            // 清空阶段数据
+            dataStage = new YamlConfiguration();
             // 执行阶段奖励
             CronusStageAcceptEvent.call(player, quest, stageNext);
             stageNext.eval(new QuestProgram(player, this), Action.ACCEPT);
@@ -101,8 +103,6 @@ public class DataQuest implements TSerializable {
             playerData.setQuestCompleted(quest.getId(), false);
             // 更新任务阶段
             currentStage = stageNext.getId();
-            // 清空阶段数据
-            dataStage = new YamlConfiguration();
         }
     }
 

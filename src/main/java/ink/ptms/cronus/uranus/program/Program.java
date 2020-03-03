@@ -4,6 +4,7 @@ import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 /**
  * @Author 坏黑
@@ -61,6 +62,10 @@ public class Program {
 
     public CommandSender getSender() {
         return sender;
+    }
+
+    public Player asPlayer() {
+        return (Player) sender;
     }
 
     public String[] getArgs() {

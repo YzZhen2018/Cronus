@@ -9,6 +9,7 @@ import io.izzel.taboolib.TabooLibLoader;
 import io.izzel.taboolib.module.inject.TFunction;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -32,7 +33,10 @@ public class ProgramLoader {
         TabooLibLoader.getPluginClasses(Uranus.getInst()).ifPresent(classes -> {
             classes.stream().filter(pluginClass -> pluginClass.isAnnotationPresent(Auto.class)).forEach(pluginClass -> {
                 if (Effect.class.isAssignableFrom(pluginClass)) {
-                    registerEffect(pluginClass);
+                    String depend = ((Auto) pluginClass.getAnnotation(Auto.class)).depend();
+                    if (depend.isEmpty() || Bukkit.getPluginManager().getPlugin(depend) != null) {
+                        registerEffect(pluginClass);
+                    }
                 }
             });
         });
@@ -94,6 +98,7 @@ public class ProgramLoader {
             effects.add(effect);
         } catch (Throwable t) {
             t.printStackTrace();
+            System.out.println(effectClass);
         }
     }
 

@@ -26,6 +26,9 @@ public class ListenerEntity implements Listener {
         if (e.getHand() == EquipmentSlot.HAND && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
             try {
                 LinkedList<Catchers.Catcher> catchers = Catchers.getPlayerdata().get(e.getPlayer().getName());
+                if (catchers == null) {
+                    return;
+                }
                 for (Catchers.Catcher catcher : catchers) {
                     if (catcher instanceof Entity.EntitySelect) {
                         e.setCancelled(true);

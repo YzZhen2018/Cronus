@@ -24,7 +24,7 @@ public class SelectorMythicMobs extends Selector {
     @Override
     public String getDisplay(String in) {
         MythicMob mythicMob = ((MythicMobs) plugin).getMobManager().getMythicMob(in);
-        return mythicMob == null ? "?" : mythicMob.getDisplayName();
+        return mythicMob == null ? "?" : mythicMob.getDisplayName().get();
     }
 
     @Override
