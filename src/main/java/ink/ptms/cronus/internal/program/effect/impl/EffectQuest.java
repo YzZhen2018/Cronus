@@ -25,7 +25,7 @@ public class EffectQuest extends Effect {
 
     @Override
     public String pattern() {
-        return "quest\\.(?!var|val|log)(?<action>\\S+) (?<value>.+)";
+        return "quest\\.(?!var|val|log|task)(?<action>\\S+) (?<value>.+)";
     }
 
     @Override
