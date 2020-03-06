@@ -1,9 +1,13 @@
 package ink.ptms.cronus.internal.bukkit;
 
+import com.google.common.collect.Maps;
+import ink.ptms.cronus.internal.bukkit.parser.CustomParser;
 import io.izzel.taboolib.util.item.ItemBuilder;
 import io.izzel.taboolib.util.item.Items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
 
 /**
  * @Author 坏黑
@@ -17,6 +21,7 @@ public class ItemStack {
     private int damage;
     private int amount;
     private org.bukkit.inventory.ItemStack bukkitItem;
+    private Map<CustomParser, String> custom;
 
     public ItemStack(org.bukkit.inventory.ItemStack bukkitItem) {
         this.bukkitItem = bukkitItem;
@@ -29,6 +34,16 @@ public class ItemStack {
         this.lore = lore;
         this.damage = damage;
         this.amount = amount;
+        this.custom = Maps.newHashMap();
+    }
+
+    public ItemStack(String type, String name, String lore, int damage, int amount, Map<CustomParser, String> custom) {
+        this.type = type;
+        this.name = name;
+        this.lore = lore;
+        this.damage = damage;
+        this.amount = amount;
+        this.custom = custom;
     }
 
     public org.bukkit.inventory.ItemStack toBukkitItem() {
@@ -62,8 +77,12 @@ public class ItemStack {
         return itemStack.getAmount() >= amount;
     }
 
+    public boolean isCustom(org.bukkit.inventory.ItemStack itemStack) {
+        return custom.isEmpty() || custom.entrySet().stream().allMatch(entry -> entry.getKey().isItem(itemStack, entry.getValue()));
+    }
+
     public boolean isItem(org.bukkit.inventory.ItemStack itemStack) {
-        return bukkitItem == null ? isType(itemStack) && isName(itemStack) && isLore(itemStack) && isDamage(itemStack) && isAmount(itemStack) : bukkitItem.isSimilar(itemStack) && bukkitItem.getAmount() <= itemStack.getAmount();
+        return bukkitItem == null ? isType(itemStack) && isName(itemStack) && isLore(itemStack) && isDamage(itemStack) && isAmount(itemStack) && isCustom(itemStack) : bukkitItem.isSimilar(itemStack) && bukkitItem.getAmount() <= itemStack.getAmount();
     }
 
     public boolean hasItem(Player player) {
@@ -124,6 +143,10 @@ public class ItemStack {
         return bukkitItem;
     }
 
+    public Map<CustomParser, String> getCustom() {
+        return custom;
+    }
+
     public String asString() {
         if (!Items.isNull(bukkitItem)) {
             return Items.getName(bukkitItem);
@@ -144,6 +167,9 @@ public class ItemStack {
         if (amount > 1) {
             builder.append(",").append("a=").append(amount);
         }
+        custom.forEach((k, v) -> {
+            builder.append(",").append(k.getPrefix()).append("=").append(v);
+        });
         return builder.toString();
     }
 
@@ -155,6 +181,8 @@ public class ItemStack {
                 ", lore='" + lore + '\'' +
                 ", damage=" + damage +
                 ", amount=" + amount +
+                ", bukkitItem=" + bukkitItem +
+                ", custom=" + custom +
                 '}';
     }
 }

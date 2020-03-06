@@ -11,6 +11,10 @@ import java.util.List;
  */
 public abstract class ItemStorage implements Service {
 
+    public String depend() {
+        return "Cronus";
+    }
+
     abstract public ItemStack getItem(String name);
 
     abstract public void addItem(String name, ItemStack itemStack);

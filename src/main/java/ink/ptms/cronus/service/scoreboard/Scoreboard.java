@@ -50,11 +50,9 @@ public class Scoreboard implements Service, Listener {
         if (list != null) {
             list.getKeys(false).forEach(keyword -> this.list.put(keyword, list.getInt(keyword)));
         }
-        scoreboardTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Cronus.getInst(), () -> {
-            if (isEnabled()) {
-                Bukkit.getOnlinePlayers().forEach(this::update);
-            }
-        }, 0, 40);
+        if (isEnabled()) {
+            scoreboardTask = Bukkit.getScheduler().runTaskTimerAsynchronously(Cronus.getInst(), () -> Bukkit.getOnlinePlayers().forEach(this::update), 0, 40);
+        }
         CronusReloadServiceEvent.call(this);
     }
 
@@ -76,15 +74,17 @@ public class Scoreboard implements Service, Listener {
     }
 
     public void update(Player player) {
-        List<String> build = build(player);
-        // 空行检查
-        for (int i = 0; i < build.size(); i++) {
-            if (build.get(i).isEmpty()) {
-                build.set(i, Arrays.stream(String.valueOf(Numbers.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
+        if (isEnabled()) {
+            List<String> build = build(player);
+            // 空行检查
+            for (int i = 0; i < build.size(); i++) {
+                if (build.get(i).isEmpty()) {
+                    build.set(i, Arrays.stream(String.valueOf(Numbers.getRandomInteger(1000, 9999)).split("")).map(s -> "§" + s).collect(Collectors.joining()));
+                }
             }
+            // 返回主线程发送计分板
+            Bukkit.getScheduler().runTask(Cronus.getInst(), () -> Scoreboards.display(player, build.toArray(new String[0])));
         }
-        // 返回主线程发送计分板
-        Bukkit.getScheduler().runTask(Cronus.getInst(), () -> Scoreboards.display(player, build.toArray(new String[0])));
     }
 
     public List<String> build(Player player) {

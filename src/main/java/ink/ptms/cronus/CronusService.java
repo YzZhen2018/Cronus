@@ -1,5 +1,6 @@
 package ink.ptms.cronus;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.database.Database;
 import ink.ptms.cronus.database.DatabaseType;
@@ -7,6 +8,7 @@ import ink.ptms.cronus.database.data.DataPlayer;
 import ink.ptms.cronus.database.data.item.ItemStorage;
 import ink.ptms.cronus.database.data.item.ItemStorageCronus;
 import ink.ptms.cronus.database.data.item.hook.StorageAsgard;
+import ink.ptms.cronus.database.data.item.hook.StorageMythicMobs;
 import ink.ptms.cronus.database.data.item.hook.StoragePurtmars;
 import ink.ptms.cronus.database.impl.DatabaseSQL;
 import ink.ptms.cronus.database.impl.DatabaseYAML;
@@ -20,10 +22,12 @@ import ink.ptms.cronus.uranus.annotations.Auto;
 import io.izzel.taboolib.TabooLibLoader;
 import io.izzel.taboolib.module.inject.TInject;
 import io.izzel.taboolib.module.locale.logger.TLogger;
+import org.apache.logging.log4j.LogManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,7 +51,15 @@ public class CronusService {
     private Map<String, TaskCache> registeredTask = Maps.newHashMap();
     private Map<String, ConditionCache> registeredCondition = Maps.newHashMap();
     private Map<String, DataPlayer> playerData = Maps.newConcurrentMap();
+    private List<ItemStorage> registeredItemStorage = Lists.newArrayList();
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
+
+    public CronusService() {
+        registeredItemStorage.add(new StorageAsgard());
+        registeredItemStorage.add(new StoragePurtmars());
+        registeredItemStorage.add(new StorageMythicMobs());
+        registeredItemStorage.add(new ItemStorageCronus());
+    }
 
     void init() {
         // 数据储存
@@ -60,14 +72,12 @@ public class CronusService {
             logger.info("Database Using YAML.");
         }
         // 物品储存
-        if (purtmarsHooked) {
-            services.put("ItemStorage", new StoragePurtmars());
-            logger.info("Hooked Purtmars.");
-        } else if (asgardHooked) {
-            services.put("ItemStorage", new StorageAsgard());
-            logger.info("Hooked Asgard.");
-        } else {
-            services.put("ItemStorage", new ItemStorageCronus());
+        for (ItemStorage itemStorage : registeredItemStorage) {
+            if (Bukkit.getPluginManager().getPlugin(itemStorage.depend()) != null) {
+                services.put("ItemStorage", itemStorage);
+                logger.info("ItemStorage Using " + itemStorage.depend() + ".");
+                break;
+            }
         }
         // 引路
         TabooLibLoader.getPluginClasses(Cronus.getInst()).ifPresent(classes -> {
@@ -126,6 +136,10 @@ public class CronusService {
         return services.get(name);
     }
 
+    public Service setService(String name, Service service) {
+        return services.put(name, service);
+    }
+
     public Database getDatabase() {
         return (Database) getService("Database");
     }
@@ -172,5 +186,9 @@ public class CronusService {
 
     public Map<String, Service> getServices() {
         return services;
+    }
+
+    public List<ItemStorage> getRegisteredItemStorage() {
+        return registeredItemStorage;
     }
 }

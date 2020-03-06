@@ -1,5 +1,7 @@
 package ink.ptms.cronus.internal.bukkit.parser;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import ink.ptms.cronus.Cronus;
 import ink.ptms.cronus.internal.bukkit.*;
 import io.izzel.taboolib.module.inject.TInject;
@@ -9,6 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author 坏黑
@@ -18,6 +22,11 @@ public class BukkitParser {
 
     @TInject
     static TLogger logger;
+    static List<CustomParser> customParser = Lists.newArrayList();
+
+    public static List<CustomParser> getCustomParser() {
+        return customParser;
+    }
 
     public static BlockFace toBlockFace(Object str) {
         return new BlockFace(String.valueOf(str));
@@ -103,6 +112,7 @@ public class BukkitParser {
         String lore = null;
         int damage = -1;
         int amount = 1;
+        Map<CustomParser, String> custom = Maps.newHashMap();
         for (String v : String.valueOf(in).split("[,;]")) {
             if (v.toLowerCase().startsWith("type=")) {
                 type = v.substring("type=".length());
@@ -125,10 +135,19 @@ public class BukkitParser {
             } else if (v.toLowerCase().startsWith("a=")) {
                 amount = NumberConversions.toInt(v.substring("a=".length()));
             } else {
-                type = v;
+                boolean isCustom = false;
+                for (CustomParser parser : customParser) {
+                    if (v.toLowerCase().startsWith(parser.getPrefix() + "=")) {
+                        isCustom = true;
+                        custom.put(parser, v.toLowerCase().substring((parser.getPrefix() + "=").length()));
+                    }
+                }
+                if (!isCustom) {
+                    type = v;
+                }
             }
         }
-        return new ItemStack(type, name, lore, damage, amount);
+        return new ItemStack(type, name, lore, damage, amount, custom);
     }
 
     public static org.bukkit.Location toBukkitLocation(Object in) {

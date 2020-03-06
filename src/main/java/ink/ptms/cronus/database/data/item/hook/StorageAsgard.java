@@ -13,6 +13,11 @@ import java.util.List;
 public class StorageAsgard extends ItemStorage {
 
     @Override
+    public String depend() {
+        return "SacredItem";
+    }
+
+    @Override
     public ItemStack getItem(String name) {
         return SacredItemManager.getInstance().getItem(name);
     }
