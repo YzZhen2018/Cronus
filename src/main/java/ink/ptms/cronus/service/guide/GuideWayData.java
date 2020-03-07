@@ -2,6 +2,7 @@ package ink.ptms.cronus.service.guide;
 
 import com.google.common.collect.Lists;
 import ink.ptms.cronus.Cronus;
+import io.izzel.taboolib.TabooLib;
 import io.izzel.taboolib.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -71,11 +72,13 @@ public class GuideWayData {
             }
             Location midPoint = getMidPoint(player.getEyeLocation(), target, distance);
             if (midPoint != null) {
-                String dis = doubleFormat.format(player.getLocation().distance(target));
-                for (int i = 0; i < entity.size(); i++) {
-                    entity.get(i).setCustomName(text.get(i).replace("{distance}", dis));
-                    entity.get(i).teleport(midPoint.clone().add(0, i * -0.3 - 0.5, 0));
-                }
+                String distance = doubleFormat.format(player.getLocation().distance(target));
+                Bukkit.getScheduler().runTask(Cronus.getPlugin(), () -> {
+                    for (int i = 0; i < entity.size(); i++) {
+                        entity.get(i).setCustomName(text.get(i).replace("{distance}", distance));
+                        entity.get(i).teleport(midPoint.clone().add(0, i * -0.3 - 0.5, 0));
+                    }
+                });
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -83,7 +86,11 @@ public class GuideWayData {
     }
 
     public void cancel() {
-        entity.forEach(Entity::remove);
+        if (Bukkit.isPrimaryThread()) {
+            entity.forEach(Entity::remove);
+        } else {
+            Bukkit.getScheduler().runTask(Cronus.getPlugin(), () -> entity.forEach(Entity::remove));
+        }
     }
 
     public void display() {

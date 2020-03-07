@@ -5,6 +5,7 @@ import ink.ptms.cronus.internal.bukkit.ItemStack;
 import ink.ptms.cronus.internal.bukkit.parser.BukkitParser;
 import ink.ptms.cronus.internal.task.Task;
 import ink.ptms.cronus.internal.task.special.Countable;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityBreedEvent;
@@ -16,10 +17,9 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-05-28 17:21
  */
-@Task(name = "player_breed", version = ">=11000")
+@Task(name = "player_breed")
 public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
 
-    private int count;
     private String mother;
     private String father;
     private String entity;
@@ -31,7 +31,7 @@ public class TaskPlayerBreed extends Countable<EntityBreedEvent> {
 
     @Override
     public void init(Map<String, Object> data) {
-        count = NumberConversions.toInt(data.getOrDefault("count", 1));
+        super.init(data);
         mother = data.containsKey("mother") ? String.valueOf(data.get("mother")) : null;
         father = data.containsKey("father") ? String.valueOf(data.get("father")) : null;
         entity = data.containsKey("entity") ? String.valueOf(data.get("entity")) : null;

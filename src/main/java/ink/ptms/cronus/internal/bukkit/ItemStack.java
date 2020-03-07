@@ -1,12 +1,15 @@
 package ink.ptms.cronus.internal.bukkit;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ink.ptms.cronus.internal.bukkit.parser.CustomParser;
+import ink.ptms.cronus.util.UtilsKt;
 import io.izzel.taboolib.util.item.ItemBuilder;
 import io.izzel.taboolib.util.item.Items;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,7 +18,7 @@ import java.util.Map;
  */
 public class ItemStack {
 
-    private String type;
+    private List<String> type;
     private String name;
     private String lore;
     private int damage;
@@ -29,7 +32,7 @@ public class ItemStack {
     }
 
     public ItemStack(String type, String name, String lore, int damage, int amount) {
-        this.type = type;
+        this.type = type == null ? null : Lists.newArrayList(type.split("\\|"));
         this.name = name;
         this.lore = lore;
         this.damage = damage;
@@ -38,7 +41,7 @@ public class ItemStack {
     }
 
     public ItemStack(String type, String name, String lore, int damage, int amount, Map<CustomParser, String> custom) {
-        this.type = type;
+        this.type = type == null ? null : Lists.newArrayList(type.split("\\|"));
         this.name = name;
         this.lore = lore;
         this.damage = damage;
@@ -47,7 +50,7 @@ public class ItemStack {
     }
 
     public org.bukkit.inventory.ItemStack toBukkitItem() {
-        ItemBuilder builder = new ItemBuilder(Items.asMaterial(type), amount, damage);
+        ItemBuilder builder = new ItemBuilder(Items.asMaterial(type.get(0)), amount, damage);
         if (name != null) {
             builder.name(name);
         }
@@ -58,7 +61,7 @@ public class ItemStack {
     }
 
     public boolean isType(org.bukkit.inventory.ItemStack itemStack) {
-        return type == null || itemStack.getType().name().equalsIgnoreCase(type);
+        return type == null || UtilsKt.INSTANCE.any(type, t -> itemStack.getType().name().equalsIgnoreCase(t));
     }
 
     public boolean isName(org.bukkit.inventory.ItemStack itemStack) {
@@ -119,8 +122,12 @@ public class ItemStack {
         return false;
     }
 
-    public String getType() {
-        return type;
+    public List<String> getType() {
+        return Lists.newArrayList(type);
+    }
+
+    public void setType(List<String> type) {
+        this.type = type;
     }
 
     public String getName() {

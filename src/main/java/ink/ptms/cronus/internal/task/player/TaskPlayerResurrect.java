@@ -13,7 +13,7 @@ import java.util.Map;
  * @Author 坏黑
  * @Since 2019-05-28 17:21
  */
-@Task(name = "player_resurrect", version = ">=11100")
+@Task(name = "player_resurrect")
 public class TaskPlayerResurrect extends Countable<EntityResurrectEvent> {
 
     public TaskPlayerResurrect(ConfigurationSection config) {
