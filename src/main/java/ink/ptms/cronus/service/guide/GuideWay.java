@@ -48,6 +48,7 @@ public class GuideWay implements Service, Listener {
     }
 
     private void update(Player player) {
+        Cronus.getCronusService().getService(GuideWay.class).cancel(player);
         Bukkit.getScheduler().runTaskLater(Cronus.getInst(), () -> CronusAPI.guideHandle(player), 20);
     }
 
