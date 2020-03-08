@@ -43,7 +43,7 @@
     <orderEntry type="module" module-name="ink.ptms.cronus.Cronus.main" />
     <orderEntry type="library" name="Gradle: org.spigotmc:spigot:1.14.4-R0.1-20191211.040645-13" level="project" />
     <orderEntry type="library" name="Gradle: io.izzel.taboolib:TabooLib:all:5.17" level="project" />
-    <orderEntry type="library" name="Gradle: io.izzel.taboolib.loader:TabooLibloader:all:1.4" level="project" />
+    <orderEntry type="library" name="Gradle: io.izzel.taboolib.loader:TabooLibloader:all:1.5" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.41" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.41" level="project" />

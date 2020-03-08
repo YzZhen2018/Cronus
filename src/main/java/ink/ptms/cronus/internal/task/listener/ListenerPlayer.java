@@ -29,6 +29,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 
 /**
  * @Author 坏黑
@@ -222,6 +223,16 @@ public class ListenerPlayer implements Listener {
             // 异步计算
             Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
                 CronusAPI.stageHandle(e.getPlayer(), e, TaskPlayerWalk.class, TaskPlayerSwim.class, TaskPlayerRide.class, TaskPlayerElytra.class, TaskPlayerLeash.class);
+            });
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void e(VehicleMoveEvent e) {
+        if (!e.getFrom().getBlock().equals(e.getTo().getBlock()) && e.getVehicle() instanceof Player) {
+            // 异步计算
+            Bukkit.getScheduler().runTaskAsynchronously(Cronus.getInst(), () -> {
+                CronusAPI.stageHandle((Player) e.getVehicle(), e, TaskPlayerVehicle.class);
             });
         }
     }

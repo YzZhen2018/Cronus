@@ -209,12 +209,16 @@ public class Command extends CronusCommand {
                 return;
             }
             DataPlayer dataPlayer = CronusAPI.getData(player);
-            DataQuest dataQuest = dataPlayer.getQuest(args[1]);
-            if (dataQuest == null) {
-                error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
-                return;
+            if (args[1].equalsIgnoreCase("all")) {
+                dataPlayer.stopQuest();
+            } else {
+                DataQuest dataQuest = dataPlayer.getQuest(args[1]);
+                if (dataQuest == null) {
+                    error(sender, "玩家 &7" + args[0] + " &c未接受该任务.");
+                    return;
+                }
+                dataPlayer.stopQuest(dataQuest.getQuest());
             }
-            dataPlayer.stopQuest(dataQuest.getQuest());
             dataPlayer.push();
         }
     };

@@ -141,14 +141,17 @@ public class Status implements Service, Listener {
                 break;
         }
         // 提示音效
+        for (String line : Cronus.getConf().getStringList("Status.sound-disabled")) {
+            if (dataQuest.getQuest().getBookTag().contains(line)) {
+                return;
+            }
+        }
         sound.play(player);
     }
 
     public void cancel(Player player) {
-        switch (type) {
-            case BOSSBAR:
-                Optional.ofNullable(statusBar.remove(player.getName())).ifPresent(BossBar::removeAll);
-                break;
+        if (type == StatusType.BOSSBAR) {
+            Optional.ofNullable(statusBar.remove(player.getName())).ifPresent(BossBar::removeAll);
         }
     }
 

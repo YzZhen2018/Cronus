@@ -140,6 +140,15 @@ public class DataPlayer implements TSerializable {
         completeQuest(quest);
     }
 
+    public void stopQuest() {
+        for (Map.Entry<String, DataQuest> entry : this.quest.entrySet()) {
+            Quest quest = this.quest.remove(entry.getKey()).getQuest();
+            if (quest != null) {
+                CronusQuestStopEvent.call(player, quest);
+            }
+        }
+    }
+
     public void stopQuest(Quest quest) {
         if (quest == null) {
             return;

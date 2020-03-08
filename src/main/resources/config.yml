@@ -16,26 +16,26 @@ Settings:
     slot-message: 10
     # 回复位置
     slot-reply:
-    - 12
-    - 13
-    - 14
-    - 15
-    - 16
-    - 21
-    - 22
-    - 23
-    - 24
-    - 25
-    - 30
-    - 31
-    - 32
-    - 33
-    - 34
-    - 39
-    - 40
-    - 41
-    - 42
-    - 43
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 39
+      - 40
+      - 41
+      - 42
+      - 43
 
 # 数据储存
 Database:
@@ -67,6 +67,9 @@ Status:
     style: SEGMENTED_20
   # 提示音效
   sound: 'ENTITY_PLAYER_LEVELUP-1-2'
+  # 忽略音效的任务类型
+  sound-disabled:
+    - 支线任务
 
 # 计分板显示
 Scoreboard:
@@ -80,15 +83,15 @@ Scoreboard:
     支线任务: 0
   # 显示内容
   content:
-  - '&6&l当前任务'
-  - ''
-  - '{format}'
-  - '&e examplehost.com'
+    - '&6&l当前任务'
+    - ''
+    - '{format}'
+    - '&e examplehost.com'
   # 任务格式
   format:
-  - '{display}'
-  - '{content}'
-  - ''
+    - '{display}'
+    - '{content}'
+    - ''
 
 # 任务纵览
 QuestBook:
@@ -103,15 +106,15 @@ QuestBook:
       支线任务: 0
     # 纵览开头
     head:
-    - '任务纵览'
-    - ''
-    - '当前正在进行的任务'
-    - ''
+      - '任务纵览'
+      - ''
+      - '当前正在进行的任务'
+      - ''
     # 纵览格式
     format:
-    - '<hover:{display}|查看详细信息|CronusQuestOpen {id}> <hover:{quest:visible}|隐藏或显示|CronusQuestVisible {id} -open:def_0>'
-    - '{content}'
-    - ''
+      - '<hover:{display}|查看详细信息|CronusQuestOpen {id}> <hover:{quest:visible}|隐藏或显示|CronusQuestVisible {id} -open:def_0>'
+      - '{content}'
+      - ''
 
 # 快捷物品
 # 该物品会绑定至玩家的快捷栏或背包，点击执行指定操作
@@ -126,8 +129,8 @@ QuestItem:
     material: book
     name: '&7任务纵览'
     lore:
-    - ''
-    - '&8点击查看当前任务进度'
+      - ''
+      - '&8点击查看当前任务进度'
     # 动作
     effect:
-    - 'command.player CronusQuestBook def_0'
+      - 'command.player CronusQuestBook def_0'
